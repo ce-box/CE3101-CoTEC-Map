@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "CoTEC-Map"
+    }
+  },
+  "defaultProject": "CoTEC-Map",
+  "cli": {
+    "analytics": "a240948b-d335-4901-bea9-c201dedb32e2"
+  }
 }
