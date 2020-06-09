@@ -1,0 +1,11 @@
+div.container-fluid{
+    div.row{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        div.card{
+            margin: 20px;
+        }
+    }
+}
