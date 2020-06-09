@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AdminServiceService {
 
-  private URL: 'localhost:3000';
+  private URL: '/administration/';
   /**
    * Constructor
    * @param http http request
