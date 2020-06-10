@@ -8,6 +8,13 @@ import { AdminServiceService } from '../../services/admin-service.service';
 })
 export class AdminComponent implements OnInit {
 
+  rows = [
+    { name: 'Austin', gender: 'Male', company: 'Swimlane' },
+    { name: 'Dany', gender: 'Male', company: 'KFC' },
+    { name: 'Molly', gender: 'Female', company: 'Burger King' }
+  ];
+  columns = [{ name: '#' },{ prop: 'name' }, { name: 'Gender' }, { name: 'Company' }];
+
   constructor(public adminService: AdminServiceService) {
     this.getServiceData();
   }
