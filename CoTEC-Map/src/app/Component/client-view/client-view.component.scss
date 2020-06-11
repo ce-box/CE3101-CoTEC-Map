@@ -1,0 +1,66 @@
+.body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.65;
+  text-align: left;
+}
+
+//Scroll bar
+
+.scrollbar {
+  
+  overflow-y: scroll;
+  overflow-x: scroll;
+  box-sizing: content-box;
+  
+}
+
+//Style of first scroll
+#style-1 {
+    height: 250px;
+}
+
+#style-1::-webkit-scrollbar
+{
+    width: 3px;
+    height: 3px;
+}
+
+#style-1::-webkit-scrollbar-thumb
+{
+    background-color: #9B9BA1;
+    border-radius: 30px;
+}
+
+//Style of second scroll
+#style-2 {
+    height: 500px;
+}
+
+#style-2::-webkit-scrollbar
+{
+    width: 3px;
+}
+
+#style-2::-webkit-scrollbar-thumb
+{
+    background-color: #9B9BA1;
+    border-radius: 30px;
+}
+
+
+
+h5, h6 {
+    margin-bottom: 0.5rem;
+    font-family: Roboto;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #364a63;
+}
+
+#tablaCases {
+    font-weight: 200;
+}
+
