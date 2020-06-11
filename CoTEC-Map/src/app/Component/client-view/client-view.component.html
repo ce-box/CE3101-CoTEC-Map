@@ -1,4 +1,97 @@
 <!--The content is a structure for a map-->
-<div style="text-align: center;">
-  <div id="regions_div" style="width: 900px; height: 500px;"></div>
-</div>
+<body>
+  <div class="container">
+    <br />
+    <div class="row">
+      <div class="card card-bordered col-xl-8" id="regions_div"></div>
+      <div class="col-xl-4">
+        <div>
+          <div class="scrollbar" id="style-2">
+            <table class="table table-borderless text-center">
+              <tbody>
+                <tr *ngFor="let country of countries">
+                  <td>{{ country.name }}</td>
+                  <td>{{ country.numberCases }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-xl-4">
+        <div class="card-inner">
+          <div class="nk-cov-wg1">
+            <div class="card-title">
+              <h5 class="title">Casos de CoTEC - <small>Mundial</small></h5>
+            </div>
+            <div class="nk-cov-data">
+              <h6 class="overline-title">Total de casos confirmados</h6>
+              <div class="amount">7,389,298</div>
+            </div>
+            <canvas
+              id="myPieChart"
+              class="chartjs"
+              width="567"
+              height="283"
+            ></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4">
+        <div class="card-inner">
+          <div class="nk-cov-wg1">
+            <div class="card-title">
+              <h5 class="title">Paises más efectados</h5>
+            </div>
+            <div class="scrollbar" id="style-1">
+              <table class="table table-hover text-center" id="style-1">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">País</th>
+                    <th scope="col">Contagios</th>
+                    <th scope="col">Muertes</th>
+                    <th scope="col">Recuperados</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let country of countries">
+                    <th scope="row">
+                      <img
+                        [src]="country.code"
+                        class="img-responsive"
+                        alt="Responsive image"
+                        width="30"
+                        height="30"
+                      />
+                    </th>
+                    <td>{{ country.name }}</td>
+                    <td>{{ country.numberCases }}</td>
+                    <td>{{ country.numberDeads }}</td>
+                    <td>{{ country.numberRecovered }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4">
+        <div class="card-inner">
+          <div class="nk-cov-wg1">
+            <div class="card-title">
+              <h5 class="title">AQUI VA EL LOGO</h5>
+            </div>
+            <div class="nk-cov-data">
+              <h6 class="overline-title">Total de casos confirmados</h6>
+              <div class="amount">7,389,298</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
