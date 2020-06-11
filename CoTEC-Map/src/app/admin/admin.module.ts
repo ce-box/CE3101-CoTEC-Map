@@ -5,13 +5,15 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './pages/admin/admin.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { MatSidenavModule } from '@angular/material/sidenav';
 @NgModule({
   declarations: [AdminComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
     HttpClientModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    MatSidenavModule
   ]
 })
 export class AdminModule { }
