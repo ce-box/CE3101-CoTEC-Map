@@ -10,8 +10,12 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule} from '@angular/material/icon';
 import { MatSelectModule} from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import { RegionsComponent } from './pages/regions/regions.component';
+import { HospitalsComponent } from './pages/hospitals/hospitals.component';
+import { MedicationsComponent } from './pages/medications/medications.component';
+import { PatologiesComponent } from './pages/patologies/patologies.component';
 @NgModule({
-  declarations: [AdminComponent],
+  declarations: [AdminComponent, RegionsComponent, HospitalsComponent, MedicationsComponent, PatologiesComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
