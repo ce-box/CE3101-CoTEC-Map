@@ -1,77 +1,75 @@
-<!-- <mat-sidenav-container>
+<mat-sidenav-container>
   <mat-sidenav class="sidebar" mode="side" opened>
     <div class="sidebar-header">
       <img src="assets/imgs/claudiaPoll.jpg" class="rounded-circle" alt="">
       <h3>Claudia Poll <br> <strong>Gerente CCSS</strong></h3>
       <button type="button" class="btn btn-outline-light text-dark">Light</button>
-  </div>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
-
+    
+    <p class="NavigationTitle">Data Management Platform</p>
+    <mat-grid-list cols="12" rowHeight="3:10" class="CardNavigation">
+      <mat-grid-tile colS colspan="3">
+        <div class="card" style="background-color: #FFDB02;">
+          <div class="card-body">
+            <div class="card-title">Regions <img src="assets/imgs/regions_Image.png" alt=""></div>
+            <p class="card-text">Manage the regions of your country</p>
+          </div>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="3">
+        <div class="card" style="background-color: #F95F62;">
+          <div class="card-body">
+            <div class="card-title">Hospital Center <img src="assets/imgs/hospital_Image.png" alt=""></div>
+            <p class="card-text">Manage the HC's of your country</p>
+          </div>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="3">
+        <div class="card" style="background-color: #00A6FF;">
+          <div class="card-body">
+            <div class="card-title">Medications <img src="assets/imgs/medication_Images.png" alt=""></div>
+            <p class="card-text">Medication management for the patients</p>
+          </div>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="3">
+        <div class="card" style="background-color: #13CE66;">
+          <div class="card-body">
+            <div class="card-title">Pathologies <img src="assets/imgs/patology_image.png" alt=""></div>
+            <p class="card-text">Management of patient diseases</p>
+          </div>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile  colspan="8" >
+        <ngx-datatable class="material" [rows]="rows" [columns]="columns" style="margin-top: 20px;"> </ngx-datatable>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="4" class="CardsDownload" >
+        <div class="CardContainer">
+          <div class="CardSelection">
+            <span>
+              Preventive measure 
+            </span>
+            <img src="assets/imgs/button_image.png" alt="">
+            <form>
+              <mat-form-field >
+                <mat-label >Make a selection</mat-label>
+                <mat-select [(ngModel)]="selectedValue" name="food" >
+                  <mat-option *ngFor="let food of foods" [value]="food.value" >
+                    {{food.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </form>
+          </div>
+          <div class="DownloadCard" >
+            <img src="assets/imgs/excel_icon.png" alt="">            
+            <span>Upload File</span>
+            <mat-icon aria-hidden="false" aria-label="Example home icon">publish</mat-icon>
+          </div>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
   </mat-sidenav-content>
-</mat-sidenav-container> -->
-<!-- <div class="BigContainer">
-    <div class="wrapper">
-        <nav id="sidebar">
-            
-        </nav>
-
-    </div>
-    <div id="content">
-        <h2>Data Management Platform</h2>
-        <div class="row">
-            <div class="col-3">
-                <div class="card" style="background-color: #FFDB02;">
-                    <div class="card-body">
-                      <div class="card-title">Regions  <img src="assets/imgs/regions_Image.png" alt=""></div>
-                      <p class="card-text">Manage the regions of your country</p>
-                    </div>
-                  </div>
-            </div>
-            <div class="col-3">
-                <div class="card" style="background-color: #F95F62;">
-                <div class="card-body">
-                  <div class="card-title">Hospital Center<img src="assets/imgs/hospital_Image.png" alt=""></div>
-                  <p class="card-text">Manage the HC's of your country</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-3">
-                <div class="card" style="background-color: #00A6FF;">
-                <div class="card-body">
-                  <div class="card-title">Medications  <img src="assets/imgs/medication_Images.png" alt=""></div>
-                  <p class="card-text">Medication management for the patients</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-3">
-                <div class="card" style="background-color: #13CE66;">
-                <div class="card-body">
-                  <div class="card-title">Pathologies <img src="assets/imgs/patology_image.png" alt=""></div>
-                  <p class="card-text">Management of patient diseases</p>
-                </div>
-              </div>
-            </div>
-        </div> 
-        <div class="row">
-            <div class="col-8">
-                <h3>Patient Status Management</h3>
-                <ngx-datatable  class="material" [rows]="rows" [columns]="columns"> </ngx-datatable>
-            </div>
-            <div class="col-4">
-                <div class="card" style="background-color: #000742;">
-                    <div class="card-body">
-                      <div class="card-title">Pathologies <img src="assets/imgs/patology_image.png" alt=""></div>
-                      <p class="card-text">Management of patient diseases</p>
-                    </div>
-                  </div>
-                  <div class="card" style="background-color: #13CE66;">
-                    <div class="card-body">
-                      <div class="card-title">Pathologies <img src="assets/imgs/patology_image.png" alt=""></div>
-                      <p class="card-text">Management of patient diseases</p>
-                    </div>
-                  </div>
-            </div>
-        </div> 
-    </div>
-</div> -->
+</mat-sidenav-container>

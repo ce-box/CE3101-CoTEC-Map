@@ -1,33 +1,84 @@
-.BigContainer{
-    display: flex;
-    width: 100%;
-}
-.wrapper {
-    display: flex;
-    align-items: stretch;
-}
-img{
-    &.rounded-circle{
-        height: 130px ;
-        width: 130px;
+mat-sidenav-container {
+    height: 100%;
+    mat-sidenav {
+        background: #435a74;
+        color: #fff;
+        padding: 20px;
+        width: 25%;
+        img {
+            &.rounded-circle {
+                height: 130px;
+                width: 130px;
+            }
+        }
     }
 }
-#sidebar {
-    min-width: 250px;
-    max-width: 250px;
-    min-height: 100vh;
-    background: #435A74;
-    color: #fff;
-    transition: all 0.3s;
+mat-sidenav-content {
+    p {
+        &.NavigationTitle {
+            margin: 35px 10px 40px 30px;
+            font-size: 20px;
+            line-height: 25px;
+            font-weight: 500;
+            color: #343f4b;
+        }
+    }
+    mat-grid-list {
+        height: 100%;
+        width: 100%;
+        &.CardNavigation {
+            margin: 0px 10px 15px 5px;
+            mat-grid-tile {
+                &.CardsDownload {
+                    padding: 0px;
+                    div.CardContainer {
+                        div.CardSelection {
+                            padding: 80px 20px 20px 20px;
+                            background-color: #000742;
+                            color: white;
+                            font-size: 16px;
+                            line-height: 25px;
+                            font-weight: 500;
+                            max-width: 250px;
+                            height: 250px;
+                            //margin-bottom: 30px;
+                            img {
+                                height: 40px;
+                                width: 40px;
+                            }
+                            form {
+                                margin-top: 15px;
+                                mat-form-field {
+                                    background: white;
+                                    border-radius: 5px;
+                                    padding: 10px;
+                                }
+                            }
+                        }
+                        div.DownloadCard {
+                            max-width: 250px;
+                            background-color: #13ce66;
+                            height: 150px;
+                            margin-top: 15px;
+                            padding: 10px 30px;
+                            img {
+                                height: 40px;
+                                width: 40px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &.SecondRow {
+        }
+    }
 }
-
-#sidebar .sidebar-header {
-    padding: 20px;
-    background: #435A74;
-}
-
-.card{
-    img{
+.card {
+    min-height: 150px;
+    max-height: 150px;
+    width: 200px;
+    img {
         width: 50px;
         height: 50px;
         margin-left: 15px;
