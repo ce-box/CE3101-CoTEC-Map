@@ -10,16 +10,15 @@ import {MatIconRegistry} from '@angular/material/icon';
 export class AdminComponent implements OnInit {
 
   rows = [
-    { name: 'Austin', gender: 'Male', company: 'Swimlane' },
-    { name: 'Dany', gender: 'Male', company: 'KFC' },
-    { name: 'Molly', gender: 'Female', company: 'Burger King' }
+    { number: 1 , name: 'Austin', gender: 'Male', company: 'Swimlane' },
+    { number: 2 , name: 'Dany', gender: 'Male', company: 'KFC' },
+    { number: 3 , name: 'Molly', gender: 'Female', company: 'Burger King' }
   ];
-  columns = [{ name: '#' },{ prop: 'name' }, { name: 'Gender' }, { name: 'Company' }];
+  columns = [{ name: 'number' }, { prop: 'name' }, { name: 'Gender' }, { name: 'Company' }];
   selectedValue: any;
   foods = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
+    {value: 'byCountry', viewValue: 'Por Pais'},
+    {value: 'general', viewValue: 'General'}
   ];
 
   constructor(
