@@ -15,6 +15,9 @@ import { HospitalsComponent } from './pages/hospitals/hospitals.component';
 import { MedicationsComponent } from './pages/medications/medications.component';
 import { PatologiesComponent } from './pages/patologies/patologies.component';
 import { MatInputModule } from '@angular/material/input';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyMaterialModule } from '@ngx-formly/material';
+import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 
 
 @NgModule({
@@ -31,7 +34,9 @@ import { MatInputModule } from '@angular/material/input';
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    FormlyModule,
+    FormlyBootstrapModule,
   ]
 })
 export class AdminModule { }
