@@ -5,7 +5,7 @@ import {MatIconRegistry} from '@angular/material/icon';
 import { SelectionType } from '@swimlane/ngx-datatable';
 import faker from 'faker';
 import { ubicaciones } from 'src/assets/data/ubication';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { NationalityService } from '../../services/nationality/nationality.service';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
@@ -83,6 +83,7 @@ export class AdminComponent implements OnInit {
     {id: 'recovered', displayName: 'Recovered'},
     {id: 'dead', displayName: 'Dead'}
   ];
+  stateForm = new FormControl();
   /**
    * Limit of the table
    */
@@ -105,14 +106,14 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.provinces = ubicaciones.provincias;
-    this.rows = this.getFakeRows(3);
+    this.rows = this.getFakeRows(6);
     this.fuseResults = this.rows;
     this.columns = [
-      { name: 'Nombre', prop: 'personal.name'},
-      { name: 'Apellidos', prop: 'personal.lastName'},
-      { name: 'Cedula', prop: 'id'},
+      { name: 'Name', prop: 'personal.name'},
+      { name: 'Last Name', prop: 'personal.lastName'},
+      { name: 'Id', prop: 'id'},
       { name: 'Region', prop: 'address.region.displayName'},
-      { name: 'Estado', prop: 'state.displayName'}
+      { name: 'Birth Date', prop: 'personal.birthdate'}
     ];
     this.fuseOptions = {
       isCaseSensitive: false,
@@ -228,6 +229,20 @@ export class AdminComponent implements OnInit {
       this.fuse = new Fuse(this.fuseResults, this.fuseOptions);
       this.fuseResults = this.fuse.search(this.searchTextFilter).map((i) => i.item);
     }
+  }
+  /**
+   * Selected item
+   */
+  onCheckboxChangeFn(event) {
+    console.log('event', event);
+  }
+  updateValueSelectPrevent(event) {
+    console.log('update', event);
+    console.log('selected', this.selectedValue);
+  }
+  updateValueSelectStatus(event) {
+    console.log('update', event);
+    console.log('selected', this.stateForm.value);
   }
 
 }
