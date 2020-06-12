@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   {path: '', component: ClientViewComponent},
-  // Yo solo quería ver como se miraba :v
   {
     path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },

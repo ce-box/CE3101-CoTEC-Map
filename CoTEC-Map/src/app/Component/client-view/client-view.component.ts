@@ -68,7 +68,6 @@ export class ClientViewComponent implements OnInit {
 
     // Create a graphic with the cases
     // tslint:disable-next-line: prefer-const
-    
     let Chart = require('chart.js');
     // tslint:disable-next-line: prefer-const
     let ctx = document.getElementById('myPieChart');

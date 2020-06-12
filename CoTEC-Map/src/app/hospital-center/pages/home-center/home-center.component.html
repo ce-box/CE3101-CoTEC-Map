@@ -1,1 +1,49 @@
-<p>home-center works!</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hospital Center</title>
+  </head>
+  <body>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4 text-center" id="hospital">
+        {{hospitalName}}
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+    <div class="row" style="padding-top: 70px; padding-bottom: 110px;">
+      <div class="col text-center">
+        <button type="button" class="btn btn-light" id="button1" onclick="location.href='hospitalCenter/patients'">
+          <img
+            src="https://cdn1.iconfinder.com/data/icons/ios-11-glyphs/30/people-512.png"
+            alt="button1"
+            id="image1"
+          />
+          <div class="row text-center">
+            <div class="col text-center">
+              <h2>Gestión de pacientes</h2>
+            </div>
+          </div>
+          <div class="card-inner"></div>
+        </button>
+      </div>
+      <div class="col text-center">
+        <button type="button" class="btn btn-light" id="button1" onclick="location.href='hospitalCenter/reports'">
+          <img
+            src="https://cdn2.iconfinder.com/data/icons/corona-virus-covid-19-17/512/40_news_report_virus-512.png"
+            alt="button1"
+            id="image1"
+          />
+          <div class="row text-center">
+            <div class="col text-center">
+              <h2>Reportes</h2>
+            </div>
+          </div>
+          <div class="card-inner"></div>
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
