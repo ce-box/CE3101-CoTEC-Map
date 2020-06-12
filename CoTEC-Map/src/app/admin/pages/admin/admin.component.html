@@ -9,7 +9,7 @@
   <mat-sidenav-content>
     
     <p class="NavigationTitle">Data Management Platform</p>
-    <mat-grid-list cols="12" rowHeight="3:10" class="CardNavigation">
+    <mat-grid-list cols="12" rowHeight="3:11" class="CardNavigation">
       <mat-grid-tile colS colspan="3">
         <div class="card" style="background-color: #FFDB02;" routerLink="regions">
           <div class="card-body">
@@ -42,9 +42,32 @@
           </div>
         </div>
       </mat-grid-tile>
+      
       <mat-grid-tile  colspan="8" >
-        <ngx-datatable class="material" [rows]="rows" [columns]="columns" style="margin-top: 20px;"> </ngx-datatable>
+        <div class="Table container">
+          <div class="col filtering-and-search-section">
+            <h3>Patient Management</h3>
+            <div class="row">
+                <mat-form-field class="search-box" appearance="outline">
+                    <mat-label> Buscar </mat-label>
+                    <input matInput class="search-input" [(ngModel)]="searchTextFilter" #searchInput>
+                    <mat-icon *ngIf="!searchTextFilter" class="search-icon" matSuffix>search</mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+          <ngx-datatable class="material" [rows]="fuseResults" 
+          [columns]="columns"
+          [selectionType]="SelectionType.single" 
+          [selected]="selected"
+          columnMode="force"
+          [scrollbarV]="true" 
+          [scrollbarH]="true" 
+          [headerHeight]="50"
+          [rowHeight]="30"
+          (select)="onSelect($event)"> </ngx-datatable>
+        </div> 
       </mat-grid-tile>
+
       <mat-grid-tile colspan="4" class="CardsDownload" >
         <div class="CardContainer">
           <div class="CardSelection">
