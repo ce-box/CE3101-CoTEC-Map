@@ -1,0 +1,44 @@
+body, html {
+    font-family: Roboto;
+    height: 100%;
+    background-repeat: no-repeat;
+    background: url(https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1035&q=80) no-repeat center center fixed;
+    background-size: 100% 100%;
+    padding-top:1px;
+    padding-bottom: 6px;
+  }
+
+  nav {
+    background: black;
+  }
+
+  table {
+      background: white;
+  }
+
+  //Scroll
+
+  .scrollbar {
+  
+    overflow-y: scroll;
+    overflow-x: scroll;
+    box-sizing: content-box;
+    
+  }
+  
+  //Style of first scroll
+  #style-1 {
+      height: 470px;
+  }
+  
+  #style-1::-webkit-scrollbar
+  {
+      width: 3px;
+      height: 3px;
+  }
+  
+  #style-1::-webkit-scrollbar-thumb
+  {
+      background-color: #9B9BA1;
+      border-radius: 30px;
+  }
