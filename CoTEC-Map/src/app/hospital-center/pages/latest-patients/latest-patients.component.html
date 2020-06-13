@@ -97,7 +97,9 @@
       <!-- /Lista de los empleados en la sucursal -->
     </div>
     <div *ngIf="changePatientPage">
-      <app-patient-management [dniPatient]  = "dniPatient"></app-patient-management>
+      <app-patient-management
+        [dniPatient]="dniPatient"
+      ></app-patient-management>
     </div>
   </body>
 </html>

@@ -1,1 +1,136 @@
-<p>reports works!</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reportes</title>
+  </head>
+  <body>
+    <!-- Header para cualquiera de las vistas -->
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="page-header">
+            <h1 class="text-center">{{ pageName }}</h1>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <hr />
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de los empleados en la sucursal -->
+    <div class="container">
+      <!-- Encabezado de la tabla -->
+      <div class="row">
+        <div class="col-md-12">
+          <nav class="navbar" style="background-color: black;">
+            <div class="col-md-2">
+              <button
+                type="button"
+                class="btn"
+                onclick="location.href='hospitalCenter'"
+              >
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSMrdnsfFgbp8dHFH5OcCaaFnVg4CEmabhtppXvwBz8B92OP9I3&usqp=CAU"
+                  alt="return-button"
+                  width="22"
+                />
+              </button>
+            </div>
+            <div class="clearfix float-right"></div>
+            <div class="clearfix float-right">
+              <div class="dropdown">
+                <button
+                  class="btn btn-primary dropdown-toggle"
+                  type="button"
+                  data-toggle="dropdown"
+                >
+                  Tipo de Reporte
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li class="dropdown-item">
+                    <button
+                      class="dropdown-item"
+                      type="button"
+                      (click)="reportState()"
+                    >
+                      Estado de pacientes
+                    </button>
+                  </li>
+                  <li class="dropdown-item">
+                    <button
+                      class="dropdown-item"
+                      type="button"
+                      (click)="reportDead()"
+                    >
+                      Casos y muertes
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <button type="submit" class="btn btn-info" (click)="print()">
+                Imprimir
+              </button>
+            </div>
+          </nav>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+      <!-- Tabla de emplados de la sucursal, aún por finalizar -->
+      <div class="container" style="background-color: white;">
+      <table
+        class="table table-borderless text-center"
+        data-sort-order="desc"
+        *ngIf="show"
+      >
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Contagiados</th>
+            <th scope="col">Recuperados</th>
+            <th scope="col">Muertos</th>
+            <th scope="col">Activos</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let country of countryData">
+          <tr>
+            <td class="align-middle">{{ country.coutry }}</td>
+            <td class="align-middle">{{ country.infections }}</td>
+            <td class="align-middle">{{ country.recovered }}</td>
+            <td class="align-middle">{{ country.dead }}</td>
+            <td class="align-middle">{{ country.actives }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Tabla de emplados de la sucursal, aún por finalizar -->
+      <table class="table text-center" data-sort-order="desc" *ngIf="show">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Contagiados</th>
+            <th scope="col">Recuperados</th>
+            <th scope="col">Muertos</th>
+            <th scope="col">Activos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="col">Totales</th>
+            <th scope="col">{{ countrystatistics.infections }}</th>
+            <th scope="col">{{ countrystatistics.recovered }}</th>
+            <th scope="col">{{ countrystatistics.dead }}</th>
+            <th scope="col">{{ countrystatistics.actives }}</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+  </body>
+</html>
