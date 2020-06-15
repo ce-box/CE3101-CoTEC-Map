@@ -8,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class ReportsComponent implements OnInit {
 
   pageName = 'Reporte';
-  show = false;
+  showPatientStatistics = false;
+  showDeadStatistics = false;
   countryData: any;
   countrystatistics: any;
 
@@ -34,12 +35,14 @@ export class ReportsComponent implements OnInit {
   // Active a state patients report
   reportState() {
     this.pageName = 'Reporte de pacientes por estado';
-    this.show = true;
+    this.showPatientStatistics = true;
+    this.showDeadStatistics = false;
   }
 
   // Active a state dead report
   reportDead() {
     this.pageName = 'Reporte de muertes y nuevos casos';
-    this.show = true;
+    this.showDeadStatistics = true;
+    this.showPatientStatistics = false;
   }
 }

@@ -22,7 +22,6 @@
       </div>
     </div>
 
-    <!-- Lista de los empleados en la sucursal -->
     <div class="container">
       <!-- Encabezado de la tabla -->
       <div class="row">
@@ -41,6 +40,7 @@
                 />
               </button>
             </div>
+            <ul class="navbar-nav mr-auto"></ul>
             <div class="clearfix float-right"></div>
             <div class="clearfix float-right">
               <div class="dropdown">
@@ -83,12 +83,13 @@
         </div>
         <div class="col-md-4"></div>
       </div>
-      <!-- Tabla de emplados de la sucursal, aún por finalizar -->
+      <!-- Tables for the reports -->
       <div class="container" style="background-color: white;">
+      <!-- Tables for the patients -->
       <table
         class="table table-borderless text-center"
         data-sort-order="desc"
-        *ngIf="show"
+        *ngIf="showPatientStatistics"
       >
         <thead>
           <tr>
@@ -108,19 +109,7 @@
             <td class="align-middle">{{ country.actives }}</td>
           </tr>
         </tbody>
-      </table>
-      <!-- Tabla de emplados de la sucursal, aún por finalizar -->
-      <table class="table text-center" data-sort-order="desc" *ngIf="show">
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col">Contagiados</th>
-            <th scope="col">Recuperados</th>
-            <th scope="col">Muertos</th>
-            <th scope="col">Activos</th>
-          </tr>
-        </thead>
-        <tbody>
+        <thead style="border-top: 3px solid #000000 ;">
           <tr>
             <th scope="col">Totales</th>
             <th scope="col">{{ countrystatistics.infections }}</th>
@@ -128,8 +117,44 @@
             <th scope="col">{{ countrystatistics.dead }}</th>
             <th scope="col">{{ countrystatistics.actives }}</th>
           </tr>
+        </thead>
+      </table>
+      <!-- /Tables for the patients -->
+
+      <!-- Tables for the dead -->
+      <table
+        class="table table-borderless text-center"
+        data-sort-order="desc"
+        *ngIf="showDeadStatistics"
+      >
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col">Recuperados</th>
+            <th scope="col">Muertos</th>
+            <th scope="col">Activos</th>
+            <th scope="col">Recuperados</th>
+            <th scope="col">Muertos</th>
+            <th scope="col">Activos</th>
+            <th scope="col">Activos</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let country of countryData">
+          <tr>
+            <td class="align-middle">{{ country.coutry }}</td>
+            <td class="align-middle"><h4>Muertes</h4><h4>Casos Nuevos</h4></td>
+            <td class="align-middle" style="border-top: 3px solid #000000 ;"><h4>{{ country.recovered }}</h4><h4>{{ country.recovered }}</h4></td>
+            <td class="align-middle" style="border-top: 3px solid #000000 ;"><h4>{{ country.dead }}</h4><h4>{{ country.dead }}</h4></td>
+            <td class="align-middle" style="border-top: 3px solid #000000 ;"><h4>{{ country.dead }}</h4><h4>{{ country.dead }}</h4></td>
+            <td class="align-middle" style="border-top: 3px solid #000000 ;"><h4>{{ country.dead }}</h4><h4>{{ country.dead }}</h4></td>
+            <td class="align-middle" style="border-top: 3px solid #000000 ;"><h4>{{ country.dead }}</h4><h4>{{ country.dead }}</h4></td>
+            <td class="align-middle" style="border-top: 3px solid #000000 ;"><h4>{{ country.dead }}</h4><h4>{{ country.dead }}</h4></td>
+            <td class="align-middle" style="border-top: 3px solid #000000 ;"><h4>{{ country.dead }}</h4><h4>{{ country.dead }}</h4></td>
+          </tr>
         </tbody>
       </table>
+      <!-- /Tables for the dead -->
     </div>
     </div>
   </body>
