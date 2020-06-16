@@ -24,7 +24,7 @@
       </div>
       <!-- /Header para cualquiera de las vistas -->
 
-      <!-- Lista de los empleados en la sucursal -->
+      <!-- List of Patients-->
       <div class="container">
         <!-- Encabezado de la tabla -->
         <div class="row">
@@ -64,6 +64,7 @@
           </div>
         </div>
         <!-- /Encabezado de la tabla -->
+
         <!-- Tabla de pacientes -->
         <div class="row">
           <div class="col-md-12">
@@ -93,8 +94,16 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-12 text-center" style="padding-bottom: 50px; padding-top: 10px;">
+            <button type="button" class="btn btn-light" id="button1" onclick="location.href='hospitalCenter/patient'">
+              <img src="https://cdn0.iconfinder.com/data/icons/glyphpack/72/user-add-512.png" alt="button1" id="image1" />
+              <div class="card-inner"></div>
+            </button>
+          </div>
+        </div>
       </div>
-      <!-- /Lista de los empleados en la sucursal -->
+      <!-- /List od Patients -->
     </div>
     <div *ngIf="changePatientPage">
       <app-patient-management
