@@ -1,0 +1,58 @@
+body,
+html {
+  font-family: Roboto;
+  height: 120%;
+  background-repeat: no-repeat;
+  background: url(https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1035&q=80)
+    no-repeat center center fixed;
+  background-size: 100% 100%;
+  padding-top: 1px;
+}
+
+#image1 {
+  padding-top: 60px;
+  height: 38%;
+}
+
+#container {
+  background-color: white;
+  border-radius: 20px;
+  height: 670px;
+}
+
+#dataContainer {
+  border: 1px solid #c5cbcd;
+  border-radius: 20px;
+}
+
+//Scroll
+
+.scrollbar {
+  overflow-y: scroll;
+  overflow-x: scroll;
+  box-sizing: content-box;
+}
+
+//Style of first scroll
+#style-1 {
+  height: 200px;
+}
+
+#style-1::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+#style-1::-webkit-scrollbar-thumb {
+  background-color: #9b9ba1;
+  border-radius: 30px;
+}
+
+#button3 {
+  padding-top: 235px;
+}
+
+#SecondContainer {
+ background-color: white;;
+ border-radius: 20px;
+}

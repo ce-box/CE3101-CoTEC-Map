@@ -1,1 +1,319 @@
-<p>contacts works!</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Administración</title>
+  </head>
+  <body>
+    <!-- Header para cualquiera de las vistas -->
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="text-center" style="font-size: 28px;" id="pageName">
+            {{ pageName }}
+          </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <hr />
+        </div>
+      </div>
+    </div>
+    <!-- /Header para cualquiera de las vistas -->
+
+    <div class="container register" id="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col-md-12">
+              <img
+                src="https://cdn2.iconfinder.com/data/icons/corona-virus-covid-19-15/512/10_health_chart_patient_chart_report-512.png"
+                alt=""
+                id="image1"
+              />
+              <div id="button3">
+                <button
+                  type="button"
+                  class="btn btn-success col-md-12"
+                  [disabled]="
+                    !(
+                      name.valid &&
+                      LastName.valid &&
+                      dni.valid &&
+                      startDate.control.valid &&
+                      email.valid &&
+                      direction.valid
+                    )
+                  "
+                  (click)="getContactValue(name.value, LastName.value, startDate.value, email.value, direction.value, 
+                  dni.value, inputContry.value)"
+                >
+                  Incluir
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9 register-right">
+          <div class="tab-content" id="myTabContent">
+            <div
+              class="tab-pane fade show active"
+              id="home"
+              role="tabpanel"
+              aria-labelledby="home-tab"
+            >
+              <br />
+              <div class="row register-form">
+                <div class="col-md-5" id="dataContainer">
+                  <div class="form-group">
+                    <h2>Nombre</h2>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Nombre *"
+                      required
+                      name="name"
+                      ngModel
+                      #name="ngModel"
+                      id="startDate"
+                    />
+                    <div
+                      class="alert alert-danger"
+                      *ngIf="name.touched && !name.valid"
+                    >
+                      Debe ingresar una fecha válida.
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <h2>Apellidos</h2>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Apellidos *"
+                      required
+                      LastName="LastName"
+                      ngModel
+                      #LastName="ngModel"
+                      id="LastName"
+                    />
+                    <div
+                      class="alert alert-danger"
+                      *ngIf="LastName.touched && !LastName.valid"
+                    >
+                      Debe ingresar una fecha válida.
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <h2>Número de identificación</h2>
+                    <input
+                      required
+                      pattern="[0-9]{9}"
+                      ngModel
+                      name="dni"
+                      placeholder="Identificación *"
+                      #dni="ngModel"
+                      type="number"
+                      class="form-control"
+                      id="dni"
+                    />
+                    <div
+                      class="alert alert-danger"
+                      *ngIf="dni.touched && !dni.valid"
+                    >
+                      <div *ngIf="dni.errors?.required">
+                        Debe ingresar un código.
+                      </div>
+                      <div *ngIf="dni.errors?.pattern">
+                        El código debe ser de 9 dígitos.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <h2>Edad</h2>
+                    <div class="form-group">
+                      <input
+                        required
+                        type="date"
+                        name="startDate"
+                        ngModel
+                        #startDate="ngModel"
+                        max="3000-12-31"
+                        min="1000-01-01"
+                        class="form-control"
+                        id="startDate"
+                      />
+                      <div
+                        class="alert alert-danger"
+                        *ngIf="startDate.touched && !startDate.valid"
+                      >
+                        Debe ingresar una fecha válida.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <h2>Correo electrónico</h2>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Correo electrónico *"
+                      required
+                      email="email"
+                      ngModel
+                      #email="ngModel"
+                      id="email"
+                    />
+                    <div
+                      class="alert alert-danger"
+                      *ngIf="email.touched && !email.valid"
+                    >
+                      Debe ingresar una fecha válida.
+                    </div>
+                  </div>
+                  <div class="form-group"></div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-5" id="dataContainer">
+                  <div class="form-group">
+                    <h2>País de origen</h2>
+                    <select 
+                    id="inputContry" 
+                    class="form-control"
+                    inputContry="inputContry"
+                    ngModel
+                    #inputContry="ngModel">
+                      <option *ngFor="let country of countrys" selected>{{
+                        country
+                      }}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <h2>Dirección</h2>
+                    <textarea
+                      type="textarea"
+                      class="form-control"
+                      placeholder="Dirección *"
+                      required
+                      direction="direction"
+                      ngModel
+                      #direction="ngModel"
+                      id="direction"
+                    ></textarea>
+                    <div
+                      class="alert alert-danger"
+                      *ngIf="direction.touched && !direction.valid"
+                    >
+                      Debe ingresar una dirección válida.
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <h2>Patologías</h2>
+                    <select
+                      id="inputState"
+                      class="form-control"
+                      multiple="true"
+                    >
+                      <option
+                        *ngFor="let pathology of pathologys"
+                        (click)="getPathologyValue(pathology)"
+                      >
+                        {{ pathology.name }}
+                      </option>
+                    </select>
+                    <div class="scrollbar" id="style-1">
+                      <table
+                        class="table table-hover text-center"
+                        data-sort-order="desc"
+                      >
+                        <thead>
+                          <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripción</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            class="align-middle"
+                            *ngFor="let pathology of pathologysList"
+                          >
+                            <td
+                              class="align-middle"
+                              (click)="deletePathology(pathology)"
+                            >
+                              {{ pathology.name }}
+                            </td>
+                            <td class="align-middle"
+                                (click)="deletePathology(pathology)">
+                              {{ pathology.description }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br><br>
+    <!-- Tabla de contactos -->
+    <div class="container register" id="SecondContainer">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="scrollbar" id="style-2">
+              <table class="table table-hover text-center" data-sort-order="desc">
+                <thead>
+                  <tr>
+                    <th scope="col">Identificación</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">Edad</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let contact of contactList">
+                    <td class="align-middle" 
+                    (click)="deleteContact(contact)">
+                        {{ contact.dni }}
+                    </td>
+                    <td class="align-middle" 
+                    (click)="deleteContact(contact)">
+                        {{ contact.name }}
+                    </td>
+                    <td class="align-middle" 
+                    (click)="deleteContact(contact)">
+                        {{ contact.lastName }}
+                    </td>
+                    <td class="align-middle" 
+                    (click)="deleteContact(contact)">
+                        {{ contact.age }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class = "col-md-12 text-center">
+            <br>
+            <br>
+            <button 
+              type="button"
+              class="btn btn-success col-md-2"
+              (click)="sendContact()"
+            >
+              Agregar
+            </button>
+            <br>
+          <br>
+          </div>
+        </div>
+      </div>
+      <br><br><br>
+      <!-- /Tabla de contactos -->
+  </body>
+</html>

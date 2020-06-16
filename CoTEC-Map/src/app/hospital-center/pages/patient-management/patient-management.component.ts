@@ -8,6 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class PatientManagementComponent implements OnInit {
   @Input() dniPatient: number;
   pageName = 'Paciente';
+  changeContactPage = false;
+  dniContact: number;
   patient: any;
   contacts: any;
 
@@ -75,4 +77,10 @@ export class PatientManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  // Change the page to create contacts
+  changePage(dniContact: number){
+    this.changeContactPage = true;
+    this.dniContact = dniContact;
+  }
 }
