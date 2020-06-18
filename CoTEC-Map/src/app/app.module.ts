@@ -6,7 +6,10 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ClientViewComponent } from './Component/client-view/client-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyMaterialModule } from '@ngx-formly/material';
+import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,7 +19,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormlyModule.forRoot(),
+    FormlyBootstrapModule,
+    FormlyMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

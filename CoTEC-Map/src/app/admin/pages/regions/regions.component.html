@@ -1,1 +1,14 @@
-<p>regions works!</p>
+<div class="PrincipalContainer">
+    <div class="imageDiv">
+        <img src="assets/imgs/imagComplet.jpeg" alt="">
+        <div class="container">
+            <h4>Regions Management</h4>
+            <form [formGroup]="form" (ngSubmit)="submit()">
+                <formly-form [model]="model" [fields]="recruitmentFields" [options]="options" [form]="form"></formly-form>
+                <button type="submit" class="btn btn-primary submit-button" [disabled]="!form.valid">Submit</button>
+    
+            </form>
+        </div>
+    </div>
+    
+</div>
