@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { statusEnum } from '../modules/status.enum';
+import { ModalController } from '@ionic/angular';
+import { EditComponent } from '../components/edit/edit.component';
 
 @Component({
   selector: 'app-patients',
@@ -17,14 +19,14 @@ export class PatientsPage implements OnInit {
       Region: 'Cartago',
       Pathology: ['asthmatic', 'hypertensive'],
       Status: statusEnum.ACTIVE,
-      Medication: ['Ibuprofen'],
+      Medication: 'Ibuprofen',
       Hospitalize: true,
       UCI: true
     },
     {
-      Name: 'Bertha',
+      Name: 'Alberto',
       LastName: 'Brenes Brenes',
-      Id: '304980542',
+      Id: '304980541',
       Age: '23',
       Nationality: 'costarricense',
       Region: 'Cartago',
@@ -35,9 +37,9 @@ export class PatientsPage implements OnInit {
       UCI: true
     },
     {
-      Name: 'Bertha',
+      Name: 'Esmaik',
       LastName: 'Brenes Brenes',
-      Id: '304980542',
+      Id: '304780542',
       Age: '23',
       Nationality: 'costarricense',
       Region: 'Cartago',
@@ -48,9 +50,34 @@ export class PatientsPage implements OnInit {
       UCI: true
     }
   ];
-  constructor() { }
+  keyPatients = [
+    'Name',
+    'LastName',
+    'Id',
+    'Age',
+    'Nationality',
+    'Region',
+    'Pathology',
+    'Status',
+    'Medication',
+    'Hospitalize',
+    'UCI'
+  ];
+  constructor( public modalController: ModalController) { }
 
   ngOnInit() {
+  }
+  async presentModal(idM: string) {
+    const modal = await this.modalController.create({
+      component: EditComponent,
+      cssClass: 'EditComponent',
+      componentProps: {
+        id: idM,
+        data: this.listPatients1,
+        keysParent: this.keyPatients
+      }
+    });
+    return await modal.present();
   }
 
 }

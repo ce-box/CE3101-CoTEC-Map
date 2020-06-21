@@ -1,0 +1,18 @@
+ion-toolbar{
+    --background: #7EA470 ;
+        ion-button{
+            align-self: flex-start;
+            --background: transparent;
+            ion-icon{
+                color: white;
+            }
+        }
+}
+ion-content{
+    ion-button{
+        margin: 10px;
+        --background: #3AC0BB;
+        --color: #343F4B;;
+    }
+    
+}
