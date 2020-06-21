@@ -1,0 +1,109 @@
+<ion-content>
+  <div>
+    <ion-button routerLink="/home">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-button>
+    <h3>Management of Patients</h3>
+    <div class="buttons">
+      <ion-button>Agregar</ion-button>
+      <ion-button>Eliminar</ion-button>
+      <ion-button>Editar</ion-button>
+    </div>
+    <div class="table">
+      <ion-grid>
+        <ion-row class="titles">
+          <ion-col size="4">
+            <ion-text>Name</ion-text>
+          </ion-col>
+          <ion-col size="4">
+            <ion-text>LastName</ion-text>
+          </ion-col>
+          <ion-col size="4">
+            <ion-text>Id</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let item of listPatients1">
+          <ion-col size="4">
+            <ion-text>{{item.Name}}</ion-text>
+          </ion-col>
+          <ion-col size="4">
+            <ion-text>{{item.LastName}}</ion-text>
+          </ion-col>
+          <ion-col size="4">
+            <ion-text>{{item.Id}}</ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid>
+        <ion-row class="titles">
+          <ion-col size="4">
+            <ion-text>Region</ion-text>
+          </ion-col>
+          <ion-col size="4">
+            <ion-text>Age</ion-text>
+          </ion-col>
+          <ion-col size="4">
+            <ion-text>Status</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let item of listPatients1">
+          <ion-col size="4">
+            <ion-text>{{item.Region}}</ion-text>
+          </ion-col>
+          <ion-col size="4">
+            <ion-text>{{item.Age}}</ion-text>
+          </ion-col>
+          <ion-col size="4">
+            <ion-text>{{item.Status}}</ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid>
+        <ion-row class="titles">
+          <ion-col size="4">
+            <ion-text>Hospitalize</ion-text>
+          </ion-col>
+          <ion-col size="4">
+            <ion-text>UCI</ion-text>
+          </ion-col>
+          <ion-col size="4">
+            <ion-text>Nationality</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let item of listPatients1">
+          <ion-col size="4">
+            <ion-text>{{item.Hospitalize}}</ion-text>
+          </ion-col>
+          <ion-col size="4">
+            <ion-text>{{item.UCI}}</ion-text>
+          </ion-col>
+          <ion-col size="4">
+            <ion-text>{{item.Nationality}}</ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid>
+        <ion-row class="titles">
+          <ion-col size="6">
+            <ion-text>Pathology</ion-text>
+          </ion-col>
+          <ion-col size="6">
+            <ion-text>Medication</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let item of listPatients1">
+          <ion-col size="6">
+            <ul *ngFor="let patology of item.Pathology">
+              <li>{{patology}}</li>
+            </ul>
+          </ion-col>
+          <ion-col size="6">
+            <ul *ngFor="let medication of item.Medication">
+              <li>{{medication}}</li>
+            </ul>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>
