@@ -64,6 +64,7 @@
           columnMode="ColumnMode.force"
           [scrollbarH]="true" 
           [headerHeight]="40"
+          [rowHeight]="30"
           [footerHeight]="40"
           (select)="onSelect($event)">
           <ngx-datatable-column *ngFor="let column of columns" [name]="column.name" [prop]="column.prop">
@@ -110,11 +111,15 @@
               </mat-form-field>
             </form>
           </div>
+          <h3>Upload the file</h3> 
           <div class="DownloadCard" >
-            <img src="assets/imgs/excel_icon.png" alt="">            
-            <span>Upload File</span>
-            <mat-icon aria-hidden="false" aria-label="Example home icon">publish</mat-icon>
+            <img src="assets/imgs/excel_icon.png" alt="">
+            <input  (change)="fileChange($event)"  type="file"  class="custom-file-input"  id="inputGroupFile01"  aria-describedby="inputGroupFileAddon01"  placeholder="Upload a file">            
+            <button mat-icon-button aria-label="Example icon button with a vertical three dot icon" [disabled]="disableMoreFile" (click)="upload()">
+              <mat-icon>publish</mat-icon>
+            </button>
           </div>
+          
         </div>
       </mat-grid-tile>
     </mat-grid-list>

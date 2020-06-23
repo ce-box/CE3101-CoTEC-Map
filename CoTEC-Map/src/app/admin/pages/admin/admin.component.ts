@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AdminServiceService } from '../../services/admin-service.service';
-import {DomSanitizer} from '@angular/platform-browser';
-import {MatIconRegistry} from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material/icon';
 import { SelectionType } from '@swimlane/ngx-datatable';
 import faker from 'faker';
 import { ubicaciones } from 'src/assets/data/ubication';
@@ -9,6 +9,8 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { NationalityService } from '../../services/nationality/nationality.service';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopoverComponent } from '../../components/popover/popover.component';
 /**
  * Declare fuse variable
  */
@@ -27,9 +29,9 @@ export class AdminComponent implements OnInit {
    * rows of the table
    */
   rows = [
-    { number: 1 , name: 'Austin', gender: 'Male', company: 'Swimlane' },
-    { number: 2 , name: 'Dany', gender: 'Male', company: 'KFC' },
-    { number: 3 , name: 'Molly', gender: 'Female', company: 'Burger King' }
+    { number: 1, name: 'Austin', gender: 'Male', company: 'Swimlane' },
+    { number: 2, name: 'Dany', gender: 'Male', company: 'KFC' },
+    { number: 3, name: 'Molly', gender: 'Female', company: 'Burger King' }
   ];
   /**
    * Columns of the table
@@ -43,8 +45,8 @@ export class AdminComponent implements OnInit {
    * Option Select
    */
   foods = [
-    {value: 'byCountry', viewValue: 'Por Pais'},
-    {value: 'general', viewValue: 'General'}
+    { value: 'byCountry', viewValue: 'Por Pais' },
+    { value: 'general', viewValue: 'General' }
   ];
   /**
    * Type of the selection
@@ -78,16 +80,24 @@ export class AdminComponent implements OnInit {
    * States of the patients
    */
   states = [
-    {id: 'active', displayName: 'Active'},
-    {id: 'infected', displayName: 'Infected'},
-    {id: 'recovered', displayName: 'Recovered'},
-    {id: 'dead', displayName: 'Dead'}
+    { id: 'active', displayName: 'Active' },
+    { id: 'infected', displayName: 'Infected' },
+    { id: 'recovered', displayName: 'Recovered' },
+    { id: 'dead', displayName: 'Dead' }
   ];
   stateForm = new FormControl();
   /**
    * Limit of the table
    */
   tableLimit: number;
+  /**
+   * File selected
+   */
+  FileSelected: File;
+  /**
+   * Boolean for the disable of more files in the app
+   */
+  disableMoreFile: boolean = true;
   /**
    * First method in the page
    * @param adminService Controller for the admin service
@@ -98,10 +108,11 @@ export class AdminComponent implements OnInit {
     public adminService: AdminServiceService,
     public iconRegistry: MatIconRegistry,
     public sanitizer: DomSanitizer,
-    private nationalityService: NationalityService) {
-      iconRegistry.addSvgIcon(
-        'excel_icon',
-        sanitizer.bypassSecurityTrustResourceUrl('../../../../assets/imgs/excel_icon.png'));
+    private nationalityService: NationalityService,
+    private _snackBar: MatSnackBar) {
+    iconRegistry.addSvgIcon(
+      'excel_icon',
+      sanitizer.bypassSecurityTrustResourceUrl('../../../../assets/imgs/excel_icon.png'));
   }
 
   ngOnInit(): void {
@@ -109,11 +120,9 @@ export class AdminComponent implements OnInit {
     this.rows = this.getFakeRows(6);
     this.fuseResults = this.rows;
     this.columns = [
-      { name: 'Name', prop: 'personal.name'},
-      { name: 'Last Name', prop: 'personal.lastName'},
-      { name: 'Id', prop: 'id'},
-      { name: 'Region', prop: 'address.region.displayName'},
-      { name: 'Birth Date', prop: 'personal.birthdate'}
+      { name: 'Name', prop: 'personal.name' },
+      { name: 'Last Name', prop: 'personal.lastName' },
+      { name: 'Id', prop: 'id' }
     ];
     this.fuseOptions = {
       isCaseSensitive: false,
@@ -152,7 +161,7 @@ export class AdminComponent implements OnInit {
   /**
    * Get nationalities
    */
-  async getNationalities(){
+  async getNationalities() {
     let dataN;
     await this.nationalityService.getCountries();
     console.log('outside', dataN);
@@ -160,7 +169,7 @@ export class AdminComponent implements OnInit {
   /**
    * Test services get data
    */
-  getServiceData(){
+  getServiceData() {
     this.adminService.getServiceData().subscribe(data => {
       console.log(data);
     });
@@ -176,7 +185,7 @@ export class AdminComponent implements OnInit {
   /**
    * selection event
    */
-  onSelect({selected}) {
+  onSelect({ selected }) {
     console.log('holi on select', selected);
   }
   /**
@@ -244,5 +253,35 @@ export class AdminComponent implements OnInit {
     console.log('update', event);
     console.log('selected', this.stateForm.value);
   }
-
+  /**
+   * Upload the files
+   * @param element the element uploaded
+   */
+  fileChange(element) {
+    console.log(element.target.files[0]);
+    if (element.target.files[0].type === "application/vnd.ms-excel"){
+      console.log('es un excel');
+      this.openSnackBar('Send the file');
+      this.FileSelected = element.target.files[0];
+      this.disableMoreFile = false;
+    }else{
+      this.openSnackBar('Please upload an excel File');
+    }
+  }
+  /**
+   * Send the file to the service
+   */
+  upload() {
+    console.log('will be sent', this.selectedValue);
+    //this.adminService.uploadData(this.FileSelected);
+  }
+  /**
+   * Toast messages controller
+   * @param message message for the toast
+   */
+  openSnackBar(message: string) {
+    this._snackBar.open(message, '', {
+      duration: 2000,
+    });
+  }
 }

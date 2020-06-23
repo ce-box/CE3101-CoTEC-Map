@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { FormGroup } from '@angular/forms';
+import { SelectionType } from '@swimlane/ngx-datatable';
+import { MatDialog } from '@angular/material/dialog';
+import { ModifyDataComponent } from '../../components/modify-data/modify-data.component';
 
 @Component({
   selector: 'app-regions',
@@ -8,83 +11,61 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./regions.component.scss']
 })
 export class RegionsComponent implements OnInit {
-  form = new FormGroup({});
-  /**
-   * modal object
-   */
-  model: any = {};
-  /**
-   * option for the form
-   */
-  options: FormlyFormOptions = {};
-
-
-  /**
-   * Temporal data for recruitment
-   */
-  recruitmentFields: FormlyFieldConfig[] = [
-    {
-      fieldGroupClassName: 'row',
-      fieldGroup: [
-        {
-          className: 'col-6',
-          type: 'input',
-          key: 'name',
-          templateOptions: {
-            label: 'Name',
-            required: true
-          },
-        },
-        {
-          className: 'col-6',
-          type: 'input',
-          key: 'bedCapacity',
-          templateOptions: {
-            label: 'Bed Capacity',
-            required: true
-          },
-          expressionProperties: {
-          },
-        },
-      ],
-    },
-    {
-      fieldGroupClassName: 'row',
-      fieldGroup: [
-        {
-          className: 'col-6',
-          type: 'input',
-          key: 'bedQuantity',
-          templateOptions: {
-            label: 'Beds Quantity UCI',
-            required: true
-          },
-        },
-        {
-          className: 'col-6',
-          type: 'input',
-          key: 'director',
-          templateOptions: {
-            label: "Hospital Center's director",
-            required: true
-          },
-        },
-      ],
-    },
-    {
-      type: 'textarea',
-      key: 'contact',
-      templateOptions: {
-        label: 'Contact',
-        required: true,
-      },
-    }
+  columnsS = [ { prop: 'state' , name: 'State' }];
+  rowsS = [
+    {state: 'oriental'},
+    {state: 'occidental'},
+    {state: 'oriental'}
   ];
-  constructor() { }
+  columnsR = [ { prop: 'region' , name: 'Region' }];
+  rowsR = [
+    { region: 'central'},
+    {region: 'central'},
+    {region: 'central'}
+  ];
+  columnsP = [ { prop: 'providence' , name: 'Providence' }];
+  rowsP = [
+    { providence: 'Cartago'},
+    {providence: 'San Jose'},
+    {providence: 'Cartago'}
+  ];
+  /**
+   * Type of the selection
+   */
+  SelectionType = SelectionType;
+  /**
+   * Table row selected
+   */
+  selected = [];
+  /**
+   * Filter for the search bar
+   */
+  searchTextFilter: string;
+  
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
-  submit(){
-    console.log(this.model);
+  /**
+   * selection event
+   */
+  onSelect({ selected }) {
+    console.log('holi on select', selected);
+  }
+  /**
+   * Open a Modify/Add Component
+   */
+  openDialog(actionT: string) {
+    const dialogRef = this.dialog.open(ModifyDataComponent, {
+      data: {
+        Action: actionT,
+        Parent: 'Region',
+        Keys: ['Region', 'Providence', 'State'],
+        values: []
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }

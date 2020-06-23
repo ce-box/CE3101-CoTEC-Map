@@ -9,7 +9,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule} from '@angular/material/icon';
 import { MatSelectModule} from '@angular/material/select';
-import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RegionsComponent } from './pages/regions/regions.component';
 import { HospitalsComponent } from './pages/hospitals/hospitals.component';
 import { MedicationsComponent } from './pages/medications/medications.component';
@@ -18,7 +18,9 @@ import { MatInputModule } from '@angular/material/input';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
-
+import {MatButtonModule} from '@angular/material/button';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { ComponentsModule } from './components/components.module';
 
 @NgModule({
   declarations: [AdminComponent, RegionsComponent, HospitalsComponent, MedicationsComponent, PatologiesComponent],
@@ -37,6 +39,9 @@ import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
     MatInputModule,
     FormlyModule,
     FormlyBootstrapModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    ComponentsModule
   ]
 })
 export class AdminModule { }
