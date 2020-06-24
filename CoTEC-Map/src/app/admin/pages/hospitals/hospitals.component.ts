@@ -1,90 +1,103 @@
 import { Component, OnInit } from '@angular/core';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { FormGroup } from '@angular/forms';
+import { SelectionType } from '@swimlane/ngx-datatable';
+import { MatDialog } from '@angular/material/dialog';
+import { ModifyDataComponent } from '../../components/modify-data/modify-data.component';
+import { EditDataComponent } from '../../components/edit-data/edit-data.component';
 @Component({
   selector: 'app-hospitals',
   templateUrl: './hospitals.component.html',
   styleUrls: ['./hospitals.component.scss']
 })
 export class HospitalsComponent implements OnInit {
-  form = new FormGroup({});
   /**
-   * modal object
+   * Type of the selection
    */
-  model: any = {};
+  SelectionType = SelectionType;
   /**
-   * option for the form
+   * Table row selected
    */
-  options: FormlyFormOptions = {};
-
-
+  selected = [];
   /**
-   * Temporal data for recruitment
+   * Item selected to change/delete
    */
-  recruitmentFields: FormlyFieldConfig[] = [
+  selectToOption: object;
+  /**
+   * Columns hospital center
+   */
+  columnsS = [{ prop: 'location', name: 'Location' },
+  { prop: 'uciCapacity', name: 'UCI Capacity'},
+  {name: 'Name'},
+  {name: 'Capacity'},
+  {name: 'Director'},
+  {name: 'Contact'}];
+  /**
+   * Rows Hospital center
+   */
+  rowsS = [
     {
-      fieldGroupClassName: 'row',
-      fieldGroup: [
-        {
-          className: 'col-6',
-          type: 'input',
-          key: 'name',
-          templateOptions: {
-            label: 'Name',
-            required: true
-          },
-        },
-        {
-          className: 'col-6',
-          type: 'input',
-          key: 'bedCapacity',
-          templateOptions: {
-            label: 'Bed Capacity',
-            required: true
-          },
-          expressionProperties: {
-          },
-        },
-      ],
+      location: 'oriental',
+      name: 'San Juan de Dios',
+      capacity: 64,
+      uciCapacity: 12,
+      director: 'Roman Macaya',
+      contact: 'macaya@msalud.com'
     },
-    {
-      fieldGroupClassName: 'row',
-      fieldGroup: [
-        {
-          className: 'col-6',
-          type: 'input',
-          key: 'bedQuantity',
-          templateOptions: {
-            label: 'Beds Quantity UCI',
-            required: true
-          },
-        },
-        {
-          className: 'col-6',
-          type: 'input',
-          key: 'director',
-          templateOptions: {
-            label: "Hospital Center's director",
-            required: true
-          },
-        },
-      ],
-    },
-    {
-      type: 'textarea',
-      key: 'contact',
-      templateOptions: {
-        label: 'Contact',
-        required: true,
-      },
-    }
   ];
-  constructor() { }
+  /**
+   * Boolean variable for enable a change in the option
+   */
+  enableChange: boolean = false;
+
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
-  submit(){
-    console.log(this.model);
+  /**
+   * selection event
+   */
+  onSelect({ selected }, Parent: string) {
+    console.log('holi on select', selected, 'parent', Parent);
+    this.selectToOption = {
+      parent: Parent,
+      value: selected[0]
+    };
+    this.enableChange = true;
   }
-
+  /**
+   * Delete the option selected
+   */
+  deleteSelected(){
+    console.log(this.selectToOption);
+  }
+  /**
+   * Open a Modify/Add Component
+   */
+  openDialog(actionT: string) {
+    const dialogRef = this.dialog.open(ModifyDataComponent, {
+      data: {
+        Action: actionT,
+        Parent: 'Hospital',
+        Keys: ['Region', 'Providence', 'State']
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  /**
+   * Open a Modify/Add Component
+   */
+  openDialogToEdit() {
+    const dialogRef = this.dialog.open(EditDataComponent, {
+      data: {
+        Selection: this.selectToOption,
+        Keys: Object.keys(this.selectToOption['value'])
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 }
