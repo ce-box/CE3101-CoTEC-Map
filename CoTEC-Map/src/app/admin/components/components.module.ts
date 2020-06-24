@@ -10,9 +10,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
+import { EditDataComponent } from './edit-data/edit-data.component';
 
 @NgModule({
-  declarations: [ModifyDataComponent, PopoverComponent],
+  declarations: [ModifyDataComponent, PopoverComponent, EditDataComponent],
   imports: [
     CommonModule,
     MatInputModule,

@@ -34,6 +34,13 @@ div.PrincipalContainer{
                 border-radius: 4px;
                 padding: 25px;
                 width: 600px;
+                &.selectionValue{
+                    padding: 0px 25px 5px 25px;
+                    h4{
+                        font-size: 16px;
+                    }
+                }
+                
                
             }
         }

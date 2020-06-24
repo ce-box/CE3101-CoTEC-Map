@@ -2,22 +2,22 @@
     <div class="imageDiv">
         <h4>Regions Management</h4>
         <div class="buttons">
-            <button mat-raised-button (click)="openDialog('add')">Agregar</button>
-            <button mat-raised-button>Eliminar</button>
-            <button mat-raised-button (click)="openDialog('edit')">Modificar</button>
+            <button mat-raised-button (click)="openDialog('add')">Add</button>
+            <button mat-raised-button [disabled]="!enableChange" (click)="deleteSelected()">Eliminar</button>
+            <button mat-raised-button [disabled]="!enableChange" (click)="openDialogToEdit()">Edit</button>
         </div>
         <div class="container">
                 <ngx-datatable class="material" #mydatatable [rows]="rowsS" [columns]="columnsS"
                     [selectionType]="SelectionType.single" [selected]="selected" columnMode="ColumnMode.force"
-                    [headerHeight]="40" [rowHeight]="30" [footerHeight]="40" (select)="onSelect($event)">
+                    [headerHeight]="40" [rowHeight]="30" [footerHeight]="40" (select)="onSelect($event,'State')">
                 </ngx-datatable>
                 <ngx-datatable class="material" #mydatatable [rows]="rowsR" [columns]="columnsR"
                     [selectionType]="SelectionType.single" [selected]="selected" columnMode="ColumnMode.force"
-                    [headerHeight]="40" [rowHeight]="30" [footerHeight]="40" (select)="onSelect($event)">
+                    [headerHeight]="40" [rowHeight]="30" [footerHeight]="40" (select)="onSelect($event,'Region')">
                 </ngx-datatable>
                 <ngx-datatable class="material" #mydatatable [rows]="rowsP" [columns]="columnsP"
                     [selectionType]="SelectionType.single" [selected]="selected" columnMode="ColumnMode.force"
-                    [headerHeight]="40" [rowHeight]="30" [footerHeight]="40" (select)="onSelect($event)">
+                    [headerHeight]="40" [rowHeight]="30" [footerHeight]="40" (select)="onSelect($event,'Province')">
                 </ngx-datatable>
         </div>
     </div>
