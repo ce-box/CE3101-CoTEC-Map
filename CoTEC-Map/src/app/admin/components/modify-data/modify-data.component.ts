@@ -21,7 +21,7 @@ export class ModifyDataComponent implements OnInit {
    */
   keyOptions: any[] = [
     'steak-0-1', 'Pizza', 'tacos-2', 'Tacos'
-];
+  ];
   /**
    * Form for the forms
    */
@@ -120,6 +120,34 @@ export class ModifyDataComponent implements OnInit {
           key: 'option2',
           templateOptions: {
             label: 'House Pharmacy',
+            required: true
+          }
+        }
+      ],
+    }
+  ];
+  /**
+   * Temporal data for region form
+   */
+  GeneralFields: FormlyFieldConfig[] = [
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'name',
+          templateOptions: {
+            label: 'Name',
+            required: true
+          }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'description',
+          templateOptions: {
+            label: 'Description',
             required: true
           }
         }
@@ -251,23 +279,80 @@ export class ModifyDataComponent implements OnInit {
       ],
     }
   ];
+  /**
+   * Temporal data for hospital form
+   */
+  ByCountryFields: FormlyFieldConfig[] = [
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'name',
+          templateOptions: {
+            label: 'Name',
+            required: true
+          }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'country',
+          templateOptions: {
+            label: 'Country',
+            required: true
+          }
+        }
+      ],
+    },
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'startDate',
+          templateOptions: {
+            label: 'Start Date',
+            required: true
+          }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'endDate',
+          templateOptions: {
+            label: 'End Date',
+            required: true
+          }
+        }
+      ],
+    }
+  ];
   constructor(public dialogRef: MatDialogRef<any>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     console.log('data pased', this.data);
     this.keyOptions = this.data.Keys;
-    if (this.data.Parent === 'Region'){
+    if (this.data.Parent === 'Region') {
       this.presentOptions = true;
-    }else{
+    } else {
       this.presentOptions = false;
-      if (this.data.Parent === 'Hospital'){
+      if (this.data.Parent === 'Hospital') {
         this.recruitmentFields = this.HospitalFields;
       }
-      if (this.data.Parent === 'Medication'){
+      if (this.data.Parent === 'Medication') {
         this.recruitmentFields = this.MedicationFields;
       }
-      if (this.data.Parent === 'Pathology'){
+      if (this.data.Parent === 'Pathology') {
         this.recruitmentFields = this.PathologyFields;
+      }
+      if (this.data.Parent === 'byCountry'){
+        this.recruitmentFields = this.ByCountryFields;
+      }
+      if (this.data.Parent === 'general'){
+        this.recruitmentFields = this.GeneralFields;
       }
     }
   }
@@ -277,19 +362,19 @@ export class ModifyDataComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  selectOptionF(event){
+  selectOptionF(event) {
     console.log('eve', event);
     console.log('selected value', this.selectedValue);
-    if (this.selectedValue){
-      if (this.selectedValue === 'Region'){
+    if (this.selectedValue) {
+      if (this.selectedValue === 'Region') {
         console.log('valuyes Region');
         this.recruitmentFields = this.RegionFields
       }
-      if (this.selectedValue === 'Providence'){
+      if (this.selectedValue === 'Providence') {
         console.log('valuyes');
         this.recruitmentFields = this.SPrFields;
       }
-      if (this.selectedValue === 'State'){
+      if (this.selectedValue === 'State') {
         console.log('valuyes');
         this.recruitmentFields = this.SPrFields;
       }

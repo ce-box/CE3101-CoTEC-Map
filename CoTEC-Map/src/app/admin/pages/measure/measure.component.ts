@@ -112,16 +112,29 @@ export class MeasureComponent implements OnInit {
    * Open a Modify/Add Component
    */
   openDialog(actionT: string) {
-    const dialogRef = this.dialog.open(ModifyDataComponent, {
-      data: {
-        Action: actionT,
-        Parent: this.idPage,
-        Keys: Object.keys(this.rowsS[0])
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    if (this.idPage === 'general'){
+      const dialogRef = this.dialog.open(ModifyDataComponent, {
+        data: {
+          Action: actionT,
+          Parent: this.idPage,
+          Keys: Object.keys(this.rowsG)
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    }else{
+      const dialogRef = this.dialog.open(ModifyDataComponent, {
+        data: {
+          Action: actionT,
+          Parent: this.idPage,
+          Keys: Object.keys(this.rowsS)
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    }
   }
   /**
    * Open a Modify/Add Component
@@ -131,7 +144,7 @@ export class MeasureComponent implements OnInit {
       data: {
         Parent: this.idPage,
         Selection: this.selectToOption,
-        Keys: Object.keys(this.rowsS[0])
+        Keys: Object.keys(this.selectToOption['value'])
       }
     });
     dialogRef.afterClosed().subscribe(result => {
