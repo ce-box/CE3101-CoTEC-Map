@@ -11,6 +11,7 @@ import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PopoverComponent } from '../../components/popover/popover.component';
+import { Route, Router } from '@angular/router';
 /**
  * Declare fuse variable
  */
@@ -109,7 +110,8 @@ export class AdminComponent implements OnInit {
     public iconRegistry: MatIconRegistry,
     public sanitizer: DomSanitizer,
     private nationalityService: NationalityService,
-    private _snackBar: MatSnackBar) {
+    private _snackBar: MatSnackBar,
+    private route: Router) {
     iconRegistry.addSvgIcon(
       'excel_icon',
       sanitizer.bypassSecurityTrustResourceUrl('../../../../assets/imgs/excel_icon.png'));
@@ -245,9 +247,14 @@ export class AdminComponent implements OnInit {
   onCheckboxChangeFn(event) {
     console.log('event', event);
   }
+  /**
+   * Select option for the prevent measure
+   */
   updateValueSelectPrevent(event) {
     console.log('update', event);
     console.log('selected', this.selectedValue);
+    const url = `/admin/measure/${this.selectedValue}`;
+    this.route.navigateByUrl(url);
   }
   updateValueSelectStatus(event) {
     console.log('update', event);

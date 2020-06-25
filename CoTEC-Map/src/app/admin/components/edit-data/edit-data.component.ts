@@ -30,6 +30,9 @@ export class EditDataComponent implements OnInit {
    * Temporal data for form
    */
   recruitmentFields: FormlyFieldConfig[] = [];
+  /**
+   * Formly data structure for one value
+   */
   FieldOne: FormlyFieldConfig[] = [
     {
       fieldGroupClassName: 'row',
@@ -51,6 +54,9 @@ export class EditDataComponent implements OnInit {
       ]
     }
   ];
+  /**
+   * Formly data structure for two values
+   */
   FieldTwo: FormlyFieldConfig[] = [
     {
       fieldGroupClassName: 'row',
@@ -87,6 +93,181 @@ export class EditDataComponent implements OnInit {
     }
   ];
   /**
+   * Formly data structure for four values
+   */
+  FieldFour: FormlyFieldConfig[] = [
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'state',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[0];
+              field.form.controls.state.setValue(this.data['Selection']['value'][this.data.Keys[0]]);
+            }
+        }
+      },
+      {
+        className: 'col-6',
+        type: 'input',
+        key:'province',
+        templateOptions: {
+          required: true
+        },
+        hooks: {
+          onInit: (field: FormlyFieldConfig) => {
+            field.templateOptions.label = this.data.Keys[1];
+            field.form.controls.province.setValue(this.data['Selection']['value'][this.data.Keys[1]]);
+          }
+      }
+    }
+      ]
+    },
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option3',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[2];
+              field.form.controls.option3.setValue(this.data['Selection']['value'][this.data.Keys[2]]);
+            }
+        }
+      },
+      {
+        className: 'col-6',
+        type: 'input',
+        key:'option4',
+        templateOptions: {
+          required: true
+        },
+        hooks: {
+          onInit: (field: FormlyFieldConfig) => {
+            field.templateOptions.label = this.data.Keys[3];
+            field.form.controls.option4.setValue(this.data['Selection']['value'][this.data.Keys[3]]);
+          }
+      }
+    }
+      ]
+    }
+  ];
+  /**
+   * Formly data structure for six values
+   */
+  SixFields: FormlyFieldConfig[] = [
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option1',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[0];
+              field.form.controls.option1.setValue(this.data['Selection']['value'][this.data.Keys[0]]);
+            }
+        }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option2',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[1];
+              field.form.controls.option2.setValue(this.data['Selection']['value'][this.data.Keys[1]]);
+            }
+        }
+        }
+      ],
+    },
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option3',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[2];
+              field.form.controls.option3.setValue(this.data['Selection']['value'][this.data.Keys[2]]);
+            }
+        }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option4',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[3];
+              field.form.controls.option4.setValue(this.data['Selection']['value'][this.data.Keys[3]]);
+            }
+        }
+        }
+      ],
+    },
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option5',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[4];
+              field.form.controls.option5.setValue(this.data['Selection']['value'][this.data.Keys[4]]);
+            }
+        }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option6',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[5];
+              field.form.controls.option6.setValue(this.data['Selection']['value'][this.data.Keys[5]]);
+            }
+        }
+        }
+      ],
+    }
+  ];
+  /**
    * First method in the page
    * @param dialogRef Controller for the dialog
    * @param data Data passed from the parent component
@@ -96,11 +277,18 @@ export class EditDataComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('edit', this.data);
+    console.log('edit leght keys',this.data.Keys.length )
     if (this.data.Keys.length === 1){
       this.recruitmentFields = this.FieldOne;
     }
     if (this.data.Keys.length === 2){
       this.recruitmentFields = this.FieldTwo;
+    }
+    if (this.data.Keys.length === 4){
+      this.recruitmentFields = this.FieldFour;
+    }
+    if (this.data.Keys.length === 6){
+      this.recruitmentFields = this.SixFields;
     }
 
   }

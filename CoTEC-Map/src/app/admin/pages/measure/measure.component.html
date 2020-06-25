@@ -1,0 +1,21 @@
+<div class="PrincipalContainer">
+    <div class="imageDiv">
+        <h4>Health Measure Management</h4>
+        <div class="buttons">
+            <button mat-raised-button (click)="openDialog('add')">Add</button>
+            <button mat-raised-button [disabled]="!enableChange" *ngIf="generalView" (click)="deleteSelected()">Eliminar</button>
+            <button mat-raised-button [disabled]="!enableChange" *ngIf="!generalView" (click)="disableSelected()">Disable</button>
+            <button mat-raised-button [disabled]="!enableChange" (click)="openDialogToEdit()">Edit</button>
+        </div>
+        <div class="container">
+                <ngx-datatable class="material" #mydatatable [rows]="rowsS" [columns]="columnsS" *ngIf="!generalView"
+                    [selectionType]="SelectionType.single" [selected]="selected" columnMode="ColumnMode.force"
+                    [headerHeight]="40" [rowHeight]="30" [footerHeight]="40" (select)="onSelect($event,'State')">
+                </ngx-datatable>
+                <ngx-datatable class="material" #mydatatable [rows]="rowsG" [columns]="columnsG" *ngIf="generalView"
+                [selectionType]="SelectionType.single" [selected]="selected" columnMode="ColumnMode.force"
+                [headerHeight]="40" [rowHeight]="100" [footerHeight]="40" (select)="onSelect($event,'State')">
+            </ngx-datatable>
+        </div>
+    </div>
+</div>

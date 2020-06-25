@@ -35,3 +35,6 @@ $CoTEC-Map-theme: mat-light-theme($CoTEC-Map-primary, $CoTEC-Map-accent, $CoTEC-
 @import '~@swimlane/ngx-datatable/assets/icons.css';
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-cell, .ngx-datatable.fixed-row .datatable-scroll .datatable-body-row .datatable-body-group-cell{
+    white-space: normal !important;
+}

@@ -1,91 +1,100 @@
 import { Component, OnInit } from '@angular/core';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { FormGroup } from '@angular/forms';
+import { SelectionType } from '@swimlane/ngx-datatable';
+import { MatDialog } from '@angular/material/dialog';
+import { EditDataComponent } from '../../components/edit-data/edit-data.component';
+import { ModifyDataComponent } from '../../components/modify-data/modify-data.component';
 @Component({
   selector: 'app-patologies',
   templateUrl: './patologies.component.html',
   styleUrls: ['./patologies.component.scss']
 })
 export class PatologiesComponent implements OnInit {
-  form = new FormGroup({});
   /**
-   * modal object
+   * Type of the selection
    */
-  model: any = {};
+  SelectionType = SelectionType;
   /**
-   * option for the form
+   * Table row selected
    */
-  options: FormlyFormOptions = {};
-
-
+  selected = [];
   /**
-   * Temporal data for recruitment
+   * Item selected to change/delete
    */
-  recruitmentFields: FormlyFieldConfig[] = [
+  selectToOption: object;
+  /**
+   * Columns hospital center
+   */
+  columnsS = [{ prop: 'name', name: 'Name' },
+  { prop: 'description', name: 'Description'},
+  { name: 'Symptoms'},
+  { name: 'Treatment'}];
+  /**
+   * Rows Hospital center
+   */
+  rowsS = [
     {
-      fieldGroupClassName: 'row',
-      fieldGroup: [
-        {
-          className: 'col-6',
-          type: 'input',
-          key: 'name',
-          templateOptions: {
-            label: 'Name',
-            required: true
-          },
-        },
-        {
-          className: 'col-6',
-          type: 'input',
-          key: 'bedCapacity',
-          templateOptions: {
-            label: 'Bed Capacity',
-            required: true
-          },
-          expressionProperties: {
-          },
-        },
-      ],
+      name: 'Flu',
+      description: 'Can cause mild to severe illness, and at times can lead to death',
+      symptoms: 'fever* or feeling feverish/chills, cough, sore throat, runny or stuffy nose, muscle or body aches, headaches, fatigue (tiredness)',
+      treatment: 'you`ll need nothing more than bed rest and plenty of fluids'
     },
-    {
-      fieldGroupClassName: 'row',
-      fieldGroup: [
-        {
-          className: 'col-6',
-          type: 'input',
-          key: 'bedQuantity',
-          templateOptions: {
-            label: 'Beds Quantity UCI',
-            required: true
-          },
-        },
-        {
-          className: 'col-6',
-          type: 'input',
-          key: 'director',
-          templateOptions: {
-            label: "Hospital Center's director",
-            required: true
-          },
-        },
-      ],
-    },
-    {
-      type: 'textarea',
-      key: 'contact',
-      templateOptions: {
-        label: 'Contact',
-        required: true,
-      },
-    }
   ];
-  constructor() { }
+  /**
+   * Boolean variable for enable a change in the option
+   */
+  enableChange: boolean = false;
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
-  submit(){
-    console.log(this.model);
+  /**
+   * selection event
+   */
+  onSelect({ selected }, Parent: string) {
+    console.log('holi on select', selected, 'parent', Parent);
+    this.selectToOption = {
+      parent: Parent,
+      value: selected[0]
+    };
+    this.enableChange = true;
   }
-
+  /**
+   * Delete the option selected
+   */
+  deleteSelected(){
+    console.log('selected to delete',this.selectToOption);
+  }
+  /**
+   * Open a Modify/Add Component
+   */
+  openDialog(actionT: string) {
+    const dialogRef = this.dialog.open(ModifyDataComponent, {
+      data: {
+        Action: actionT,
+        Parent: 'Pathology',
+        Keys: Object.keys(this.rowsS[0])
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  /**
+   * Open a Modify/Add Component
+   */
+  openDialogToEdit() {
+    const dialogRef = this.dialog.open(EditDataComponent, {
+      data: {
+        Parent: 'Pathology',
+        Selection: this.selectToOption,
+        Keys: Object.keys(this.rowsS[0])
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 
 }

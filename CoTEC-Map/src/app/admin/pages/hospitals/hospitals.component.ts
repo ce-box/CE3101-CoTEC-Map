@@ -37,12 +37,12 @@ export class HospitalsComponent implements OnInit {
    */
   rowsS = [
     {
+      capacity: 64,
+      contact: 'macaya@msalud.com',
+      director: 'Roman Macaya',
       location: 'oriental',
       name: 'San Juan de Dios',
-      capacity: 64,
-      uciCapacity: 12,
-      director: 'Roman Macaya',
-      contact: 'macaya@msalud.com'
+      uciCapacity: 12
     },
   ];
   /**
@@ -69,7 +69,7 @@ export class HospitalsComponent implements OnInit {
    * Delete the option selected
    */
   deleteSelected(){
-    console.log(this.selectToOption);
+    console.log('selected to delete',this.selectToOption);
   }
   /**
    * Open a Modify/Add Component
@@ -79,7 +79,7 @@ export class HospitalsComponent implements OnInit {
       data: {
         Action: actionT,
         Parent: 'Hospital',
-        Keys: ['Region', 'Providence', 'State']
+        Keys: Object.keys(this.rowsS[0])
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -92,8 +92,9 @@ export class HospitalsComponent implements OnInit {
   openDialogToEdit() {
     const dialogRef = this.dialog.open(EditDataComponent, {
       data: {
+        Parent: 'Hospital Center',
         Selection: this.selectToOption,
-        Keys: Object.keys(this.selectToOption['value'])
+        Keys: Object.keys(this.rowsS[0])
       }
     });
     dialogRef.afterClosed().subscribe(result => {

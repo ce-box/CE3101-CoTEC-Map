@@ -21,9 +21,10 @@ import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ComponentsModule } from './components/components.module';
+import { MeasureComponent } from './pages/measure/measure.component';
 
 @NgModule({
-  declarations: [AdminComponent, RegionsComponent, HospitalsComponent, MedicationsComponent, PatologiesComponent],
+  declarations: [AdminComponent, RegionsComponent, HospitalsComponent, MedicationsComponent, PatologiesComponent, MeasureComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

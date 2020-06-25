@@ -93,6 +93,7 @@ export class RegionsComponent implements OnInit {
   openDialogToEdit() {
     const dialogRef = this.dialog.open(EditDataComponent, {
       data: {
+        Parent: 'Region',
         Selection: this.selectToOption,
         Keys: Object.keys(this.selectToOption['value'])
       }
