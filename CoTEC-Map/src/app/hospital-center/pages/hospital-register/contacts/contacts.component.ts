@@ -9,12 +9,15 @@ import { Contact } from './contact';
   styleUrls: ['./contacts.component.scss']
 })
 export class ContactsComponent implements OnInit {
+  // Dni contact
   @Input() dniContact: number;
 
+  pageName = 'Crear Contacto';
+
+  // Data list
   pathologys: Pathologys[];
   pathologysList: any[] = [];
   contactList: any[] = [];
-  pageName = 'Crear Contacto';
   states: any;
   countrys: any;
 
@@ -60,9 +63,10 @@ export class ContactsComponent implements OnInit {
     }
   }
 
-  getContactValue(name: string, lastname: string, age: string, email: string, address: string, dni: number, country: string): void {
+  // Get the values for the forms and incluide in the table
+  getContactValue(name: string, lastName: string, age: string, email: string, address: string, dni: number, country: string): void {
     const temporal = this.pathologysList;
-    const contact: Contact = {name, lastname, age, email, address, dni, country, pathologys: temporal};
+    const contact: Contact = {name, lastName, age, email, address, dni, country, pathologys: temporal};
     console.log(contact);
     const i = this.contactList.indexOf(contact);
 

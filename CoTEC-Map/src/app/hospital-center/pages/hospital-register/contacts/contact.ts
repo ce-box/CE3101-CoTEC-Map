@@ -1,6 +1,7 @@
+// Contact information interface
 export interface Contact{
     name: string;
-    lastname: string;
+    lastName: string;
     age: string;
     email: string;
     address: string;

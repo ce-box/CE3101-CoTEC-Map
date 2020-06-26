@@ -6,7 +6,7 @@
     <title>Lista de Pacientes</title>
   </head>
   <body>
-    <!-- Header para cualquiera de las vistas -->
+    <!-- Header for any of the views -->
     <div *ngIf="!changePatientPage">
       <div class="container mt-4">
         <div class="row">
@@ -22,11 +22,11 @@
           </div>
         </div>
       </div>
-      <!-- /Header para cualquiera de las vistas -->
+      <!-- /Header for any of the views -->
 
       <!-- List of Patients-->
       <div class="container">
-        <!-- Encabezado de la tabla -->
+        <!-- Table Patient Header -->
         <div class="row">
           <div class="col-md-12">
             <nav class="navbar">
@@ -63,9 +63,9 @@
             </nav>
           </div>
         </div>
-        <!-- /Encabezado de la tabla -->
+        <!-- /Table Patient Header -->
 
-        <!-- Tabla de pacientes -->
+        <!-- Patient Table -->
         <div class="row">
           <div class="col-md-12">
             <div class="scrollbar" id="style-1">
@@ -94,21 +94,39 @@
             </div>
           </div>
         </div>
+        <!-- /Patient Table -->
+
+        <!-- Add Patient Button -->
         <div class="row">
-          <div class="col-md-12 text-center" style="padding-bottom: 50px; padding-top: 10px;">
-            <button type="button" class="btn btn-light" id="button1" onclick="location.href='hospitalCenter/patient'">
-              <img src="https://cdn0.iconfinder.com/data/icons/glyphpack/72/user-add-512.png" alt="button1" id="image1" />
+          <div
+            class="col-md-12 text-center"
+            style="padding-bottom: 50px; padding-top: 10px;"
+          >
+            <button
+              type="button"
+              class="btn btn-light"
+              id="button1"
+              onclick="location.href='hospitalCenter/patient'"
+            >
+              <img
+                src="https://cdn0.iconfinder.com/data/icons/glyphpack/72/user-add-512.png"
+                alt="button1"
+                id="image1"
+              />
               <div class="card-inner"></div>
             </button>
           </div>
         </div>
+        <!-- /Add Patient Button -->
       </div>
-      <!-- /List od Patients -->
+      <!-- /List of Patients -->
     </div>
+    <!-- Roud for patient management -->
     <div *ngIf="changePatientPage">
       <app-patient-management
         [dniPatient]="dniPatient"
       ></app-patient-management>
     </div>
+    <!-- /Roud for patient management -->
   </body>
 </html>

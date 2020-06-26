@@ -6,10 +6,17 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./patient-management.component.scss'],
 })
 export class PatientManagementComponent implements OnInit {
+  // Patient dni, Contact dni
   @Input() dniPatient: number;
-  pageName = 'Paciente';
-  changeContactPage = false;
   dniContact: number;
+
+  pageName = 'Paciente';
+
+  // Change pages
+  changeContactPage = false;
+  changeEditPatientPage = false;
+
+  // List information
   patient: any;
   contacts: any;
 
@@ -82,5 +89,10 @@ export class PatientManagementComponent implements OnInit {
   changePage(dniContact: number){
     this.changeContactPage = true;
     this.dniContact = dniContact;
+  }
+
+  // Change the page to edit patient
+  changeEditPage( ){
+    this.changeEditPatientPage = true;
   }
 }

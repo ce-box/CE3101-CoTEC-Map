@@ -7,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LatestPatientsComponent implements OnInit {
 
+
   pageName = 'Lista de Pacientes';
-  patients: any;
+
+  // Change page
   changePatientPage = false;
   dniPatient: number;
+
+  // Patient list
+  patients: any;
 
   constructor() {
     this.patients = [
@@ -32,6 +37,7 @@ export class LatestPatientsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // Chage the page to the information patient
   changePage(dniPatient: number){
     this.changePatientPage = true;
     this.dniPatient = dniPatient;

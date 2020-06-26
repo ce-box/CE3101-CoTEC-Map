@@ -1,3 +1,4 @@
+//General page style
 body, html {
     height: 100%;
     background-repeat: no-repeat;
@@ -7,6 +8,7 @@ body, html {
 
 }
 
+//Structure for the view
 #hospital {
     
     padding-top: 20px;
@@ -21,6 +23,7 @@ body, html {
     
 }
 
+//Button style
 #button1 {
     
     opacity: 0.8;
@@ -28,6 +31,7 @@ body, html {
     width: 65%;
 }
 
+//Button images styles
 #image1 {
     width: 50%;
     height: 50%;

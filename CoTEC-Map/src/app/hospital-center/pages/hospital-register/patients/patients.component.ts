@@ -9,11 +9,13 @@ import { Medication } from './medication';
 })
 export class PatientsComponent implements OnInit {
 
+  pageName = 'Crear paciente';
+
+  // Data lists
   pathologys: Pathologys[];
   medication: Medication[];
   pathologysList: any[] = [];
   medicationList: any[] = [];
-  pageName = 'Crear paciente';
   states: any;
   countrys: any;
 

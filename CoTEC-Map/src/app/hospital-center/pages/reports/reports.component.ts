@@ -8,8 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class ReportsComponent implements OnInit {
 
   pageName = 'Reporte';
+
+  // Change report type
   showPatientStatistics = false;
   showDeadStatistics = false;
+
+  // List data
   countryData: any;
   countrystatistics: any;
 

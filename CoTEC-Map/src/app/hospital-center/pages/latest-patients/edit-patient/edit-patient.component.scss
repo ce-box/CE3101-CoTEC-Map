@@ -1,8 +1,7 @@
-// General page style
 body,
 html {
   font-family: Roboto;
-  height: 115%;
+  height: 100%;
   background-repeat: no-repeat;
   background: url(https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1035&q=80)
     no-repeat center center fixed;
@@ -11,33 +10,39 @@ html {
   padding-bottom: 6px;
 }
 
-// Patient image
-#image1 {
-  padding-top: 60px;
+#button1 {
+  opacity: 0.8;
+  border-radius: 10px;
+  width: 65%;
 }
 
-// Input container style
+#image1 {
+  padding-top: 60px;
+  padding-left: 20px;
+  height: 40%;
+}
+
 #container {
   background-color: white;
   border-radius: 20px;
 }
 
-// Table container 
 #dataContainer {
   border: 1px solid #C5CBCD  ;
   border-radius: 20px;
 }
 
 //Scroll
+
 .scrollbar {
   overflow-y: scroll;
   overflow-x: scroll;
   box-sizing: content-box;
 }
 
-//Style of first scroll {
+//Style of first scroll
 #style-1 {
-  height: 200px;
+  height: 190px;
 }
 
 #style-1::-webkit-scrollbar {
@@ -50,10 +55,35 @@ html {
   border-radius: 30px;
 }
 
-// Button (Agregar)
-#button3 {
-    padding-top: 400px;
+//Style of first scroll
+#style-2 {
+  height: 320px;
 }
 
+#style-2::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
 
+#style-2::-webkit-scrollbar-thumb {
+  background-color: #9b9ba1;
+  border-radius: 30px;
+}
 
+#button1 {
+    
+  opacity: 0.8;
+  width: 100%;
+  
+}
+
+#image2 {
+  width: 10%;
+  height: 10%;
+}
+
+#buttonContainer {
+  background-color: white;
+  opacity: 0.8;
+  border-radius: 20px;
+}

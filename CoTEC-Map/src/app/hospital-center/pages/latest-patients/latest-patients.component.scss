@@ -1,6 +1,7 @@
+//General page style
 body, html {
     font-family: Roboto;
-    height: 100%;
+    height: 105%;
     background-repeat: no-repeat;
     background: url(https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1035&q=80) no-repeat center center fixed;
     background-size: 100% 100%;
@@ -8,16 +9,17 @@ body, html {
     padding-bottom: 6px;
   }
 
+  //Table Header
   nav {
     background: black;
   }
 
+  //Body table
   table {
       background: white;
   }
 
   //Scroll
-
   .scrollbar {
   
     overflow-y: scroll;
@@ -26,7 +28,7 @@ body, html {
     
   }
   
-  //Style of first scroll
+  //Style of first scroll {
   #style-1 {
       height: 470px;
   }
@@ -42,7 +44,9 @@ body, html {
       background-color: #9B9BA1;
       border-radius: 30px;
   }
+  // }
 
+  //Add patient button
   #button1 {
     
     opacity: 0.8;
@@ -50,6 +54,7 @@ body, html {
     
 }
 
+//Button image
 #image1 {
     width: 10%;
     height: 10%;

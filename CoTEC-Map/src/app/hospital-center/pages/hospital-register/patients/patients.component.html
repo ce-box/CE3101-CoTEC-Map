@@ -6,7 +6,7 @@
     <title>Administración</title>
   </head>
   <body>
-    <!-- Header para cualquiera de las vistas -->
+    <!-- Header for any of the views -->
     <div class="container mt-4">
       <div class="row">
         <div class="col-12">
@@ -21,34 +21,40 @@
         </div>
       </div>
     </div>
-    <!-- /Header para cualquiera de las vistas -->
+    <!-- /Header for any of the views -->
 
+    <!-- Contact Table -->
     <div class="container register" id="container">
       <div class="row">
+        <!-- First column  -->
         <div class="col-md-3">
-          <div class="row">
-            <div class="col-md-12">
-              <img
-                src="https://cdn2.iconfinder.com/data/icons/corona-virus-covid-19-15/512/10_health_chart_patient_chart_report-512.png"
-                alt=""
-                id="image1"
-              />
-              <div id="button3">
-                <button type="button" class="btn btn-success col-md-12"
-                [disabled]="
-        !(
-            name.valid &&
-            LastName.valid &&
-            dni.valid &&
-            startDate.valid
-        )
-      ">
-                  Agregar
-                </button>
-              </div>
-            </div>
+          <!-- Image  -->
+          <div>
+            <img
+              src="https://cdn2.iconfinder.com/data/icons/corona-virus-covid-19-15/512/10_health_chart_patient_chart_report-512.png"
+              id="image1"
+              class="col-md-12"
+            />
           </div>
+          <!-- /Image  -->
+
+          <!-- Add to the list button   -->
+          <div id="button3" class="text-center">
+            <button
+              type="button"
+              class="btn btn-success col-md-8"
+              [disabled]="
+                !(name.valid && LastName.valid && dni.valid && startDate.valid)
+              "
+            >
+              Agregar
+            </button>
+          </div>
+          <!-- /Add to the list button   -->
         </div>
+        <!-- /First column  -->
+
+        <!-- Second column  -->
         <div class="col-md-9 register-right">
           <div class="tab-content" id="myTabContent">
             <div
@@ -59,7 +65,9 @@
             >
               <br />
               <div class="row register-form">
+                <!-- First information column  -->
                 <div class="col-md-5" id="dataContainer">
+                  <!-- Name input  -->
                   <div class="form-group">
                     <h2>Nombre</h2>
                     <input
@@ -79,6 +87,9 @@
                       Debe ingresar una fecha válida.
                     </div>
                   </div>
+                  <!-- /Name input  -->
+
+                  <!-- Last Name input  -->
                   <div class="form-group">
                     <h2>Apellido</h2>
                     <input
@@ -98,6 +109,9 @@
                       Debe ingresar una fecha válida.
                     </div>
                   </div>
+                  <!-- /Last Name input  -->
+
+                  <!-- Dni input  -->
                   <div class="form-group">
                     <h2>Número de identificación</h2>
                     <input
@@ -123,28 +137,9 @@
                       </div>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <h2>Edad</h2>
-                    <div class="form-group">
-                      <input
-                        required
-                        type="date"
-                        name="startDate"
-                        ngModel
-                        #startDate="ngModel"
-                        max="3000-12-31"
-                        min="1000-01-01"
-                        class="form-control"
-                        id="startDate"
-                      />
-                      <div
-                        class="alert alert-danger"
-                        *ngIf="startDate.touched && !startDate.valid"
-                      >
-                        Debe ingresar una fecha válida.
-                      </div>
-                    </div>
-                  </div>
+                  <!-- /Dni input  -->
+
+                  <!-- State input  -->
                   <div class="form-group">
                     <h2>Estado</h2>
                     <select id="inputState" class="form-control">
@@ -153,6 +148,9 @@
                       }}</option>
                     </select>
                   </div>
+                  <!-- /State input  -->
+
+                  <!-- Medication table select  -->
                   <div class="form-group">
                     <h2>Medicación</h2>
                     <select
@@ -197,10 +195,41 @@
                       </table>
                     </div>
                   </div>
+                  <!-- /Medication table select  -->
                   <div class="form-group"></div>
                 </div>
+                <!-- /First information column  -->
+
                 <div class="col-md-1"></div>
+
+                <!-- Second information column  -->
                 <div class="col-md-5" id="dataContainer">
+                  <!-- Born input  -->
+                  <div class="form-group">
+                    <h2>Edad</h2>
+                    <div class="form-group">
+                      <input
+                        required
+                        type="date"
+                        name="startDate"
+                        ngModel
+                        #startDate="ngModel"
+                        max="3000-12-31"
+                        min="1000-01-01"
+                        class="form-control"
+                        id="startDate"
+                      />
+                      <div
+                        class="alert alert-danger"
+                        *ngIf="startDate.touched && !startDate.valid"
+                      >
+                        Debe ingresar una fecha válida.
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Born input  -->
+
+                  <!-- Country input  -->
                   <div class="form-group">
                     <h2>País de origen</h2>
                     <select id="inputState" class="form-control">
@@ -209,6 +238,9 @@
                       }}</option>
                     </select>
                   </div>
+                  <!-- /Country input  -->
+
+                  <!-- Region input  -->
                   <div class="form-group">
                     <h2>Región</h2>
                     <input
@@ -218,58 +250,71 @@
                       value=""
                     />
                   </div>
+                  <!-- /Region input  -->
+
+                  <!-- Hospital internal state input  -->
                   <div class="form-group">
-                    <h2>Internado</h2>
-                    <div class="custom-control custom-radio">
-                      <input
-                        type="radio"
-                        id="customRadio1"
-                        name="customRadio"
-                        class="custom-control-input"
-                        checked
-                      />
-                      <label class="custom-control-label" for="customRadio1"
-                        >Sí</label
-                      >
-                    </div>
-                    <div class="custom-control custom-radio">
-                      <input
-                        type="radio"
-                        id="customRadio2"
-                        name="customRadio"
-                        class="custom-control-input"
-                      />
-                      <label class="custom-control-label" for="customRadio2"
-                        >No</label
-                      >
+                    <div class="row">
+                      <div class="col">
+                        <h2>Internado</h2>
+                        <div class="custom-control custom-radio">
+                          <input
+                            type="radio"
+                            id="customRadio1"
+                            name="customRadio"
+                            class="custom-control-input"
+                            checked
+                          />
+                          <label class="custom-control-label" for="customRadio1"
+                            >Sí</label
+                          >
+                        </div>
+                        <div class="custom-control custom-radio">
+                          <input
+                            type="radio"
+                            id="customRadio2"
+                            name="customRadio"
+                            class="custom-control-input"
+                          />
+                          <label class="custom-control-label" for="customRadio2"
+                            >No</label
+                          >
+                        </div>
+                      </div>
+                    
+                      <div class="col"></div>
+
+                      <div class="col">
+                        <h2>En UCI</h2>
+                        <div class="custom-control custom-radio">
+                          <input
+                            type="radio"
+                            id="customRadio3"
+                            name="customRadio2"
+                            class="custom-control-input"
+                            checked
+                          />
+                          <label class="custom-control-label" for="customRadio3"
+                            >Sí</label
+                          >
+                        </div>
+                        <div class="custom-control custom-radio">
+                          <input
+                            type="radio"
+                            id="customRadio4"
+                            name="customRadio2"
+                            class="custom-control-input"
+                          />
+                          <label class="custom-control-label" for="customRadio4"
+                            >No</label
+                          >
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <h2>Internado en UCI</h2>
-                    <div class="custom-control custom-radio">
-                      <input
-                        type="radio"
-                        id="customRadio3"
-                        name="customRadio2"
-                        class="custom-control-input"
-                        checked
-                      />
-                      <label class="custom-control-label" for="customRadio3"
-                        >Sí</label
-                      >
-                    </div>
-                    <div class="custom-control custom-radio">
-                      <input
-                        type="radio"
-                        id="customRadio4"
-                        name="customRadio2"
-                        class="custom-control-input"
-                      />
-                      <label class="custom-control-label" for="customRadio4"
-                        >No</label
-                      >
-                    </div>
-                  </div>
+                  <!-- /Hospital internal state input  -->
+
+                  <!-- Pathology Tables inputs  -->
                   <div class="form-group">
                     <h2>Patologías</h2>
                     <select
@@ -314,13 +359,18 @@
                       </table>
                     </div>
                   </div>
+                  <!-- /Pathology Tables inputs  -->
                 </div>
+                <!-- /Second information column  -->
                 <div class="col-md-1"></div>
               </div>
             </div>
           </div>
         </div>
+        <!-- /Second column  -->
       </div>
+      <br />
     </div>
+    <br /><br /><br />
   </body>
 </html>

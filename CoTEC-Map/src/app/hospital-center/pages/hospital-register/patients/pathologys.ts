@@ -1,3 +1,4 @@
+// Pathologys information interface
 export interface Pathologys{
     name: string;
     treatment: string;

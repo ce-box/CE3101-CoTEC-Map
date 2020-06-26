@@ -6,16 +6,26 @@
     <title>Hospital Center</title>
   </head>
   <body>
+    <!-- Header for any of the views -->
     <div class="row">
       <div class="col-md-4"></div>
       <div class="col-md-4 text-center" id="hospital">
-        {{hospitalName}}
+        {{ hospitalName }}
       </div>
       <div class="col-md-4"></div>
     </div>
+    <!-- /Header for any of the views -->
+
+    <!-- Page body -->
     <div class="row" style="padding-top: 70px; padding-bottom: 110px;">
       <div class="col text-center">
-        <button type="button" class="btn btn-light" id="button1" onclick="location.href='hospitalCenter/LastPatients'">
+        <!-- Patients button -->
+        <button
+          type="button"
+          class="btn btn-light"
+          id="button1"
+          onclick="location.href='hospitalCenter/LastPatients'"
+        >
           <img
             src="https://cdn1.iconfinder.com/data/icons/ios-11-glyphs/30/people-512.png"
             alt="button1"
@@ -28,9 +38,16 @@
           </div>
           <div class="card-inner"></div>
         </button>
+        <!-- /Patients button -->
       </div>
       <div class="col text-center">
-        <button type="button" class="btn btn-light" id="button1" onclick="location.href='hospitalCenter/reports'">
+        <!-- Reports button -->
+        <button
+          type="button"
+          class="btn btn-light"
+          id="button1"
+          onclick="location.href='hospitalCenter/reports'"
+        >
           <img
             src="https://cdn2.iconfinder.com/data/icons/corona-virus-covid-19-17/512/40_news_report_virus-512.png"
             alt="button1"
@@ -43,7 +60,9 @@
           </div>
           <div class="card-inner"></div>
         </button>
+        <!-- /Reports button -->
       </div>
     </div>
+    <!-- /Page body -->
   </body>
 </html>
