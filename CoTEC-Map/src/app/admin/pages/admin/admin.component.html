@@ -3,13 +3,13 @@
     <div class="sidebar-header">
       <img src="assets/imgs/claudiaPoll.jpg" class="rounded-circle" alt="">
       <h3>Claudia Poll <br> <strong>Gerente CCSS</strong></h3>
-      <button type="button" class="btn btn-outline-light text-dark">Light</button>
+      <button type="button" class="btn btn-outline-light text-dark" style="color:white">Log out</button>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
     
     <p class="NavigationTitle">Data Management Platform</p>
-    <mat-grid-list cols="12" rowHeight="3:10" class="CardNavigation">
+    <mat-grid-list cols="12" rowHeight="3:11" class="CardNavigation">
       <mat-grid-tile colS colspan="3">
         <div class="card" style="background-color: #FFDB02;" routerLink="regions">
           <div class="card-body">
@@ -42,9 +42,55 @@
           </div>
         </div>
       </mat-grid-tile>
+      
       <mat-grid-tile  colspan="8" >
-        <ngx-datatable class="material" [rows]="rows" [columns]="columns" style="margin-top: 20px;"> </ngx-datatable>
+        <div class="Table container">
+          <div class="col filtering-and-search-section">
+            <h3>Patient Management</h3>
+            <div class="row">
+                <mat-form-field class="search-box" appearance="outline">
+                    <mat-label> Buscar </mat-label>
+                    <input matInput class="search-input" [(ngModel)]="searchTextFilter" #searchInput>
+                    <mat-icon *ngIf="!searchTextFilter" class="search-icon" matSuffix>search</mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+          <ngx-datatable class="material" 
+          #mydatatable
+          [rows]="fuseResults"
+          [selectionType]="SelectionType.single" 
+          [selected]="selected"
+          [limit]="2"
+          columnMode="ColumnMode.force"
+          [scrollbarH]="true" 
+          [headerHeight]="40"
+          [rowHeight]="30"
+          [footerHeight]="40"
+          (select)="onSelect($event)">
+          <ngx-datatable-column *ngFor="let column of columns" [name]="column.name" [prop]="column.prop">
+          </ngx-datatable-column>
+          <ngx-datatable-column [sortable]="false" [draggable]="false"
+              name="State"
+              [resizeable]="false">
+              <ng-template ngx-datatable-cell-template 
+              let-onCheckboxChangeFn="onCheckboxChangeFn"
+              let-rowIndex="rowIndex"
+              let-value="value">
+              <mat-form-field>
+                <mat-select [formControl]="stateForm" placeholder="select">
+                  <mat-option *ngFor="let state of states"  
+                  [value]="state.id"
+                  (blur)="updateValueSelectStatus($event)">
+                  {{state.displayName}}
+                </mat-option>
+                </mat-select>
+              </mat-form-field>
+              
+              </ng-template>
+          </ngx-datatable-column> </ngx-datatable>
+        </div> 
       </mat-grid-tile>
+
       <mat-grid-tile colspan="4" class="CardsDownload" >
         <div class="CardContainer">
           <div class="CardSelection">
@@ -56,18 +102,24 @@
               <mat-form-field >
                 <mat-label >Make a selection</mat-label>
                 <mat-select [(ngModel)]="selectedValue" name="food" >
-                  <mat-option *ngFor="let food of foods" [value]="food.value" >
+                  <mat-option *ngFor="let food of foods" 
+                  [value]="food.value" 
+                  (blur)='updateValueSelectPrevent($event)'>
                     {{food.viewValue}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
             </form>
           </div>
+          <h3>Upload the file</h3> 
           <div class="DownloadCard" >
-            <img src="assets/imgs/excel_icon.png" alt="">            
-            <span>Upload File</span>
-            <mat-icon aria-hidden="false" aria-label="Example home icon">publish</mat-icon>
+            <img src="assets/imgs/excel_icon.png" alt="">
+            <input  (change)="fileChange($event)"  type="file"  class="custom-file-input"  id="inputGroupFile01"  aria-describedby="inputGroupFileAddon01"  placeholder="Upload a file">            
+            <button mat-icon-button aria-label="Example icon button with a vertical three dot icon" [disabled]="disableMoreFile" (click)="upload()">
+              <mat-icon>publish</mat-icon>
+            </button>
           </div>
+          
         </div>
       </mat-grid-tile>
     </mat-grid-list>

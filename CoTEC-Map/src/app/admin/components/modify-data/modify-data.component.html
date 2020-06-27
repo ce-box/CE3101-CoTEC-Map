@@ -1,0 +1,24 @@
+<div class="PrincipalContainer">
+    <div class="imageDiv">
+        <img src="assets/imgs/imagComplet.jpeg" alt="">
+        <div class="container">
+            <form *ngIf="presentOptions">
+                <h4>Select the option to add</h4>
+                <mat-form-field>
+                  <mat-label>Options</mat-label>
+                  <mat-select [(ngModel)]="selectedValue" name="option" (focus)="selectOptionF($event)">
+                    <mat-option *ngFor="let option of keyOptions"  [value]="option" >
+                      {{option}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </form>
+            <form [formGroup]="form" (ngSubmit)="submit()">
+                <formly-form [model]="model" [fields]="recruitmentFields" [options]="options" [form]="form"></formly-form>
+                <button type="submit" class="btn btn-primary submit-button" [disabled]="!form.valid">Submit</button>
+    
+            </form>
+        </div>
+    </div>
+    
+</div>

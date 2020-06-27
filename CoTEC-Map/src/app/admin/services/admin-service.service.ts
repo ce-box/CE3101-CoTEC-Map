@@ -17,4 +17,10 @@ export class AdminServiceService {
   getServiceData(){
     return this.http.get(`${URL}/admin`);
   }
+  uploadData(data: File){
+    this.http.post('/api/upload', data)
+      .subscribe((response) => {
+        console.log('response received is ', response);
+      });
+  }
 }

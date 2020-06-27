@@ -9,13 +9,22 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule} from '@angular/material/icon';
 import { MatSelectModule} from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RegionsComponent } from './pages/regions/regions.component';
 import { HospitalsComponent } from './pages/hospitals/hospitals.component';
 import { MedicationsComponent } from './pages/medications/medications.component';
 import { PatologiesComponent } from './pages/patologies/patologies.component';
+import { MatInputModule } from '@angular/material/input';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyMaterialModule } from '@ngx-formly/material';
+import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { ComponentsModule } from './components/components.module';
+import { MeasureComponent } from './pages/measure/measure.component';
+
 @NgModule({
-  declarations: [AdminComponent, RegionsComponent, HospitalsComponent, MedicationsComponent, PatologiesComponent],
+  declarations: [AdminComponent, RegionsComponent, HospitalsComponent, MedicationsComponent, PatologiesComponent, MeasureComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -26,7 +35,14 @@ import { PatologiesComponent } from './pages/patologies/patologies.component';
     MatListModule,
     MatIconModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    FormlyModule,
+    FormlyBootstrapModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    ComponentsModule
   ]
 })
 export class AdminModule { }

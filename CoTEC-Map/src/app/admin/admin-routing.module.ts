@@ -5,6 +5,7 @@ import { RegionsComponent } from './pages/regions/regions.component';
 import { HospitalsComponent } from './pages/hospitals/hospitals.component';
 import { MedicationsComponent } from './pages/medications/medications.component';
 import { PatologiesComponent } from './pages/patologies/patologies.component';
+import { MeasureComponent } from './pages/measure/measure.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,9 @@ const routes: Routes = [
   },
   {
     path : 'pathology', component : PatologiesComponent
+  },
+  {
+    path : 'measure/:id', component : MeasureComponent
   }
 ];
 
