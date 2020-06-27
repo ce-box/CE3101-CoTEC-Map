@@ -1,3 +1,4 @@
+//General page style
 body,
 html {
   font-family: Roboto;
@@ -10,37 +11,33 @@ html {
   padding-bottom: 6px;
 }
 
-#button1 {
-  opacity: 0.8;
-  border-radius: 10px;
-  width: 65%;
-}
-
+//Style for the patient image
 #image1 {
   padding-top: 60px;
   padding-left: 20px;
-  height: 40%;
+  
 }
 
+//Style for information container (patient information and contact table)
 #container {
   background-color: white;
   border-radius: 20px;
 }
 
+//Style for the border in the information container
 #dataContainer {
   border: 1px solid #C5CBCD  ;
   border-radius: 20px;
 }
 
 //Scroll
-
 .scrollbar {
   overflow-y: scroll;
   overflow-x: scroll;
   box-sizing: content-box;
 }
 
-//Style of first scroll
+//Style of first scroll {
 #style-1 {
   height: 190px;
 }
@@ -54,8 +51,9 @@ html {
   background-color: #9b9ba1;
   border-radius: 30px;
 }
+// }
 
-//Style of first scroll
+//Style of first scroll {
 #style-2 {
   height: 320px;
 }
@@ -69,19 +67,22 @@ html {
   background-color: #9b9ba1;
   border-radius: 30px;
 }
+// }
 
+//Style for the contact button
 #button1 {
     
   opacity: 0.8;
   width: 100%;
-  
 }
 
+//Style for botton image
 #image2 {
   width: 10%;
   height: 10%;
 }
 
+//Container for the add contact button
 #buttonContainer {
   background-color: white;
   opacity: 0.8;

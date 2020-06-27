@@ -15,6 +15,7 @@ export class PatientManagementComponent implements OnInit {
   // Change pages
   changeContactPage = false;
   changeEditPatientPage = false;
+  changeContactInformation = false;
 
   // List information
   patient: any;
@@ -94,5 +95,11 @@ export class PatientManagementComponent implements OnInit {
   // Change the page to edit patient
   changeEditPage( ){
     this.changeEditPatientPage = true;
+  }
+
+  // Change the page to contact information
+  changeinformationContactPage(dni: number){
+    this.dniContact = this.dniContact;
+    this.changeContactInformation = true;
   }
 }

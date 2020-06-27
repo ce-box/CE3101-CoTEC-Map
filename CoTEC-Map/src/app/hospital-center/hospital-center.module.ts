@@ -10,8 +10,8 @@ import { LatestPatientsComponent } from './pages/latest-patients/latest-patients
 import { HomeCenterComponent } from './pages/home-center/home-center.component';
 import { PatientsComponent } from './pages/hospital-register/patients/patients.component';
 import { ContactsComponent } from './pages/hospital-register/contacts/contacts.component';
-import { EditPatientComponent } from './pages/latest-patients/edit-patient/edit-patient.component';
-import { ContactManagementComponent } from './pages/latest-patients/contact-management/contact-management.component';
+import { EditPatientComponent } from './pages/hospital-register/edit-patient/edit-patient.component';
+import { EditContactComponent } from './pages/hospital-register/edit-contact/edit-contact.component';
 
 
 @NgModule({
@@ -22,8 +22,8 @@ import { ContactManagementComponent } from './pages/latest-patients/contact-mana
     HomeCenterComponent,
     PatientsComponent,
     ContactsComponent,
-    EditPatientComponent,
-    ContactManagementComponent,
+    EditContactComponent,
+    EditPatientComponent
   ],
   imports: [CommonModule, HospitalCenterRoutingModule, FormsModule, NgSelectModule],
 })
