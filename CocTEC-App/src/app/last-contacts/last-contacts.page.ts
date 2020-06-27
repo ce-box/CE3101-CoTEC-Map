@@ -12,29 +12,29 @@ export class LastContactsPage implements OnInit {
     {
       Name: 'Bertha',
       LastName: 'Brenes Brenes',
-      Id: '304980542',
-      Age: '23',
+      Id: 304980542,
+      Age: 23,
       Nationality: 'costarricense',
-      Direction: 'Cartago',
+      Address: 'Cartago',
       Pathology: 'asthmatic, hypertensive',
       email: 'bertacaro1996@gmail.com'
     },
     {
       Name: 'Alberto',
       LastName: 'Brenes Brenes',
-      Id: '304980285',
-      Age: '23',
+      Id: 304980285,
+      Age: 23,
       Nationality: 'costarricense',
-      Direction: 'Cartago',
+      Address: 'Cartago',
       Pathology: 'asthmatic, hypertensive',
       email: 'bertacaro1996@gmail.com'
     }, {
       Name: 'Ivannia',
       LastName: 'Brenes Fernandez',
-      Id: '303020181',
-      Age: '23',
+      Id: 303020181,
+      Age: 23,
       Nationality: 'costarricense',
-      Direction: 'Cartago',
+      Address: 'Cartago',
       Pathology: 'asthmatic, hypertensive',
       email: 'bertacaro1996@gmail.com'
     }
@@ -42,9 +42,10 @@ export class LastContactsPage implements OnInit {
   keysLast = [
     'Name',
     'LastName',
-    'Id', 'Age',
+    'Id',
+    'Age',
     'Nationality',
-    'Direction',
+    'Address',
     'Pathology',
     'email'
   ];
