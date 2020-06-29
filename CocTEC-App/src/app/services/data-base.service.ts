@@ -30,18 +30,22 @@ export class DataBaseService {
     private sqlitePorter: SQLitePorter) {
     console.log('ngInit database');
     this.plt.ready().then(() => {
-      this.sqlite.create({
+      console.log('ready platform');
+      const sql = this.sqlite.create({
         name: 'patient.db',
         location: 'default'
-      })
-        .then((db: SQLiteObject) => {
-          this.database = db;
-          this.seedDatabase();
-        });
+      });
+      console.log('sql create', sql);
+      // .then((db: SQLiteObject) => {
+      //   db.executeSql('create table danceMoves(name VARCHAR(32))', [])
+      //     .then(() => console.log('Executed SQL'))
+      //     .catch(e => console.log(e));
+      // })
+      // .catch(e => console.log(e));
     });
   }
   seedDatabase() {
-    console.log('access')
+    console.log('access');
     this.http.get('assets/data/seed.sql', { responseType: 'text' })
       .subscribe(sql => {
         this.sqlitePorter.importSqlToDb(this.database, sql)
