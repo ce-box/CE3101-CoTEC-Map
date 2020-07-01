@@ -1,102 +1,144 @@
-<!--The content is a structure for a map-->
-<body>
-  <div class="container">
-    <br />
-    <div class="row">
-      <div class="card card-bordered col-xl-8" id="regions_div"></div>
-      <div class="col-xl-4">
-        <div>
-          <div class="scrollbar" id="style-2">
-            <table class="table table-borderless text-left">
-              <tbody>
-                <tr *ngFor="let country of countries">
-                  <td>{{ country.countryName }}</td>
-                  <td>{{ country.infected }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="row">
-      <div class="col-xl-4">
-        <div class="card-inner">
-          <div class="nk-cov-wg1">
-            <div class="card-title">
-              <h5 class="title">Casos de CoTEC - <small>Mundial</small></h5>
-            </div>
-            <div class="nk-cov-data">
-              <h6 class="overline-title">Total de casos confirmados</h6>
-              <div class="amount">{{ worldInformation.infected }}</div>
-            </div>
-            <canvas
-              id="myPieChart"
-              class="chartjs"
-              width="567"
-              height="283"
-            ></canvas>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-4">
-        <div class="card-inner">
-          <div class="nk-cov-wg1">
-            <div class="card-title">
-              <h5 class="title">Reporte por país</h5>
-            </div>
-            <div class="scrollbar" id="style-1">
-              <table class="table table-hover text-center" id="style-1">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th scope="col">País</th>
-                    <th scope="col">Contagios</th>
-                    <th scope="col">Muertes</th>
-                    <th scope="col">Recuperados</th>
-                    <th scope="col">Incremento Diario</th>
-                  </tr>
-                </thead>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <br />
+      <!--First row information-->
+      <div class="row">
+        <!--Structure for a map-->
+        <div class="card card-bordered col-xl-8" id="regions_div"></div>
+        <div class="col-xl-4">
+          <div>
+            <div class="scrollbar" id="style-2">
+              <!--Contries Data table-->
+              <table class="table table-borderless text-left">
                 <tbody>
                   <tr *ngFor="let country of countries">
-                    <th scope="row">
-                      <img
-                        [src]="country.flagUrl"
-                        class="img-responsive"
-                        alt="Responsive image"
-                        width="30"
-                        height="30"
-                      />
-                    </th>
-                    <td>{{ country.countryName }}</td>
-                    <td>{{ country.infected }}</td>
-                    <td>{{ country.deaths }}</td>
-                    <td>{{ country.recovered }}</td>
-                    <td>{{ country.dailyIncrease }}</td>
+                    <td (click)="getMeasures(country.countryCode)">
+                      {{ country.countryName }}
+                    </td>
+                    <td (click)="getMeasures(country.countryCode)">
+                      {{ country.infected }}
+                    </td>
                   </tr>
                 </tbody>
               </table>
+              <!--/Contries Data table-->
             </div>
           </div>
         </div>
       </div>
-      <div class="col-xl-4">
-        <div class="card-inner">
-          <div class="nk-cov-wg1">
-            <div class="card-title">
-              <h5 class="title">AQUI VA EL LOGO</h5>
+      <!--/First row information-->
+      <br />
+      <!--Second row information-->
+      <div class="row">
+        <div class="col-xl-4">
+          <div class="card-inner">
+            <!--Doughnut information-->
+            <div class="nk-cov-wg1">
+              <div class="card-title">
+                <h5 class="title">Casos de CoTEC - <small>Mundial</small></h5>
+              </div>
+              <div class="nk-cov-data">
+                <h6 class="overline-title">Total de casos confirmados</h6>
+                <div class="amount">{{ worldInformation.infected }}</div>
+              </div>
+              <canvas
+                id="myPieChart"
+                class="chartjs"
+                width="567"
+                height="283"
+              ></canvas>
             </div>
-            <div class="nk-cov-data">
-              <h6 class="overline-title">Total de casos confirmados</h6>
-              <div class="amount">7,389,298</div>
+            <!--/Doughnut information-->
+          </div>
+        </div>
+        <div class="col-xl-4">
+          <div class="card-inner">
+            <!--Country information table-->
+            <div class="nk-cov-wg1">
+              <div class="card-title">
+                <h5 class="title">Reporte por país</h5>
+              </div>
+              <div class="scrollbar" id="style-1">
+                <table class="table table-hover text-center" id="style-1">
+                  <thead>
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col">País</th>
+                      <th scope="col">Contagios</th>
+                      <th scope="col">Muertes</th>
+                      <th scope="col">Recuperados</th>
+                      <th scope="col">Incremento</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let country of countries">
+                      <th scope="row">
+                        <img
+                          [src]="country.flagUrl"
+                          class="img-responsive"
+                          alt="Responsive image"
+                          width="30"
+                          height="30"
+                        />
+                      </th>
+                      <td>{{ country.countryName }}</td>
+                      <td>{{ country.infected }}</td>
+                      <td>{{ country.deaths }}</td>
+                      <td>{{ country.recovered }}</td>
+                      <td>{{ country.dailyIncrease }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
+            <!--/Country information table-->
+          </div>
+        </div>
+        <div class="col-xl-4">
+          <div class="card-inner">
+            <!--Country measure information table-->
+            <div class="nk-cov-wg1">
+              <div class="card-title">
+                <h5 class="title">Medidas Sanitarias</h5>
+              </div>
+              <div class="scrollbar" id="style-1">
+                <table class="table table-hover text-center" id="style-1">
+                  <thead>
+                    <tr>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Descripción</th>
+                      <th scope="col">Inicio</th>
+                      <th scope="col">Final</th>
+                      <th scope="col">Estatus</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let measure of measures">
+                      <td>{{ measure.name }}</td>
+                      <td>{{ measure.description }}</td>
+                      <td>{{ measure.startDate }}</td>
+                      <td>{{ measure.endDate }}</td>
+                      <td>{{ measure.status }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!--/Country measure information table-->
           </div>
         </div>
       </div>
+      <!--/Second row information-->
     </div>
-  </div>
-  <br>
-  <br>
-  <br>
-</body>
+    <br />
+    <br />
+    <br />
+  </body>
+</html>

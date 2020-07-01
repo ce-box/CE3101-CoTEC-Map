@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Pathologys } from './pathologys';
-import { Contact } from './contact';
+import { Contact } from '../../../Interfaces/contact';
+import { Pathologys } from 'src/app/hospital-center/Interfaces/pathologys';
 
 
 @Component({

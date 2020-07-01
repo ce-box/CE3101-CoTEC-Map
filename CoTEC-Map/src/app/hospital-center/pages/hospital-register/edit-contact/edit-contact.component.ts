@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Pathologys } from '../contacts/pathologys';
-import { Contact } from '../contacts/contact';
+import { Contact } from '../../../Interfaces/contact';
+import { Pathologys } from 'src/app/hospital-center/Interfaces/pathologys';
 
 @Component({
   selector: 'app-edit-contact',

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CountriesService } from './Services/countries.service';
-import { Country } from './Country';
+import { Country } from './Interfaces/Country';
+import { Measures } from './Interfaces/Measures';
 
 
 declare var google;
@@ -16,6 +17,7 @@ export class ClientViewComponent implements OnInit {
   countries: any;
   worldInformation: any;
   mapInformation: any;
+  measures: any;
 
   // tslint:disable-next-line: variable-name
   constructor(private _http: CountriesService) {}
@@ -108,5 +110,11 @@ export class ClientViewComponent implements OnInit {
       );
       chart.draw(data, options);
     }
+  }
+
+  getMeasures(code: string) {
+    this._http.getMeasuresData(code).subscribe(data => {
+      this.measures = data;
+    });
   }
 }

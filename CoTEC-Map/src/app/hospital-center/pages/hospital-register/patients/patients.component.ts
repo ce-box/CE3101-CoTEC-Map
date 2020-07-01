@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Pathologys } from './pathologys';
-import { Medication } from './medication';
+import { Pathologys } from '../../../Interfaces/pathologys';
+import { Medication } from '../../../Interfaces/medication';
 
 @Component({
   selector: 'app-patients',

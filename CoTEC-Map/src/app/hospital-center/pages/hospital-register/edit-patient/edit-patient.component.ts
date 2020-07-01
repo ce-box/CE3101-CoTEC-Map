@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Pathologys } from '../patients/pathologys';
-import { Medication } from '../patients/medication';
+import { Pathologys } from '../../../Interfaces/pathologys';
+import { Medication } from '../../../Interfaces/medication';
 
 @Component({
   selector: 'app-edit-patient',
