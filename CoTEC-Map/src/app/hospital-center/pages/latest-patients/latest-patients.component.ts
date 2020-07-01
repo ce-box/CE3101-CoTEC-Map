@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PatientService } from '../../Services/patient.service';
+
 
 @Component({
   selector: 'app-latest-patients',
@@ -17,24 +19,13 @@ export class LatestPatientsComponent implements OnInit {
   // Patient list
   patients: any;
 
-  constructor() {
-    this.patients = [
-      {code: 207840516, name: 'Olman', lastName: 'Castro Hernández' },
-      {code: 207840514, name: 'Bertha', lastName: 'Castro Hernández' },
-      {code: 207840534, name: 'Esteban', lastName: 'Castro Hernández' },
-      {code: 207840512, name: 'Randall', lastName: 'Castro Hernández' },
-      {code: 207840516, name: 'Olman', lastName: 'Castro Hernández' },
-      {code: 207840514, name: 'Bertha', lastName: 'Castro Hernández' },
-      {code: 207840534, name: 'Esteban', lastName: 'Castro Hernández' },
-      {code: 207840512, name: 'Randall', lastName: 'Castro Hernández' },
-      {code: 207840516, name: 'Olman', lastName: 'Castro Hernández' },
-      {code: 207840514, name: 'Bertha', lastName: 'Castro Hernández' },
-      {code: 207840534, name: 'Esteban', lastName: 'Castro Hernández' },
-      {code: 207840512, name: 'Randall', lastName: 'Castro Hernández' }
-    ];
-  }
+  // tslint:disable-next-line: variable-name
+  constructor(private _http: PatientService) {}
 
   ngOnInit(): void {
+    this._http.getPatientData().subscribe(data => {
+      this.patients = data;
+    });
   }
 
   // Chage the page to the information patient

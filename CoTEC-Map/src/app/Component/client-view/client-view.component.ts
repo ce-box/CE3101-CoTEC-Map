@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CountriesService } from './Services/countries.service';
+import { Country } from './Country';
 
 
 declare var google;
@@ -13,70 +14,42 @@ declare var require: any;
 export class ClientViewComponent implements OnInit {
 
   countries: any;
-  country: any;
+  worldInformation: any;
+  mapInformation: any;
 
   // tslint:disable-next-line: variable-name
-  constructor(private _http: CountriesService) {
-    // sOLO NECESARIO PARA PRUEBAS SE DEBE ELIMINRA UNA VEZ SE HAGA LA CONEXIÓN
-    this.countries = [
-      // tslint:disable-next-line: max-line-length
-      {code : 'https://www.countryflags.io/US/flat/64.png', name : 'Costa Rica', numberCases : 2344, numberDeads : 234455, numberRecovered : 3455678},
-      // tslint:disable-next-line: max-line-length
-      {code : 'https://www.countryflags.io/CR/flat/64.png', name : 'coFFd', numberCases : 2344, numberDeads : 234455, numberRecovered : 3455678},
-      // tslint:disable-next-line: max-line-length
-      {code : 'https://www.countryflags.io/RU/flat/64.png', name : 'cod', numberCases : 2344, numberDeads : 234455, numberRecovered : 3455678},
-      {code : 'US', name : 'coFd', numberCases : 2344, numberDeads : 234455, numberRecovered : 3455678},
-      {code : 'US', name : 'cod', numberCases : 2344, numberDeads : 234455, numberRecovered : 3455678},
-      {code : 'US', name : 'cCDod', numberCases : 2344, numberDeads : 234455, numberRecovered : 3455678},
-      {code : 'US', name : 'cod', numberCases : 2344, numberDeads : 234455, numberRecovered : 3455678},
-      {code : 'US', name : 'cod', numberCases : 2344, numberDeads : 234455, numberRecovered : 3455678},
-      {code : 'US', name : 'cod', numberCases : 2344, numberDeads : 234455, numberRecovered : 3455678},
-      {code : 'US', name : 'cod', numberCases : 2344, numberDeads : 234455, numberRecovered : 3455678},
-      {code : 'US', name : 'cod', numberCases : 2344, numberDeads : 234455, numberRecovered : 3455678}
-    ];
-  }
+  constructor(private _http: CountriesService) {}
 
   // This funtion draw the map in at screen.
   ngOnInit(): void {
 
     this._http.getContriesData().subscribe(data => {
-      this.country = data;
-      console.log(this.country);
+      this.countries = data;
     });
 
-    // Cases coubtry map
-    google.charts.load('current', {
-      packages: ['geomap'],
-      // Note: you will need to get a mapsApiKey for your project.
-      // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-      mapsApiKey: 'AIzaSyDmhGZrOiBDdjLuW2Jp4nZC9IT2KKRYdpw',
+    this._http.getWorldInformation().subscribe(data => {
+      this.worldInformation = data;
+      this.createDoughnut(data);
     });
-    google.charts.setOnLoadCallback(drawRegionsMap);
-    function drawRegionsMap() {
-      // tslint:disable-next-line: prefer-const
-      // List of countries and information
-      const data = google.visualization.arrayToDataTable([
-        ['Country', 'Casos'],
-        ['Germany', 200],
-        ['United States', 300],
-        ['Brazil', 400],
-        ['Canada', 500],
-        ['France', 600],
-        ['Costa Rica', 700],
-      ]);
-      // tslint:disable-next-line: prefer-const
-      let options = {
-        colorAxis: { colors: ['#0553FF'] },
-        defaultColor: '#DCDDE3',
-      };
 
-      // tslint:disable-next-line: prefer-const
-      let chart = new google.visualization.GeoChart(
-        document.getElementById('regions_div')
-      );
-      chart.draw(data, options);
-    }
+    this._http.getContriesData().subscribe(data => {
+      this.mapInformation = data;
+      const mapData = this.mapStructure(data);
+      this.createMap(mapData);
+    });
 
+  }
+
+  mapStructure(countriesData: Country[]) {
+    const countryList: any = [['Country', 'Casos', 'Muertes']];
+    countriesData.forEach(country => {
+      countryList.push([country.countryName, country.infected, country.deaths]);
+    });
+
+    return countryList;
+  }
+
+  createDoughnut(data: Country) {
     // Create a graphic with the cases
     // tslint:disable-next-line: prefer-const
     let Chart = require('chart.js');
@@ -91,7 +64,7 @@ export class ClientViewComponent implements OnInit {
           {
             label: 'My First Dataset',
             // List of data with: Active cases, deads and recovered
-            data: [27865, 20000, 34560],
+            data: [this.worldInformation.active, this.worldInformation.deaths, this.worldInformation.recovered],
             backgroundColor: [
               '#38C3ED',
               '#FC8E19',
@@ -107,5 +80,33 @@ export class ClientViewComponent implements OnInit {
         }
       }
     });
+  }
+
+  createMap(mapInformation: any){
+
+    // Cases coubtry map
+    google.charts.load('current', {
+      packages: ['geomap'],
+      // Note: you will need to get a mapsApiKey for your project.
+      // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+      mapsApiKey: 'AIzaSyDmhGZrOiBDdjLuW2Jp4nZC9IT2KKRYdpw',
+    });
+    google.charts.setOnLoadCallback(drawRegionsMap);
+    function drawRegionsMap() {
+      // tslint:disable-next-line: prefer-const
+      // List of countries and information
+      const data = google.visualization.arrayToDataTable(mapInformation);
+      // tslint:disable-next-line: prefer-const
+      let options = {
+        colorAxis: { colors: ['#0553FF'] },
+        defaultColor: '#DCDDE3',
+      };
+
+      // tslint:disable-next-line: prefer-const
+      let chart = new google.visualization.GeoChart(
+        document.getElementById('regions_div')
+      );
+      chart.draw(data, options);
+    }
   }
 }

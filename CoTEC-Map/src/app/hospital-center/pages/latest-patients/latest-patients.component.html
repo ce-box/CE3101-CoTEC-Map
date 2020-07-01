@@ -80,13 +80,13 @@
                 <tbody>
                   <tr *ngFor="let patient of patients">
                     <td class="align-middle" (click)="changePage(patient.code)">
-                      {{ patient.code }}
+                      {{ patient.dni }}
                     </td>
                     <td class="align-middle" (click)="changePage(patient.code)">
                       {{ patient.name }}
                     </td>
                     <td class="align-middle" (click)="changePage(patient.code)">
-                      {{ patient.lastName }}
+                      {{ patient.name }}
                     </td>
                   </tr>
                 </tbody>

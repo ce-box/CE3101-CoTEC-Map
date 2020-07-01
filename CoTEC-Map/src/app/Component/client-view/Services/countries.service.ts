@@ -7,6 +7,8 @@ import { Country } from '../Country';
 })
 export class CountriesService {
 
+  countries: Country[] = [];
+
   constructor(private httpClient: HttpClient) { }
 
   // Entrada: ninguna
@@ -15,4 +17,12 @@ export class CountriesService {
   getContriesData() {
     return this.httpClient.get<Country[]>('https://localhost:5001/api/v1/cases/country/all');
   }
+
+  // Entrada: ninguna
+  // Función: conecta con la direción del servidor worldInformation
+  // Salida: la informacion del servidor worldInformation
+  getWorldInformation() {
+    return this.httpClient.get<Country>('https://localhost:5001/api/v1/cases/world');
+  }
 }
+
