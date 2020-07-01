@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CountriesService } from './Services/countries.service';
+
 
 declare var google;
 declare var require: any;
@@ -11,8 +13,10 @@ declare var require: any;
 export class ClientViewComponent implements OnInit {
 
   countries: any;
+  country: any;
 
-  constructor() {
+  // tslint:disable-next-line: variable-name
+  constructor(private _http: CountriesService) {
     // sOLO NECESARIO PARA PRUEBAS SE DEBE ELIMINRA UNA VEZ SE HAGA LA CONEXIÓN
     this.countries = [
       // tslint:disable-next-line: max-line-length
@@ -34,6 +38,13 @@ export class ClientViewComponent implements OnInit {
 
   // This funtion draw the map in at screen.
   ngOnInit(): void {
+
+    this._http.getContriesData().subscribe(data => {
+      this.country = data;
+      console.log(this.country);
+    });
+
+    // Cases coubtry map
     google.charts.load('current', {
       packages: ['geomap'],
       // Note: you will need to get a mapsApiKey for your project.

@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,7 @@ import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
     FormlyBootstrapModule,
     FormlyMaterialModule
   ],
-  providers: [],
+  providers: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
