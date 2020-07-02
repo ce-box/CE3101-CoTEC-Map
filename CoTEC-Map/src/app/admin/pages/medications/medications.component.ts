@@ -28,15 +28,15 @@ export class MedicationsComponent implements OnInit {
    * Columns hospital center
    */
   columnsS = [
-    {prop : 'id', name: 'Id'},
+    { prop: 'id', name: 'Id' },
     { prop: 'medicationName', name: 'Medication' },
-    { prop: 'pharmaCo', name: 'Pharmacy House'}];
+    { prop: 'pharmaCo', name: 'Pharmacy House' }];
   /**
    * Rows Hospital center
    */
   rowsS = [
     {
-      id:1,
+      id: 1,
       medicationName: 'Cibacen',
       pharmaCo: 'Novartis'
     },
@@ -56,13 +56,13 @@ export class MedicationsComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public medicationService: MedicationService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.getMedications();
     this.getPharmacyHouse();
   }
-  getMedications(){
+  getMedications() {
     this.medicationService.getMedications().subscribe(
       data => {
         console.log('medicatin data', data);
@@ -70,11 +70,20 @@ export class MedicationsComponent implements OnInit {
       }
     );
   }
-  getPharmacyHouse(){
+  getPharmacyHouse() {
     this.medicationService.getPharmacyHouses().subscribe(
-      data =>{
+      data => {
         console.log('farmacy house');
-        this.pharmacyHouse = data;
+        const dataPharmacy = [];
+        for (const pharmacy of data) {
+          const newPharmacyCo = {
+            value: pharmacy.id,
+            label: pharmacy.name
+          };
+          dataPharmacy.push(newPharmacyCo);
+        }
+        this.pharmacyHouse = dataPharmacy;
+
       }
     );
   }
@@ -92,7 +101,7 @@ export class MedicationsComponent implements OnInit {
   /**
    * Delete the option selected
    */
-  deleteSelected(){
+  deleteSelected() {
     console.log('selected to delete', this.selectToOption);
   }
   /**
