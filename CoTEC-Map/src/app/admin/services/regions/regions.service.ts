@@ -25,6 +25,7 @@ export class RegionsService {
     return this.http.get<any[]>(`https://localhost:5001/api/v1/countries/all`);
   }
   deleteRegion(bodyRegion: object){
+    console.log('bodu', bodyRegion);
    return this.http.delete(`https://localhost:5001/api/v1/regions/delete?name=${bodyRegion['name']}&Country=${bodyRegion['country']}`);
   }
 }

@@ -105,7 +105,7 @@ export class RegionsComponent implements OnInit {
   deleteSelected(){
     console.log(this.selectToOption);
     const body = {
-      name: this.selectToOption,
+      name: this.selectToOption['value']['name'],
       country: this.countrySelected
     };
     this.regionService.deleteRegion(body).subscribe(
