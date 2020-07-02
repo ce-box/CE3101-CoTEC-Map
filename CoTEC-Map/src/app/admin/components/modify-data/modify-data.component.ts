@@ -4,6 +4,7 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { RegionsService } from '../../services/regions/regions.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-modify-data',
@@ -98,11 +99,20 @@ export class ModifyDataComponent implements OnInit {
         },
         {
           className: 'col-6',
-          type: 'input',
+          type: 'select',
           key: 'option2',
           templateOptions: {
             label: 'House Pharmacy',
             required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.form.get('province').valueChanges.pipe(
+                tap(provinceSelected => {
+                  field.templateOptions.options = this.data.Pharmacies;
+                }),
+              ).subscribe();
+            },
           }
         }
       ],
@@ -328,6 +338,7 @@ export class ModifyDataComponent implements OnInit {
       }
       if (this.data.Parent === 'Medication') {
         this.recruitmentFields = this.MedicationFields;
+        console.log('farmacy', this.data.Pharmacies);
       }
       if (this.data.Parent === 'Pathology') {
         this.recruitmentFields = this.PathologyFields;

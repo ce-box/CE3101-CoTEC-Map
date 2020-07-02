@@ -5,6 +5,7 @@ import { SelectionType } from '@swimlane/ngx-datatable';
 import { MatDialog } from '@angular/material/dialog';
 import { EditDataComponent } from '../../components/edit-data/edit-data.component';
 import { ModifyDataComponent } from '../../components/modify-data/modify-data.component';
+import { MedicationService } from '../../services/medication/medication.service';
 @Component({
   selector: 'app-medications',
   templateUrl: './medications.component.html',
@@ -26,15 +27,18 @@ export class MedicationsComponent implements OnInit {
   /**
    * Columns hospital center
    */
-  columnsS = [{ prop: 'medication', name: 'Medication' },
-  { prop: 'pharmacyHouse', name: 'Pharmacy House'}];
+  columnsS = [
+    {prop : 'id', name: 'Id'},
+    { prop: 'medicationName', name: 'Medication' },
+    { prop: 'pharmaCo', name: 'Pharmacy House'}];
   /**
    * Rows Hospital center
    */
   rowsS = [
     {
-      medication: 'Cibacen',
-      pharmacyHouse: 'Novartis'
+      id:1,
+      medicationName: 'Cibacen',
+      pharmaCo: 'Novartis'
     },
   ];
   /**
@@ -42,12 +46,37 @@ export class MedicationsComponent implements OnInit {
    */
   enableChange: boolean = false;
   /**
+   * List of the pharmacyHouses in the db
+   */
+  pharmacyHouse: any[];
+  /**
    * First method for open a card
    * @param dialog Controller for the dialog
    */
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    public dialog: MatDialog,
+    public medicationService: MedicationService
+    ) { }
 
   ngOnInit(): void {
+    this.getMedications();
+    this.getPharmacyHouse();
+  }
+  getMedications(){
+    this.medicationService.getMedications().subscribe(
+      data => {
+        console.log('medicatin data', data);
+        this.rowsS = data;
+      }
+    );
+  }
+  getPharmacyHouse(){
+    this.medicationService.getPharmacyHouses().subscribe(
+      data =>{
+        console.log('farmacy house');
+        this.pharmacyHouse = data;
+      }
+    );
   }
   /**
    * selection event
@@ -64,7 +93,7 @@ export class MedicationsComponent implements OnInit {
    * Delete the option selected
    */
   deleteSelected(){
-    console.log('selected to delete',this.selectToOption);
+    console.log('selected to delete', this.selectToOption);
   }
   /**
    * Open a Modify/Add Component
@@ -74,7 +103,8 @@ export class MedicationsComponent implements OnInit {
       data: {
         Action: actionT,
         Parent: 'Medication',
-        Keys: Object.keys(this.rowsS[0])
+        Keys: Object.keys(this.rowsS[0]),
+        Pharmacies: this.pharmacyHouse
       }
     });
     dialogRef.afterClosed().subscribe(result => {
