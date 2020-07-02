@@ -336,7 +336,8 @@ export class ModifyDataComponent implements OnInit {
     console.log('data pased', this.data);
     this.keyOptions = this.data.Keys;
     if (this.data.Parent === 'Region') {
-      this.presentOptions = true;
+      this.presentOptions = false;
+      this.recruitmentFields = this.RegionFields
     } else {
       this.presentOptions = false;
       if (this.data.Parent === 'Hospital') {

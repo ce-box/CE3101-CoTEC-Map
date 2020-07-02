@@ -63,6 +63,7 @@ export class RegionsComponent implements OnInit {
   constructor(public dialog: MatDialog, public regionService: RegionsService) { }
 
   ngOnInit(): void {
+    console.log('ngOnit')
     this.getCountries();
   }
   getCountries(){
