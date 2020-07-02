@@ -5,6 +5,7 @@ import { SelectionType } from '@swimlane/ngx-datatable';
 import { MatDialog } from '@angular/material/dialog';
 import { ModifyDataComponent } from '../../components/modify-data/modify-data.component';
 import { EditDataComponent } from '../../components/edit-data/edit-data.component';
+import { RegionsService } from '../../services/regions/regions.service';
 
 @Component({
   selector: 'app-regions',
@@ -12,23 +13,18 @@ import { EditDataComponent } from '../../components/edit-data/edit-data.componen
   styleUrls: ['./regions.component.scss']
 })
 export class RegionsComponent implements OnInit {
-  columnsS = [{ prop: 'state', name: 'State' }];
-  rowsS = [
-    { state: 'oriental' },
-    { state: 'occidental' },
-    { state: 'oriental' }
-  ];
-  columnsR = [{ prop: 'region', name: 'Region' }, { name: 'Country' }];
+
+  columnsR = [{ prop: 'name', name: 'Name' }, { prop: 'code', name: 'Code' }];
   rowsR = [
-    { region: 'central', country: 'Costa Rica' },
-    { region: 'South', country: 'Argentine' },
-    { region: 'North', country: 'Mexico' }
+    { name: 'central', code: 'Costa Rica' },
+    { name: 'South', code: 'Argentine' },
+    { name: 'North', code: 'Mexico' }
   ];
-  columnsP = [{ prop: 'providence', name: 'Providence' }];
+  columnsP = [{ prop: 'name', name: 'Name' }];
   rowsP = [
-    { providence: 'Cartago' },
-    { providence: 'San Jose' },
-    { providence: 'Cartago' }
+    { name: 'Cartago' },
+    { name: 'San Jose' },
+    { name: 'Cartago' }
   ];
   /**
    * Type of the selection
@@ -51,10 +47,18 @@ export class RegionsComponent implements OnInit {
    */
   searchTextFilter: string;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public regionService: RegionsService) { }
 
   ngOnInit(): void {
+    this.getCountries();
   }
+  getCountries(){
+    this.regionService.getCountries().subscribe(data => {
+      console.log('region', data);
+      this.rowsR = data;
+    });
+  }
+  
   /**
    * selection event
    */
