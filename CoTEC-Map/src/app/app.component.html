@@ -1,70 +1,191 @@
-<div id="nav">
-  <nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand" href=" ">CoTEC</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--Principal navegation bar-->
+    <div id="nav">
+      <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href=" ">CoTEC</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto"></ul>
-      <button type="button" class="btn" onclick="location.href=' '">
-        <img
-        src="https://img.icons8.com/fluent/48/000000/home.png"
-        class="img-responsive"
-        alt="Responsive image"
-        width="30"
-        height="30"
-        id="btn1"
-      />
-      </button>
-      <button type="button" class="btn" onclick="location.href='hospitalCenter'">
-        <img
-        src="https://img.icons8.com/fluent/48/000000/globe-earth.png"
-        class="img-responsive"
-        alt="Responsive image"
-        width="30"
-        height="30"
-        id="btn1"
-      />
-      </button>
-      <button type="button" class="btn" onclick="location.href='admin'">
-        <img
-        src="https://img.icons8.com/cotton/64/000000/security-checked.png"
-        class="img-responsive"
-        alt="Responsive image"
-        width="30"
-        height="30"
-        id="btn1"
-      />
-      </button>
-      <button type="button" class="btn" onclick="location.href=' '">
-        <img
-        src="https://img.icons8.com/flat_round/64/000000/question-mark.png"
-        class="img-responsive"
-        alt="Responsive image"
-        width="30"
-        height="30"
-        id="btn1"
-      />
-      </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto"></ul>
+          <!--Home button-->
+          <button type="button" class="btn" onclick="location.href=' '">
+            <img
+              src="https://img.icons8.com/fluent/48/000000/home.png"
+              class="img-responsive"
+              alt="Responsive image"
+              width="30"
+              height="30"
+              id="btn1"
+            />
+          </button>
+          <!--/Home button-->
+
+          <!--Hospital center button-->
+          <button
+            *ngIf="hospitalCenter"
+            type="button"
+            class="btn"
+            onclick="location.href='hospitalCenter'"
+          >
+            <img
+              src="https://img.icons8.com/fluent/48/000000/globe-earth.png"
+              class="img-responsive"
+              alt="Responsive image"
+              width="30"
+              height="30"
+              id="btn1"
+            />
+          </button>
+          <!--/Hospital center button-->
+
+          <!--Admin center button-->
+          <button
+            *ngIf="admin"
+            type="button"
+            class="btn"
+            onclick="location.href='admin'"
+          >
+            <img
+              src="https://img.icons8.com/cotton/64/000000/security-checked.png"
+              class="img-responsive"
+              alt="Responsive image"
+              width="30"
+              height="30"
+              id="btn1"
+            />
+          </button>
+          <!--/Admin center button-->
+
+          <!--Login center button-->
+          <button *ngIf="login" type="button" class="btn" (click)="Login()">
+            <img
+              src="https://img.icons8.com/dusk/64/000000/login-rounded-right.png"
+              class="img-responsive"
+              alt="Responsive image"
+              width="30"
+              height="30"
+              id="btn1"
+            />
+          </button>
+          <!--/Login center button-->
+
+          <!--Logout center button-->
+          <button
+            *ngIf="logout"
+            type="button"
+            class="btn"
+            onclick="location.href=' '"
+          >
+            <img
+              src="https://img.icons8.com/dusk/64/000000/logout-rounded-left.png"
+              class="img-responsive"
+              alt="Responsive image"
+              width="30"
+              height="30"
+              id="btn1"
+            />
+          </button>
+          <!--/Logout center button-->
+        </div>
+      </nav>
     </div>
-  </nav>
-</div>
-<!--./Navbar-->
-<router-outlet></router-outlet>
-<div class="footer">
-  <div class="footer-copyright py-3">
-    © 2020 Copyright:
-    <a href="https://github.com/estalvgs1999/CE3101-CoTEC-Map" target="_blank">
-      CoTEC.com
-    </a>
-  </div> 
-</div>
+    <!--/Principal navegation bar-->
+
+    <!--Principal route-->
+    <router-outlet *ngIf="!changePage"></router-outlet>
+    <!--/Principal route-->
+
+    <!--Login-->
+    <div *ngIf="changePage" class="container">
+      <div class="row">
+        <div class="col-6 vision">
+          <img src="assets/logo.PNG" width="400" />
+          <br />
+          <br />
+          <br />
+          <h2>Registro completo</h2>
+          <p text-center>En busca del desarrollo nacional</p>
+        </div>
+        <div class="col-6 inicio">
+          <link
+            href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+            rel="stylesheet"
+            id="bootstrap-css"
+          />
+          <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+          <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+          <!------ Include the above in your HEAD tag ---------->
+
+          <div class="wrapper fadeInDown">
+            <div id="formContent">
+              <!-- Tabs Titles -->
+
+              <!-- Icon -->
+              <div class="fadeIn first">
+                <img
+                  src="https://imageog.flaticon.com/icons/png/512/295/295128.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF"
+                  id="icon"
+                  alt="User Icon"
+                  width="22"
+                />
+              </div>
+
+              <!-- Login Form -->
+              <form (submit)="confirm(userName, userPass)">
+                <input
+                  id="login"
+                  class="fadeIn second"
+                  name="login"
+                  placeholder="login"
+                  type="text"
+                  #userName
+                />
+                <input
+                  id="password"
+                  class="fadeIn third"
+                  name="login"
+                  placeholder="password"
+                  type="text"
+                  #userPass
+                />
+                <input type="submit" class="fadeIn fourth" value="Log In" />
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/Login-->
+
+    <!--Principal footer-->
+    <div class="footer">
+      <div class="footer-copyright py-3">
+        © 2020 Copyright:
+        <a
+          href="https://github.com/estalvgs1999/CE3101-CoTEC-Map"
+          target="_blank"
+        >
+          CoTEC.com
+        </a>
+      </div>
+    </div>
+    <!--/Principal footer-->
+  </body>
+</html>
