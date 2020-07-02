@@ -285,7 +285,7 @@ export class EditDataComponent implements OnInit {
       this.recruitmentFields = this.FieldTwo;
     }
     if (this.data.Keys.length === 3 && this.data.Parent === 'Medication'){
-      console.log('edit medication')
+      console.log('edit medication');
     }
     if (this.data.Keys.length === 4){
       this.recruitmentFields = this.FieldFour;

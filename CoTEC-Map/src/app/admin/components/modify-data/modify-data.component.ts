@@ -107,11 +107,7 @@ export class ModifyDataComponent implements OnInit {
           },
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
-              field.form.get('province').valueChanges.pipe(
-                tap(provinceSelected => {
-                  field.templateOptions.options = this.data.Pharmacies;
-                }),
-              ).subscribe();
+              field.templateOptions.options = this.data.Pharmacies;
             },
           }
         }
