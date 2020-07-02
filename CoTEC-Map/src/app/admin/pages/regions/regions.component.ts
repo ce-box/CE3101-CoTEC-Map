@@ -14,13 +14,25 @@ import { RegionsService } from '../../services/regions/regions.service';
 })
 export class RegionsComponent implements OnInit {
 
+  /**
+   * Columns structure for the Countries
+   */
   columnsR = [{ prop: 'name', name: 'Name' }, { prop: 'code', name: 'Code' }];
+  /**
+   * Rows data for the country
+   */
   rowsR = [
-    { name: 'central', code: 'Costa Rica' },
-    { name: 'South', code: 'Argentine' },
-    { name: 'North', code: 'Mexico' }
+    { name: 'Aruba', code: 'ABW' },
+    { name: 'Afganistán', code: 'AFG' },
+    { name: 'Mexico', code: 'MX' }
   ];
+  /**
+   * Columns structure for the region
+   */
   columnsP = [{ prop: 'name', name: 'Name' }];
+  /**
+   * Rows data for the regions
+   */
   rowsP = [
     { name: 'Cartago' },
     { name: 'San Jose' },
@@ -46,6 +58,7 @@ export class RegionsComponent implements OnInit {
    * Filter for the search bar
    */
   searchTextFilter: string;
+  countrySelected: string;
 
   constructor(public dialog: MatDialog, public regionService: RegionsService) { }
 
@@ -58,7 +71,6 @@ export class RegionsComponent implements OnInit {
       this.rowsR = data;
     });
   }
-  
   /**
    * selection event
    */
@@ -69,6 +81,22 @@ export class RegionsComponent implements OnInit {
       value: selected[0]
     };
     this.enableChange = true;
+  }
+  /**
+   * Function to get the regions
+   * @param event event
+   */
+  selectCountry(event){
+    console.log('event', event);
+    console.log('country Selected', this.countrySelected);
+    if (this.countrySelected){
+      this.regionService.getRegions(this.countrySelected).subscribe(
+        data => {
+          console.log('data service', data);
+          this.rowsP = data;
+        }
+      );
+    }
   }
   /**
    * Delete the option selected
