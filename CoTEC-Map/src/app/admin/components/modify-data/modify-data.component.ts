@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { RegionsService } from '../../services/regions/regions.service';
 
 @Component({
   selector: 'app-modify-data',
@@ -52,25 +53,6 @@ export class ModifyDataComponent implements OnInit {
    */
   presentOptions: boolean = false;
   /**
-   * Temporal data for one input
-   */
-  SPrFields: FormlyFieldConfig[] = [
-    {
-      fieldGroupClassName: 'row',
-      fieldGroup: [
-        {
-          className: 'col-6',
-          type: 'input',
-          key: 'name',
-          templateOptions: {
-            label: 'Name',
-            required: true
-          }
-        }
-      ],
-    }
-  ];
-  /**
    * Temporal data for region form
    */
   RegionFields: FormlyFieldConfig[] = [
@@ -89,7 +71,7 @@ export class ModifyDataComponent implements OnInit {
         {
           className: 'col-6',
           type: 'input',
-          key: 'country',
+          key: 'countryCode',
           templateOptions: {
             label: 'Country',
             required: true
@@ -330,16 +312,17 @@ export class ModifyDataComponent implements OnInit {
       ],
     }
   ];
-  constructor(public dialogRef: MatDialogRef<any>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(
+    public dialogRef: MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public regionService: RegionsService) { }
 
   ngOnInit(): void {
     console.log('data pased', this.data);
     this.keyOptions = this.data.Keys;
     if (this.data.Parent === 'Region') {
-      this.presentOptions = false;
-      this.recruitmentFields = this.RegionFields
+      this.recruitmentFields = this.RegionFields;
     } else {
-      this.presentOptions = false;
       if (this.data.Parent === 'Hospital') {
         this.recruitmentFields = this.HospitalFields;
       }
@@ -349,37 +332,39 @@ export class ModifyDataComponent implements OnInit {
       if (this.data.Parent === 'Pathology') {
         this.recruitmentFields = this.PathologyFields;
       }
-      if (this.data.Parent === 'byCountry'){
+      if (this.data.Parent === 'byCountry') {
         this.recruitmentFields = this.ByCountryFields;
       }
-      if (this.data.Parent === 'general'){
+      if (this.data.Parent === 'general') {
         this.recruitmentFields = this.GeneralFields;
       }
     }
   }
   submit() {
     console.log(this.model);
+    if (this.data.Parent === 'Region') {
+      this.regionService.createRegion(this.model);
+    }
+    if (this.data.Parent === 'Hospital') {
+      this.recruitmentFields = this.HospitalFields;
+    }
+    if (this.data.Parent === 'Medication') {
+      this.recruitmentFields = this.MedicationFields;
+    }
+    if (this.data.Parent === 'Pathology') {
+      this.recruitmentFields = this.PathologyFields;
+    }
+    if (this.data.Parent === 'byCountry') {
+      this.recruitmentFields = this.ByCountryFields;
+    }
+    if (this.data.Parent === 'general') {
+      this.recruitmentFields = this.GeneralFields;
+    }
+
   }
   onNoClick(): void {
     this.dialogRef.close();
   }
-  selectOptionF(event) {
-    console.log('eve', event);
-    console.log('selected value', this.selectedValue);
-    if (this.selectedValue) {
-      if (this.selectedValue === 'Region') {
-        console.log('valuyes Region');
-        this.recruitmentFields = this.RegionFields
-      }
-      if (this.selectedValue === 'Providence') {
-        console.log('valuyes');
-        this.recruitmentFields = this.SPrFields;
-      }
-      if (this.selectedValue === 'State') {
-        console.log('valuyes');
-        this.recruitmentFields = this.SPrFields;
-      }
-    }
-  }
+
 }
 

@@ -25,7 +25,7 @@
                       </mat-select>
                     </mat-form-field>
                   </form>                  
-                <ngx-datatable class="material" #mydatatable [rows]="rowsP" [columns]="columnsP"
+                <ngx-datatable class="material" #mydatatable [rows]="rowsP" [columns]="columnsP" *ngIf="countrySelected"
                     [selectionType]="SelectionType.single" [selected]="selected" columnMode="ColumnMode.force"
                     [headerHeight]="40" [rowHeight]="30" [footerHeight]="40" (select)="onSelect($event,'Province')">
                 </ngx-datatable>

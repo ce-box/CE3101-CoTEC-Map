@@ -63,7 +63,7 @@ export class RegionsComponent implements OnInit {
   constructor(public dialog: MatDialog, public regionService: RegionsService) { }
 
   ngOnInit(): void {
-    console.log('ngOnit')
+    console.log('ngOnit');
     this.getCountries();
   }
   getCountries(){
@@ -104,6 +104,15 @@ export class RegionsComponent implements OnInit {
    */
   deleteSelected(){
     console.log(this.selectToOption);
+    const body = {
+      name: this.selectToOption,
+      country: this.countrySelected
+    };
+    this.regionService.deleteRegion(body).subscribe(
+      dataResponse => {
+        console.log(dataResponse);
+      }
+    );
   }
   /**
    * Open a Modify/Add Component
