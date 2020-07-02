@@ -44,7 +44,7 @@
               type="button"
               class="btn btn-success col-md-8"
               [disabled]="
-                !(name.valid && LastName.valid && dni.valid && startDate.valid)
+                !(name.valid && LastName.valid && dni.valid && startDate.valid )
               "
             >
               Guardar
@@ -162,7 +162,7 @@
                         *ngFor="let medicine of medication"
                         (click)="getMedicineValue(medicine)"
                       >
-                        {{ medicine.medicine }}
+                        {{ medicine.medicationName }}
                       </option>
                     </select>
                     <div class="scrollbar" id="style-1">
@@ -185,10 +185,10 @@
                               class="align-middle"
                               (click)="deleteMedicine(medication)"
                             >
-                              {{ medication.medicine }}
+                              {{ medication.medicationName }}
                             </td>
                             <td class="align-middle">
-                              {{ medication.medication }}
+                              {{ medication.pharmaCo }}
                             </td>
                           </tr>
                         </tbody>

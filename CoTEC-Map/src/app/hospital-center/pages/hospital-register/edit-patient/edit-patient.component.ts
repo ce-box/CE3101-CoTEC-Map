@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Pathologys } from '../../../Interfaces/pathologys';
 import { Medication } from '../../../Interfaces/medication';
+import { PatientService } from 'src/app/hospital-center/Services/patient.service';
 
 @Component({
   selector: 'app-edit-patient',
@@ -21,7 +22,8 @@ export class EditPatientComponent implements OnInit {
   states: any;
   countrys: any;
 
-  constructor() {
+  // tslint:disable-next-line: variable-name
+  constructor(private _http: PatientService) {
 
     this.states = ['Activa', 'Contagiada', 'Recuperada', 'Muerta'];
     this.countrys = ['Costa Rica', 'El Salvador', 'Nicaragua', 'Panamá'];
@@ -29,34 +31,24 @@ export class EditPatientComponent implements OnInit {
       {
         name: 'Presión',
         treatment: 'este',
-        symptoms: ['h'],
+        symptoms: 'h',
         description: 'esta',
       },
       {
         name: 'Node Js',
         treatment: 'este',
-        symptoms: ['j'],
+        symptoms: 'j',
         description: 'esta',
       },
-      { name: 'Java', treatment: 'este', symptoms: ['k'], description: 'esta' },
-    ];
-    this.medication = [
-      {
-        medicine: 'Acetanminofen',
-        medication: 'Indial',
-      },
-      {
-        medicine: 'Ibuprofeno 200mg',
-        medication: 'Indial',
-      },
-      {
-        medicine: 'Ibuprofeno 400mg',
-        medication: 'Indial',
-      }
+      { name: 'Java', treatment: 'este', symptoms: 'k', description: 'esta' },
     ];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._http.getPatientMedications(this.dniPatient).subscribe(data => {
+      this.medication = data;
+    });
+  }
 
   // Add a pathology in the list for send to Data Base
   getPathologyValue(value: Pathologys[]): void {

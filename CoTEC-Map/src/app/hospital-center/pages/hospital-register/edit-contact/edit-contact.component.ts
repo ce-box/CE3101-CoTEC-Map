@@ -49,16 +49,16 @@ export class EditContactComponent implements OnInit {
       {
         name: 'Presión',
         treatment: 'este',
-        symptoms: ['h'],
+        symptoms: 'h',
         description: 'esta',
       },
       {
         name: 'Node Js',
         treatment: 'este',
-        symptoms: ['j'],
+        symptoms: 'j',
         description: 'esta',
       },
-      { name: 'Java', treatment: 'este', symptoms: ['k'], description: 'esta' },
+      { name: 'Java', treatment: 'este', symptoms: 'k', description: 'esta' },
     ];
   }
 

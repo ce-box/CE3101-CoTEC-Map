@@ -41,10 +41,11 @@
           <!-- Add to the list button   -->
           <div id="button3" class="text-center">
             <button
+              (click)="addPatient(dni.value, name.value, LastName.value, startDate.value, customRadio.value, customRadio2.value, inputState.value, inputStateRegion.value, inputStateCountry.value)"
               type="button"
               class="btn btn-success col-md-8"
               [disabled]="
-                !(name.valid && LastName.valid && dni.valid && startDate.valid)
+                !(name.valid && LastName.valid && dni.valid && startDate.valid && customRadio.valid && customRadio2.valid)
               "
             >
               Agregar
@@ -142,9 +143,16 @@
                   <!-- State input  -->
                   <div class="form-group">
                     <h2>Estado</h2>
-                    <select id="inputState" class="form-control">
-                      <option *ngFor="let state of states" selected>{{
-                        state
+                    <select
+                    required 
+                    id="inputState" 
+                    class="form-control"
+                    name="inputState"
+                    ngModel
+                    #inputState="ngModel" 
+                    >
+                      <option *ngFor="let statu of status" selected>{{
+                        statu.name
                       }}</option>
                     </select>
                   </div>
@@ -162,7 +170,7 @@
                         *ngFor="let medicine of medication"
                         (click)="getMedicineValue(medicine)"
                       >
-                        {{ medicine.medicine }}
+                        {{ medicine.medicationName }}
                       </option>
                     </select>
                     <div class="scrollbar" id="style-1">
@@ -185,10 +193,10 @@
                               class="align-middle"
                               (click)="deleteMedicine(medication)"
                             >
-                              {{ medication.medicine }}
+                              {{ medication.medicationName }}
                             </td>
                             <td class="align-middle">
-                              {{ medication.medication }}
+                              {{ medication.pharmaCo }}
                             </td>
                           </tr>
                         </tbody>
@@ -232,23 +240,45 @@
                   <!-- Country input  -->
                   <div class="form-group">
                     <h2>País de origen</h2>
-                    <select id="inputState" class="form-control">
-                      <option *ngFor="let country of countrys" selected>{{
-                        country
-                      }}</option>
+                    <div class="row">
+                    <div class="col">
+                    <select 
+                    required 
+                    id="inputStateCountry" 
+                    class="form-control"
+                    name="inputStateCountry"
+                    ngModel
+                    #inputStateCountry="ngModel" 
+                    >
+                      <option 
+                      *ngFor="let country of countries" 
+                      >
+                        {{country.countryName}}
+                      </option>
                     </select>
+                  </div>
+                  <div class="col">
+                    <button type="button" class="btn btn-success" (click)="getRegions(inputStateCountry?.value)">Ok</button>
+                  </div>
+                </div>
                   </div>
                   <!-- /Country input  -->
 
                   <!-- Region input  -->
                   <div class="form-group">
-                    <h2>Región</h2>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Nombre *"
-                      value=""
-                    />
+                    <h2>Regiones</h2>
+                    <select
+                    required 
+                    id="inputStateRegion" 
+                    class="form-control"
+                    name="inputStateRegion"
+                    ngModel
+                    #inputStateRegion="ngModel" 
+                    >
+                      <option *ngFor="let region of regions" selected>{{
+                        region.name
+                      }}</option>
+                    </select>
                   </div>
                   <!-- /Region input  -->
 
@@ -263,6 +293,9 @@
                             id="customRadio1"
                             name="customRadio"
                             class="custom-control-input"
+                            ngModel
+                            #customRadio="ngModel" 
+                            value = "true"
                             checked
                           />
                           <label class="custom-control-label" for="customRadio1"
@@ -275,6 +308,7 @@
                             id="customRadio2"
                             name="customRadio"
                             class="custom-control-input"
+                            value = "false"
                           />
                           <label class="custom-control-label" for="customRadio2"
                             >No</label
@@ -292,6 +326,9 @@
                             id="customRadio3"
                             name="customRadio2"
                             class="custom-control-input"
+                            ngModel
+                            #customRadio2="ngModel"
+                            value = "true"
                             checked
                           />
                           <label class="custom-control-label" for="customRadio3"
@@ -304,6 +341,7 @@
                             id="customRadio4"
                             name="customRadio2"
                             class="custom-control-input"
+                            value = "false"
                           />
                           <label class="custom-control-label" for="customRadio4"
                             >No</label

@@ -1,5 +1,7 @@
 // Medication information interface
 export interface Medication{
-    medicine: string;
-    medication: string;
+    medicationId: number;
+    medicationName: string;
+    pharmaCo: string;
+    prescription: string;
     }

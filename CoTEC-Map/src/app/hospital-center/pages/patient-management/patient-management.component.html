@@ -90,7 +90,7 @@
                   </div>
                   <div class="form-group">
                     <h2>Estado</h2>
-                    <h3>{{ patient.state }}</h3>
+                    <h3>{{ patient.status }}</h3>
                   </div>
                   <div class="form-group">
                     <h2>Medicación</h2>
@@ -103,13 +103,13 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let medication of patient.medication">
+                          <tr *ngFor="let medicine of medication">
                             <td class="align-middle">
-                              {{ medication.house }}
+                              {{ medicine.pharmaCo }}
                             </td>
 
                             <td class="align-middle">
-                              {{ medication.medicine }}
+                              {{ medicine.medicationName }}
                             </td>
                           </tr>
                         </tbody>
@@ -129,8 +129,8 @@
                   style="padding-left: 10px;"
                 >
                   <div class="form-group">
-                    <h2>Nacionalidad</h2>
-                    <h3>{{ patient.nationality }}</h3>
+                    <h2>País de prodecencia</h2>
+                    <h3>{{ patient.country }}</h3>
                   </div>
                   <div class="form-group">
                     <h2>Región</h2>
@@ -138,11 +138,11 @@
                   </div>
                   <div class="form-group">
                     <h2>Internado</h2>
-                    <h3>{{ patient.internship }}</h3>
+                    <h3>{{ patient.hospitalized }}</h3>
                   </div>
                   <div class="form-group">
                     <h2>Internado en UCI</h2>
-                    <h3>{{ patient.UCI }}</h3>
+                    <h3>{{ patient.icu }}</h3>
                   </div>
                   <div class="form-group">
                     <h2>Patologías</h2>
@@ -154,9 +154,9 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let pathology of patient.pathology">
+                          <tr *ngFor="let type of pathology">
                             <td class="align-middle">
-                              {{ pathology }}
+                              {{ type.name }}
                             </td>
                           </tr>
                         </tbody>

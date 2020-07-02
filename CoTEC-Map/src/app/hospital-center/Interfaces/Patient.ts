@@ -3,6 +3,7 @@
 export interface Patient{
     dni: string;
     name: string;
+    lastName: string;
     age: number;
     hospital: string;
     hospitalized: boolean;

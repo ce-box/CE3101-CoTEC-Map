@@ -23,7 +23,7 @@ export class LatestPatientsComponent implements OnInit {
   constructor(private _http: PatientService) {}
 
   ngOnInit(): void {
-    this._http.getPatientData().subscribe(data => {
+    this._http.getPatientsData().subscribe(data => {
       this.patients = data;
     });
   }

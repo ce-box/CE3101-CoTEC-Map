@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Pathologys } from '../../../Interfaces/pathologys';
 import { Medication } from '../../../Interfaces/medication';
+import { PatientService } from 'src/app/hospital-center/Services/patient.service';
+import { Country } from 'src/app/hospital-center/Interfaces/Country';
+import { Status } from 'src/app/hospital-center/Interfaces/status';
+import { Patient } from 'src/app/hospital-center/Interfaces/Patient';
 
 @Component({
   selector: 'app-patients',
@@ -10,51 +14,67 @@ import { Medication } from '../../../Interfaces/medication';
 export class PatientsComponent implements OnInit {
 
   pageName = 'Crear paciente';
+  countrySelect = false;
+  hospitalizedPatilse;
+
+  // Add patient var
+  hospitalizedPatient: boolean;
+  icuPatent: boolean;
+  statusPatient: number;
 
   // Data lists
   pathologys: Pathologys[];
   medication: Medication[];
   pathologysList: any[] = [];
   medicationList: any[] = [];
-  states: any;
-  countrys: any;
+  status: Status[];
+  countries: Country[];
+  regions: any;
 
-  constructor() {
+  // tslint:disable-next-line: variable-name
+  constructor(private _http: PatientService) {
 
-    this.states = ['Activa', 'Contagiada', 'Recuperada', 'Muerta'];
-    this.countrys = ['Costa Rica', 'El Salvador', 'Nicaragua', 'Panamá'];
     this.pathologys = [
       {
         name: 'Presión',
         treatment: 'este',
-        symptoms: ['h'],
+        symptoms: 'h',
         description: 'esta',
       },
       {
         name: 'Node Js',
         treatment: 'este',
-        symptoms: ['j'],
+        symptoms: 'j',
         description: 'esta',
       },
-      { name: 'Java', treatment: 'este', symptoms: ['k'], description: 'esta' },
-    ];
-    this.medication = [
-      {
-        medicine: 'Acetanminofen',
-        medication: 'Indial',
-      },
-      {
-        medicine: 'Ibuprofeno 200mg',
-        medication: 'Indial',
-      },
-      {
-        medicine: 'Ibuprofeno 400mg',
-        medication: 'Indial',
-      }
+      { name: 'Java', treatment: 'este', symptoms: 'k', description: 'esta' },
     ];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._http.getContriesData().subscribe(data => {
+      this.countries = data;
+    });
+
+    this._http.getMedications().subscribe(data => {
+      this.medication = data;
+    });
+
+    this._http.getStatus().subscribe(data => {
+      this.status = data;
+    });
+  }
+
+  getRegions(code: string) {
+    this.countrySelect = true;
+    for (const entry of this.countries) {
+      if (entry.countryName === code){
+        this._http.getRegionsForContry(entry.countryCode).subscribe(data => {
+          this.regions = data;
+        });
+      }
+    }
+  }
 
   // Add a pathology in the list for send to Data Base
   getPathologyValue(value: Pathologys[]): void {
@@ -92,5 +112,37 @@ export class PatientsComponent implements OnInit {
     if (i !== -1) {
       this.medicationList.splice(i, 1);
     }
+  }
+
+  // tslint:disable-next-line: max-line-length
+  addPatient(dni: string, name: string, lastName: string, doB: string, hospitalized: string, icu: string, status: string, region: string, country: string) {
+
+    if (hospitalized === 'true') {
+      this.hospitalizedPatient = true;
+    }
+    else {
+      this.hospitalizedPatient = false;
+    }
+
+    for (const entry of this.status) {
+      if (entry.name === status) {
+        this.statusPatient = entry.id;
+      }
+    }
+
+    for (const entry of this.countries) {
+      if (entry.countryName === country) {
+        country = entry.countryCode;
+      }
+    }
+
+    if (icu === 'true') {
+      this.icuPatent = true;
+    }
+    else {
+      this.icuPatent = false;
+    }
+
+
   }
 }

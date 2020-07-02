@@ -1,4 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { PatientService } from '../../Services/patient.service';
+import { Medication } from '../../Interfaces/medication';
+import { Pathologys } from '../../Interfaces/pathologys';
 
 @Component({
   selector: 'app-patient-management',
@@ -20,25 +23,18 @@ export class PatientManagementComponent implements OnInit {
   // List information
   patient: any;
   contacts: any;
+  medication: Medication[];
+  pathology: Pathologys[];
 
-  constructor() {
-    this.patient = {
-      name: 'Olman',
-      lastName: 'Castro Hernández',
-      dni: '207840516',
-      age: 21,
-      nationality: 'Costa Rica',
-      state: 'Crítico',
-      region: 'Heredia',
-      internship: 'Sí',
-      UCI: 'Sí',
-      medication: [
-        { house: 'Bayer', medicine: 'Alive' },
-        { house: 'Bayer', medicine: 'Alive' },
-        { house: 'Bayer', medicine: 'Aspirina' },
+  // tslint:disable-next-line: variable-name
+  constructor(private _http: PatientService) {
+
+      this.pathology = [
+        {name: 'Hipertensión', treatment: '', symptoms: '', description: ''},
+        {name: 'diavetes', treatment: '', symptoms: '', description: ''},
+        {name: 'asma', treatment: '', symptoms: '', description: ''}
       ],
-      pathology: ['Hipertensión', 'diavetes', 'asma'],
-    };
+
 
     this.contacts = [
       {
@@ -84,7 +80,15 @@ export class PatientManagementComponent implements OnInit {
     ];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._http.getPatientData(this.dniPatient).subscribe(data => {
+      this.patient = data;
+    });
+
+    this._http.getPatientMedications(this.dniPatient).subscribe(data => {
+      this.medication = data;
+    });
+  }
 
   // Change the page to create contacts
   changePage(dniContact: number){

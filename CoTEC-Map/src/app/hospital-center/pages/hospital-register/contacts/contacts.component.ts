@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Contact } from '../../../Interfaces/contact';
 import { Pathologys } from 'src/app/hospital-center/Interfaces/pathologys';
+import { ContactService } from 'src/app/hospital-center/Services/contact.service';
 
 
 @Component({
@@ -19,30 +20,34 @@ export class ContactsComponent implements OnInit {
   pathologysList: any[] = [];
   contactList: any[] = [];
   states: any;
-  countrys: any;
+  countries: any;
 
-  constructor() {
+  // tslint:disable-next-line: variable-name
+  constructor(private _http: ContactService) {
 
     this.states = ['Activa', 'Contagiada', 'Recuperada', 'Muerta'];
-    this.countrys = ['Costa Rica', 'El Salvador', 'Nicaragua', 'Panamá'];
     this.pathologys = [
       {
         name: 'Presión',
         treatment: 'este',
-        symptoms: ['h'],
+        symptoms: 'h',
         description: 'esta',
       },
       {
         name: 'Node Js',
         treatment: 'este',
-        symptoms: ['j'],
+        symptoms: 'j',
         description: 'esta',
       },
-      { name: 'Java', treatment: 'este', symptoms: ['k'], description: 'esta' },
+      { name: 'Java', treatment: 'este', symptoms: 'k', description: 'esta' },
     ];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._http.getContriesData().subscribe(data => {
+      this.countries = data;
+    });
+  }
 
   // Add a pathology in the list for send to Data Base
   getPathologyValue(value: Pathologys[]): void {
