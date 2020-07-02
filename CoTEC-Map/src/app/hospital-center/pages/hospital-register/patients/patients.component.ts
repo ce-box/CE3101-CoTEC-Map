@@ -4,7 +4,7 @@ import { Medication } from '../../../Interfaces/medication';
 import { PatientService } from 'src/app/hospital-center/Services/patient.service';
 import { Country } from 'src/app/hospital-center/Interfaces/Country';
 import { Status } from 'src/app/hospital-center/Interfaces/status';
-import { Patient } from 'src/app/hospital-center/Interfaces/Patient';
+import { Patient, SendPatient } from 'src/app/hospital-center/Interfaces/Patient';
 
 @Component({
   selector: 'app-patients',
@@ -15,7 +15,6 @@ export class PatientsComponent implements OnInit {
 
   pageName = 'Crear paciente';
   countrySelect = false;
-  hospitalizedPatilse;
 
   // Add patient var
   hospitalizedPatient: boolean;
@@ -142,7 +141,11 @@ export class PatientsComponent implements OnInit {
     else {
       this.icuPatent = false;
     }
+    const patient: SendPatient = {Dni: dni, Name: name, LastName: lastName,
+      DoB: doB, Hospitalized: this.hospitalizedPatient, ICU: this.icuPatent,
+      Status: this.statusPatient, Hospital_Id: 1, Region: region, Country: country };
+    console.log(patient);
 
-
+    this._http.postPatient(patient);
   }
 }

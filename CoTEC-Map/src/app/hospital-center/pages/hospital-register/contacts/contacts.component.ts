@@ -19,13 +19,11 @@ export class ContactsComponent implements OnInit {
   pathologys: Pathologys[];
   pathologysList: any[] = [];
   contactList: any[] = [];
-  states: any;
   countries: any;
 
   // tslint:disable-next-line: variable-name
   constructor(private _http: ContactService) {
 
-    this.states = ['Activa', 'Contagiada', 'Recuperada', 'Muerta'];
     this.pathologys = [
       {
         name: 'Presión',

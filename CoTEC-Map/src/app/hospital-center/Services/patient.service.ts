@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Patient } from '../Interfaces/Patient';
+import { Patient, SendPatient } from '../Interfaces/Patient';
 import { Country } from '../Interfaces/Country';
 import { Medication } from '../Interfaces/medication';
 import { Region } from '../Interfaces/region';
@@ -47,7 +47,7 @@ export class PatientService {
     return this.httpClient.get<Status[]>('https://localhost:5001/api/v1/status/all');
   }
 
-  postPatient(patient: Patient) {
+  postPatient(patient: SendPatient) {
     this.httpClient.post('https://localhost:5001/api/v1/patients/new/list', patient);
   }
 

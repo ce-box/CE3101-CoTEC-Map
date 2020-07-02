@@ -44,7 +44,7 @@
               type="button"
               class="btn btn-success col-md-8"
               [disabled]="
-                !(name.valid && LastName.valid && dni.valid && startDate.valid )
+                !(name.valid && LastName.valid )
               "
             >
               Guardar
@@ -113,29 +113,18 @@
 
                   <!-- Dni input  -->
                   <div class="form-group">
-                    <h2>Número de identificación</h2>
+                    <h2>Identificación</h2>
                     <input
-                      required
-                      pattern="[0-9]{9}"
-                      ngModel
-                      name="dni"
-                      placeholder="Identificación *"
-                      #dni="ngModel"
-                      type="number"
+                      type="text"
                       class="form-control"
+                      placeholder="Identificación *"
+                      required
+                      dni="dni"
+                      ngModel
+                      #dni="ngModel"
                       id="dni"
+                      disabled
                     />
-                    <div
-                      class="alert alert-danger"
-                      *ngIf="dni.touched && !dni.valid"
-                    >
-                      <div *ngIf="dni.errors?.required">
-                        Debe ingresar un código.
-                      </div>
-                      <div *ngIf="dni.errors?.pattern">
-                        El código debe ser de 9 dígitos.
-                      </div>
-                    </div>
                   </div>
                   <!-- /Dni input  -->
 
@@ -207,36 +196,34 @@
                   <!-- Born input  -->
                   <div class="form-group">
                     <h2>Edad</h2>
-                    <div class="form-group">
-                      <input
-                        required
-                        type="date"
-                        name="startDate"
-                        ngModel
-                        #startDate="ngModel"
-                        max="3000-12-31"
-                        min="1000-01-01"
-                        class="form-control"
-                        id="startDate"
-                      />
-                      <div
-                        class="alert alert-danger"
-                        *ngIf="startDate.touched && !startDate.valid"
-                      >
-                        Debe ingresar una fecha válida.
-                      </div>
-                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Edad *"
+                      required
+                      age="age"
+                      ngModel
+                      #age="ngModel"
+                      id="age"
+                      disabled
+                    />
                   </div>
                   <!-- Born input  -->
 
                   <!-- Country input  -->
                   <div class="form-group">
-                    <h2>País de origen</h2>
-                    <select id="inputState" class="form-control">
-                      <option *ngFor="let country of countrys" selected>{{
-                        country
-                      }}</option>
-                    </select>
+                    <h2>País</h2>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="País *"
+                      required
+                      country="country"
+                      ngModel
+                      #country="ngModel"
+                      id="country"
+                      disabled
+                    />
                   </div>
                   <!-- /Country input  -->
 
@@ -246,8 +233,13 @@
                     <input
                       type="text"
                       class="form-control"
-                      placeholder="Nombre *"
-                      value=""
+                      placeholder="Región *"
+                      required
+                      region="region"
+                      ngModel
+                      #region="ngModel"
+                      id="region"
+                      disabled
                     />
                   </div>
                   <!-- /Region input  -->

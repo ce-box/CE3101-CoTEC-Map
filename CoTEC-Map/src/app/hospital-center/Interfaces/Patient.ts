@@ -13,3 +13,17 @@ export interface Patient{
     country: string;
     }
 
+// Send Patient information interface
+export interface SendPatient{
+    Dni: string;
+    Name: string;
+    LastName: string;
+    DoB: string;
+    Hospitalized: boolean;
+    ICU: boolean;
+    Status: number;
+    Hospital_Id: number;
+    Region: string;
+    Country: string;
+    }
+
