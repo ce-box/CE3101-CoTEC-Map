@@ -12,6 +12,10 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PopoverComponent } from '../../components/popover/popover.component';
 import { Route, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { EditDataComponent } from '../../components/edit-data/edit-data.component';
+import { ModifyDataComponent } from '../../components/modify-data/modify-data.component';
+import { StatusService } from '../../services/status/status.service';
 /**
  * Declare fuse variable
  */
@@ -27,17 +31,19 @@ export class AdminComponent implements OnInit {
    */
   @ViewChild('searchInput', { static: false }) searchInput: ElementRef;
   /**
+   * Columns of the table
+   */
+  columns: any[] = [{ name: 'Id' , prop: 'id' }, { name: 'Name' , prop: 'name' }];
+  /**
    * rows of the table
    */
   rows = [
-    { number: 1, name: 'Austin', gender: 'Male', company: 'Swimlane' },
-    { number: 2, name: 'Dany', gender: 'Male', company: 'KFC' },
-    { number: 3, name: 'Molly', gender: 'Female', company: 'Burger King' }
+    {
+      id: 1,
+      name: 'ACTIVE'
+    }
   ];
-  /**
-   * Columns of the table
-   */
-  columns: any[] = [{ name: 'number' }, { prop: 'name' }, { name: 'Gender' }, { name: 'Company' }];
+
   /**
    * Selected Value
    */
@@ -96,9 +102,19 @@ export class AdminComponent implements OnInit {
    */
   FileSelected: File;
   /**
+   * Boolean for the enable of edition
+   */
+  // tslint:disable-next-line: no-inferrable-types
+  enableEdit: boolean = false;
+  /**
    * Boolean for the disable of more files in the app
    */
+  // tslint:disable-next-line: no-inferrable-types
   disableMoreFile: boolean = true;
+  /**
+   * String of the option in the table
+   */
+  selectToOption: object;
   /**
    * First method in the page
    * @param adminService Controller for the admin service
@@ -110,8 +126,11 @@ export class AdminComponent implements OnInit {
     public iconRegistry: MatIconRegistry,
     public sanitizer: DomSanitizer,
     private nationalityService: NationalityService,
+    // tslint:disable-next-line: variable-name
     private _snackBar: MatSnackBar,
-    private route: Router) {
+    private route: Router,
+    public dialog: MatDialog,
+    public statusService: StatusService) {
     iconRegistry.addSvgIcon(
       'excel_icon',
       sanitizer.bypassSecurityTrustResourceUrl('../../../../assets/imgs/excel_icon.png'));
@@ -119,13 +138,19 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.provinces = ubicaciones.provincias;
-    this.rows = this.getFakeRows(6);
     this.fuseResults = this.rows;
-    this.columns = [
-      { name: 'Name', prop: 'personal.name' },
-      { name: 'Last Name', prop: 'personal.lastName' },
-      { name: 'Id', prop: 'id' }
-    ];
+    this.getStatus();
+  }
+  async getStatus(){
+    this.statusService.getStatus().then(
+      dataR => {
+        this.rows = dataR;
+        this.fuseResults = this.rows;
+        this.setRows();
+      }
+    );
+  }
+  setRows(){
     this.fuseOptions = {
       isCaseSensitive: false,
       findAllMatches: false,
@@ -137,10 +162,7 @@ export class AdminComponent implements OnInit {
       threshold: 0.6,
       location: 0,
       distance: 100,
-      keys: [
-        'personal.name',
-        'personal.lastName'
-      ]
+
     };
     this.fuse = new Fuse(this.fuseResults, this.fuseOptions);
   }
@@ -164,6 +186,7 @@ export class AdminComponent implements OnInit {
    * Get nationalities
    */
   async getNationalities() {
+    // tslint:disable-next-line: prefer-const
     let dataN;
     await this.nationalityService.getCountries();
     console.log('outside', dataN);
@@ -175,6 +198,12 @@ export class AdminComponent implements OnInit {
     this.adminService.getServiceData().subscribe(data => {
       console.log(data);
     });
+  }
+  deleteData(){
+    console.log('delete');
+    // tslint:disable-next-line: no-string-literal
+    this.statusService.deleteStatus(this.selectToOption['value']['id']);
+    location.reload();
   }
 
   /**
@@ -189,45 +218,11 @@ export class AdminComponent implements OnInit {
    */
   onSelect({ selected }) {
     console.log('holi on select', selected);
-  }
-  /**
-   * get several ros
-   * @param qty number of the row
-   */
-  getFakeRows(qty: number) {
-    const fakeRows = [];
-    for (let i = 0; i < qty; i++) {
-      const newFakeObject = this.getFakeRow();
-      fakeRows.push(newFakeObject);
-    }
-    return fakeRows;
-  }
-  /**
-   * Get a fake data for the row
-   */
-  getFakeRow() {
-    /* Ask for more possible options like:
-    * 'Rather not say'
-    */
-    const genders = ['male', 'female'];
-    console.log(this.provinces[Math.floor(Math.random() * (this.provinces.length))]);
-    return {
-      id: faker.random.uuid(),
-      personal: {
-        name: faker.name.findName() + ' ' + faker.name.lastName(),
-        lastName: faker.name.lastName(),
-        birthdate: faker.date.past().toLocaleString(),
-        sex: genders[Math.floor(Math.random() * (genders.length))]
-      },
-      contact: {
-        email: faker.internet.email(),
-        phone: faker.phone.phoneNumber()
-      },
-      address: {
-        region: this.provinces[Math.floor(Math.random() * (this.provinces.length))]
-      },
-      state: this.states[Math.floor(Math.random() * (this.states.length))],
+    this.selectToOption = {
+      parent: 'Status',
+      value: selected[0]
     };
+    this.enableEdit = true;
   }
   /**
    * Apply filters to the columns
@@ -266,7 +261,7 @@ export class AdminComponent implements OnInit {
    */
   fileChange(element) {
     console.log(element.target.files[0]);
-    if (element.target.files[0].type === "application/vnd.ms-excel"){
+    if (element.target.files[0].type === 'application/vnd.ms-excel'){
       console.log('es un excel');
       this.openSnackBar('Send the file');
       this.FileSelected = element.target.files[0];
@@ -289,6 +284,35 @@ export class AdminComponent implements OnInit {
   openSnackBar(message: string) {
     this._snackBar.open(message, '', {
       duration: 2000,
+    });
+  }
+  /**
+   * Open a Modify/Add Component
+   */
+  openDialog() {
+    const dialogRef = this.dialog.open(ModifyDataComponent, {
+      data: {
+        Parent: 'Status',
+        Keys: Object.keys(this.rows[0])
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  /**
+   * Open a Modify/Add Component
+   */
+  openDialogToEdit() {
+    const dialogRef = this.dialog.open(EditDataComponent, {
+      data: {
+        Parent: 'Status',
+        Selection: this.selectToOption,
+        Keys: Object.keys(this.rows[0])
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
     });
   }
 }

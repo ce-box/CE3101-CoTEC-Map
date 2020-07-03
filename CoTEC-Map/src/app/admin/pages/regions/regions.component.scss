@@ -28,15 +28,15 @@ div.PrincipalContainer{
         div.container{
             display: flex;
             justify-content: center;
-            align-content: center;
-            align-items: center;
             flex-direction: row;
             width: 50%;
             ngx-datatable{
                 background-color: #888844;
                 border-radius: 4px;
-                margin: 10px;
-               
+                margin: 10px;          
+            }
+            h2{
+                margin-left: 10px;
             }
         }
     }

@@ -5,6 +5,7 @@ import { SelectionType } from '@swimlane/ngx-datatable';
 import { MatDialog } from '@angular/material/dialog';
 import { ModifyDataComponent } from '../../components/modify-data/modify-data.component';
 import { EditDataComponent } from '../../components/edit-data/edit-data.component';
+import { RegionsService } from '../../services/regions/regions.service';
 
 @Component({
   selector: 'app-regions',
@@ -12,23 +13,30 @@ import { EditDataComponent } from '../../components/edit-data/edit-data.componen
   styleUrls: ['./regions.component.scss']
 })
 export class RegionsComponent implements OnInit {
-  columnsS = [{ prop: 'state', name: 'State' }];
-  rowsS = [
-    { state: 'oriental' },
-    { state: 'occidental' },
-    { state: 'oriental' }
-  ];
-  columnsR = [{ prop: 'region', name: 'Region' }, { name: 'Country' }];
+
+  /**
+   * Columns structure for the Countries
+   */
+  columnsR = [{ prop: 'name', name: 'Name' }, { prop: 'code', name: 'Code' }];
+  /**
+   * Rows data for the country
+   */
   rowsR = [
-    { region: 'central', country: 'Costa Rica' },
-    { region: 'South', country: 'Argentine' },
-    { region: 'North', country: 'Mexico' }
+    { name: 'Aruba', code: 'ABW' },
+    { name: 'Afganistán', code: 'AFG' },
+    { name: 'Mexico', code: 'MX' }
   ];
-  columnsP = [{ prop: 'providence', name: 'Providence' }];
+  /**
+   * Columns structure for the region
+   */
+  columnsP = [{ prop: 'name', name: 'Name' }];
+  /**
+   * Rows data for the regions
+   */
   rowsP = [
-    { providence: 'Cartago' },
-    { providence: 'San Jose' },
-    { providence: 'Cartago' }
+    { name: 'Cartago' },
+    { name: 'San Jose' },
+    { name: 'Cartago' }
   ];
   /**
    * Type of the selection
@@ -50,10 +58,19 @@ export class RegionsComponent implements OnInit {
    * Filter for the search bar
    */
   searchTextFilter: string;
+  countrySelected: string;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public regionService: RegionsService) { }
 
   ngOnInit(): void {
+    console.log('ngOnit');
+    this.getCountries();
+  }
+  getCountries(){
+    this.regionService.getCountries().subscribe(data => {
+      console.log('region', data);
+      this.rowsR = data;
+    });
   }
   /**
    * selection event
@@ -67,10 +84,36 @@ export class RegionsComponent implements OnInit {
     this.enableChange = true;
   }
   /**
+   * Function to get the regions
+   * @param event event
+   */
+  selectCountry(event){
+    console.log('event', event);
+    console.log('country Selected', this.countrySelected);
+    if (this.countrySelected){
+      this.regionService.getRegions(this.countrySelected).subscribe(
+        data => {
+          console.log('data service', data);
+          this.rowsP = data;
+        }
+      );
+    }
+  }
+  /**
    * Delete the option selected
    */
   deleteSelected(){
     console.log(this.selectToOption);
+    const body = {
+      name: this.selectToOption['value']['name'],
+      country: this.countrySelected
+    };
+    this.regionService.deleteRegion(body).subscribe(
+      dataResponse => {
+        console.log(dataResponse);
+      }
+    );
+    location.reload();
   }
   /**
    * Open a Modify/Add Component

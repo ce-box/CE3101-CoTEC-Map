@@ -4,6 +4,8 @@ import { SelectionType } from '@swimlane/ngx-datatable';
 import { EditDataComponent } from '../../components/edit-data/edit-data.component';
 import { ModifyDataComponent } from '../../components/modify-data/modify-data.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MeasuresService } from '../../services/measure/measures.service';
+import { RegionsService } from '../../services/regions/regions.service';
 
 @Component({
   selector: 'app-measure',
@@ -36,54 +38,98 @@ export class MeasureComponent implements OnInit {
    * Columns measure for country
    */
   columnsS = [{ prop: 'name', name: 'Name' },
-  {  name: 'Country'},
+  { prop: 'description', name: 'Description' },
   { prop: 'startDate', name: 'Start Date' },
-  { prop: 'endDate', name: 'End Date'}];
+  { prop: 'endDate', name: 'End Date'},
+  { prop: 'status', name: 'Status' },
+];
   /**
    * Rows measure country
    */
   rowsS = [
     {
-      name: 'Total LockDown',
-      country: 'Costa Rica',
-      startDate: '14/03/2020',
-      endDate: '14/07/2020'
+      name: 'Uso Obligatorio de Mascarilla',
+      description: 'Ahora todos usando mascarilla perros',
+      startDate: '2020-04-02T00:00:00',
+      endDate: '2020-12-31T00:00:00',
+      status: 'Active'
     },
   ];
   /**
    * Columns measure for general
    */
-  columnsG = [{ prop: 'name', name: 'Name' },
-  { prop: 'description', name: 'Description'}];
+  columnsG = [
+    { prop: 'id', name: 'Id'},
+    { prop: 'name', name: 'Name' },
+    { prop: 'description', name: 'Description'}];
   /**
    * Rows measure general
    */
   rowsG = [
     {
+      id: 1,
       name: 'Traffic restrictions',
       description: 'No car between 5am to 5pm'
     },
   ];
   /**
+   * Variable for the countries
+   */
+  countries: any[] = [];
+  /**
+   * country selected in the options
+   */
+  countrySelected: string;
+  /**
    * Boolean variable for enable a change in the option
    */
   // tslint:disable-next-line: no-inferrable-types
   enableChange: boolean = false;
+  formlyMeasureSelected: any[];
   /**
    * First method of the page
    * @param route Controller for the routing
    * @param dialog Controller for the dialog view
    */
-  constructor( private route: ActivatedRoute, public dialog: MatDialog) { }
+  constructor(
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+    public measureService: MeasuresService,
+    public regionService: RegionsService) { }
 
   ngOnInit(): void {
     this.idPage = this.route.snapshot.params.id;
     console.log('id', this.idPage);
+    this.getGeneralMeasue();
     if (this.idPage === 'general'){
       this.generalView = true;
     }else{
       this.generalView = false;
+      this.getMeasureFormly();
+      this.getCountries();
     }
+  }
+  getGeneralMeasue(){
+    this.measureService.getSanitaryMeasure().subscribe(
+      dataR => {
+        console.log('general measure', dataR);
+        this.rowsG = dataR;
+      }
+    );
+  }
+  getCountries(){
+    this.regionService.getCountries().subscribe(data => {
+      console.log('region', data);
+      const countryData = [];
+      for (const pharmacy of data) {
+          const newPharmacyCo = {
+            value: pharmacy.code,
+            label: pharmacy.name
+          };
+          countryData.push(newPharmacyCo);
+        }
+      this.countries = countryData;
+    });
   }
   /**
    * selection event
@@ -97,16 +143,37 @@ export class MeasureComponent implements OnInit {
     this.enableChange = true;
   }
   /**
+   * Once is selected the country extract the measure by country
+   * @param event event click
+   */
+  selectCountry(event){
+    console.log('event', event);
+    console.log('country Selected', this.countrySelected);
+    if (this.countrySelected){
+      this.measureService.getSanitaryMeasureByCountry(this.countrySelected).subscribe(
+        data => {
+          console.log('data service', data);
+          this.rowsS = data;
+        }
+      );
+    }
+  }
+  /**
    * Delete the option selected
    */
   deleteSelected(){
     console.log('selected to delete', this.selectToOption);
+    // tslint:disable-next-line: no-string-literal
+    this.measureService.disableMeause(this.selectToOption['value']['id']);
+    location.reload();
   }
   /**
    * Disable the option selected
    */
   disableSelected(){
-    console.log('selected to disable', this.selectToOption);
+    console.log('selected to disable', this.selectToOption, 'countryCode', this.countrySelected);
+    this.measureService.disableCountryMeasure(this.selectToOption['value']['id'], this.countrySelected);
+    location.reload();
   }
   /**
    * Open a Modify/Add Component
@@ -128,7 +195,10 @@ export class MeasureComponent implements OnInit {
         data: {
           Action: actionT,
           Parent: this.idPage,
-          Keys: Object.keys(this.rowsS)
+          Keys: Object.keys(this.rowsS),
+          Measure: this.formlyMeasureSelected,
+          Country: this.countrySelected,
+          Countries: this.countries
         }
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -150,5 +220,24 @@ export class MeasureComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+  /**
+   * Set an structure for the measure info
+   */
+  getMeasureFormly(){
+    this.measureService.getSanitaryMeasure().subscribe(
+      data => {
+        console.log('sanitaryMeasure house');
+        const SanitaryData = [];
+        for (const pharmacy of data) {
+          const newPharmacyCo = {
+            value: pharmacy.id,
+            label: pharmacy.name
+          };
+          SanitaryData.push(newPharmacyCo);
+        }
+        this.formlyMeasureSelected = SanitaryData;
+      }
+    );
   }
 }

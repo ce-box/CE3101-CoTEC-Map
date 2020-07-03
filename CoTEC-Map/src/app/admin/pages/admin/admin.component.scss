@@ -72,16 +72,13 @@ mat-sidenav-content {
                             }
                             button{
                                 background: gray;
-                                mat-icon{
-                                }
+
                             }
                            
                         }
                     }
                 }
             }
-        }
-        &.SecondRow {
         }
     }
 }
@@ -97,4 +94,10 @@ mat-sidenav-content {
         height: 50px;
         margin-left: 15px;
     }
+}
+button{
+    margin: 15px;
+    background: #4d4d00;
+    color: #aeaeae;
+    height: 40px;
 }

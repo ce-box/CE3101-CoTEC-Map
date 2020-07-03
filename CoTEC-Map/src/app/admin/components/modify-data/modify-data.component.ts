@@ -3,6 +3,14 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { RegionsService } from '../../services/regions/regions.service';
+import { tap, retry } from 'rxjs/operators';
+import { MedicationService } from '../../services/medication/medication.service';
+import { PathologiesService } from '../../services/pathology/pathologies.service';
+import { MeasuresService } from '../../services/measure/measures.service';
+import { Router } from '@angular/router';
+import { HospitalService } from '../../services/hospital/hospital.service';
+import { StatusService } from '../../services/status/status.service';
 
 @Component({
   selector: 'app-modify-data',
@@ -52,24 +60,17 @@ export class ModifyDataComponent implements OnInit {
    */
   presentOptions: boolean = false;
   /**
-   * Temporal data for one input
+   * Boolean for the hospital view
    */
-  SPrFields: FormlyFieldConfig[] = [
-    {
-      fieldGroupClassName: 'row',
-      fieldGroup: [
-        {
-          className: 'col-6',
-          type: 'input',
-          key: 'name',
-          templateOptions: {
-            label: 'Name',
-            required: true
-          }
-        }
-      ],
-    }
-  ];
+  hospitalView: boolean = false;
+  /**
+   * Country Selected
+   */
+  countrySelected: string;
+  /**
+   * Regions list defined by a country
+   */
+  regionsData: any[];
   /**
    * Temporal data for region form
    */
@@ -89,7 +90,7 @@ export class ModifyDataComponent implements OnInit {
         {
           className: 'col-6',
           type: 'input',
-          key: 'country',
+          key: 'countryCode',
           templateOptions: {
             label: 'Country',
             required: true
@@ -108,7 +109,7 @@ export class ModifyDataComponent implements OnInit {
         {
           className: 'col-6',
           type: 'input',
-          key: 'option1',
+          key: 'name',
           templateOptions: {
             label: 'Medication',
             required: true
@@ -116,11 +117,16 @@ export class ModifyDataComponent implements OnInit {
         },
         {
           className: 'col-6',
-          type: 'input',
-          key: 'option2',
+          type: 'select',
+          key: 'pharmaceuticCo',
           templateOptions: {
             label: 'House Pharmacy',
             required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.options = this.data.Pharmacies;
+            },
           }
         }
       ],
@@ -134,16 +140,16 @@ export class ModifyDataComponent implements OnInit {
       fieldGroupClassName: 'row',
       fieldGroup: [
         {
-          className: 'col-6',
+          className: 'col-4',
           type: 'input',
           key: 'name',
           templateOptions: {
             label: 'Name',
-            required: true
+            required: true,
           }
         },
         {
-          className: 'col-6',
+          className: 'col-4',
           type: 'input',
           key: 'description',
           templateOptions: {
@@ -164,42 +170,44 @@ export class ModifyDataComponent implements OnInit {
         {
           className: 'col-6',
           type: 'input',
-          key: 'location',
-          templateOptions: {
-            label: 'Location',
-            required: true
-          }
-        },
-        {
-          className: 'col-6',
-          type: 'input',
           key: 'name',
           templateOptions: {
             label: 'Name',
             required: true
           }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'managerName',
+          templateOptions: {
+            label: 'Manager Name',
+            required: true
+          }
         }
       ],
     },
     {
       fieldGroupClassName: 'row',
       fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'phone',
+          templateOptions: {
+            label: 'Phone',
+            required: true,
+            type: 'number'
+          }
+        },
         {
           className: 'col-6',
           type: 'input',
           key: 'capacity',
           templateOptions: {
-            label: 'Beds capacity',
-            required: true
-          }
-        },
-        {
-          className: 'col-6',
-          type: 'input',
-          key: 'UCI',
-          templateOptions: {
-            label: 'UCI beds capacity',
-            required: true
+            label: 'Beds Capacity',
+            required: true,
+            type: 'number'
           }
         }
       ],
@@ -210,22 +218,53 @@ export class ModifyDataComponent implements OnInit {
         {
           className: 'col-6',
           type: 'input',
-          key: 'director',
+          key: 'icU_Capacity',
           templateOptions: {
-            label: 'Hospital`s Director',
-            required: true
+            label: 'Uci beds Capacity',
+            required: true,
+            type: 'number'
+          }
+        },
+        {
+          className: 'col-6',
+          type: 'select',
+          key: 'country',
+          templateOptions: {
+            label: 'Country',
+            required: true,
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.options = this.data.Countries;
+            }
           }
         },
         {
           className: 'col-6',
           type: 'input',
-          key: 'contact',
+          key: 'region',
           templateOptions: {
-            label: 'Director`s contact',
+            label: 'Region',
             required: true
-          }
+          },
+          // hooks: {
+          //   onInit: (field: FormlyFieldConfig) => {
+          //     field.form.get('country').valueChanges.pipe(
+          //       tap(countrySelected => {
+          //         console.log('countrySelected', countrySelected);
+          //         this.selectRegion(countrySelected);
+          //         console.log('regions options 1', this.regionsData);
+          //         field.templateOptions.options = [{
+          //           label: 'test',
+          //           value: 'test'
+          //         }];
+          //         console.log('regions options 2', this.regionsData);
+          //       }),
+          //     ).subscribe();
+          //     }
+          //   }
         }
-      ],
+      ]
     }
   ];
   /**
@@ -288,20 +327,30 @@ export class ModifyDataComponent implements OnInit {
       fieldGroup: [
         {
           className: 'col-6',
-          type: 'input',
-          key: 'name',
+          type: 'select',
+          key: 'measureId',
           templateOptions: {
             label: 'Name',
             required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.options = this.data?.Measure;
+            },
           }
         },
         {
           className: 'col-6',
-          type: 'input',
-          key: 'country',
+          type: 'select',
+          key: 'countryCode',
           templateOptions: {
             label: 'Country',
-            required: true
+            required: true,
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.options = this.data?.Countries;
+            },
           }
         }
       ],
@@ -326,59 +375,137 @@ export class ModifyDataComponent implements OnInit {
             label: 'End Date',
             required: true
           }
+        },
+        {
+          className: 'col-6',
+          type: 'select',
+          key: 'status',
+          templateOptions: {
+            label: 'Status',
+            required: true,
+            options: [
+              {label: 'Active', value: 'ACTIVE' },
+              {label: 'Inactive', value: 'INACTIVE'}
+            ]
+          }
         }
       ],
     }
   ];
-  constructor(public dialogRef: MatDialogRef<any>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  /**
+   * Formly data structure for two values
+   */
+  FieldStatus: FormlyFieldConfig[] = [
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'name',
+          templateOptions: {
+            required: true,
+            label: 'Name'
+          }
+        }
+      ]
+    }
+  ];
+  constructor(
+    public dialogRef: MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public regionService: RegionsService,
+    public medicationService: MedicationService,
+    public patholgyService: PathologiesService,
+    public measureService: MeasuresService,
+    public hospitalService: HospitalService,
+    private statusService: StatusService) { }
 
   ngOnInit(): void {
     console.log('data pased', this.data);
     this.keyOptions = this.data.Keys;
     if (this.data.Parent === 'Region') {
-      this.presentOptions = true;
+      this.recruitmentFields = this.RegionFields;
     } else {
-      this.presentOptions = false;
       if (this.data.Parent === 'Hospital') {
         this.recruitmentFields = this.HospitalFields;
+        this.hospitalView = true;
       }
       if (this.data.Parent === 'Medication') {
         this.recruitmentFields = this.MedicationFields;
+        console.log('farmacy', this.data.Pharmacies);
       }
       if (this.data.Parent === 'Pathology') {
         this.recruitmentFields = this.PathologyFields;
       }
-      if (this.data.Parent === 'byCountry'){
+      if (this.data.Parent === 'byCountry') {
         this.recruitmentFields = this.ByCountryFields;
       }
-      if (this.data.Parent === 'general'){
+      if (this.data.Parent === 'general') {
         this.recruitmentFields = this.GeneralFields;
+      }
+      if (this.data.Parent === 'Status'){
+        this.recruitmentFields = this.FieldStatus;
       }
     }
   }
   submit() {
     console.log(this.model);
+    if (this.data.Parent === 'Region') {
+      this.regionService.createRegion(this.model);
+      this.onNoClick();
+    }
+    if (this.data.Parent === 'Hospital') {
+      this.hospitalService.createHospital(this.model);
+    }
+    if (this.data.Parent === 'Medication') {
+      this.medicationService.createMedication(this.model);
+      this.onNoClick();
+    }
+    if (this.data.Parent === 'Pathology') {
+      this.patholgyService.createPathology(this.model).subscribe(
+        data => {
+          console.log('data', data);
+          this.onNoClick();
+        }
+      );
+    }
+    if (this.data.Parent === 'byCountry') {
+      this.measureService.assignSanitaryMeause(this.model);
+      this.onNoClick();
+    }
+    if (this.data.Parent === 'general') {
+      this.measureService.createSanitaryMeasure(this.model);
+      this.onNoClick();
+    }
+    if (this.data.Parent === 'Status'){
+      this.statusService.createStatus(this.model);
+      this.onNoClick();
+    }
+
   }
   onNoClick(): void {
+    location.reload();
     this.dialogRef.close();
   }
-  selectOptionF(event) {
-    console.log('eve', event);
-    console.log('selected value', this.selectedValue);
-    if (this.selectedValue) {
-      if (this.selectedValue === 'Region') {
-        console.log('valuyes Region');
-        this.recruitmentFields = this.RegionFields
+  selectRegion(countrySelected: string){
+    this.regionService.getRegions(countrySelected).subscribe(
+      dataR => {
+        console.log('regiones', dataR);
+        const SanitaryData = [];
+        for (const pharmacy of dataR) {
+          const newPharmacyCo = {
+            value: pharmacy.countryCode,
+            label: pharmacy.name
+          };
+          SanitaryData.push(newPharmacyCo);
+        }
+        console.log('regiones', SanitaryData);
+        this.regionsData = SanitaryData;
+        return this.regionsData;
       }
-      if (this.selectedValue === 'Providence') {
-        console.log('valuyes');
-        this.recruitmentFields = this.SPrFields;
-      }
-      if (this.selectedValue === 'State') {
-        console.log('valuyes');
-        this.recruitmentFields = this.SPrFields;
-      }
-    }
+    );
   }
+
 }
 
