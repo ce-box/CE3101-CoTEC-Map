@@ -88,9 +88,18 @@ export class MeasureComponent implements OnInit {
     console.log('id', this.idPage);
     if (this.idPage === 'general'){
       this.generalView = true;
+      this.getGeneralMeasue();
     }else{
       this.generalView = false;
     }
+  }
+  getGeneralMeasue(){
+    this.measureService.getSanitaryMeasure().subscribe(
+      dataR => {
+        console.log('general measure', dataR);
+        this.rowsG = dataR;
+      }
+    );
   }
   /**
    * selection event
