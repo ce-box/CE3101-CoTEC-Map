@@ -440,10 +440,10 @@ export class ModifyDataComponent implements OnInit {
   }
   selectRegion(country: string){
     let dataRegions;
-    this.regionService.getRegions(country).subscribe(
+    this.regionService.getRegions(country).toPromise().then(
       dataR => {
         dataRegions = dataR;
-        return dataR;
+        return dataRegions;
       }
     );
     return dataRegions;
