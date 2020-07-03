@@ -437,7 +437,15 @@ export class ModifyDataComponent implements OnInit {
     this.regionService.getRegions(this.countrySelected).subscribe(
       dataR => {
         console.log('regiones', dataR);
-        this.regionsData = dataR;
+        const SanitaryData = [];
+        for (const pharmacy of dataR) {
+          const newPharmacyCo = {
+            value: pharmacy.countryCode,
+            label: pharmacy.name
+          };
+          SanitaryData.push(newPharmacyCo);
+        }
+        this.regionsData = SanitaryData;
       }
     );
   }
