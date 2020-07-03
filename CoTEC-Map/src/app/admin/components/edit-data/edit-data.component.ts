@@ -381,21 +381,21 @@ export class EditDataComponent implements OnInit {
         {
           op: 'replace',
           path: '/description',
-          value: this.model[1]
+          value: this.model?.option2
         },
         {
           op: 'replace',
           path: 'treatment',
-          value: this.model[3]
+          value: this.model?.option4
         },
         {
           op: 'replace',
           path: '/symptoms',
-          value: this.model[2]
+          value: this.model?.option3
         }
       ];
       console.log('id', this.model[0], 'data', data);
-      this.patholgyService.editPathology(this.model[0], data).subscribe(
+      this.patholgyService.editPathology(this.model?.option1, data).subscribe(
         dataR => {
           console.log('edit', dataR);
         }
