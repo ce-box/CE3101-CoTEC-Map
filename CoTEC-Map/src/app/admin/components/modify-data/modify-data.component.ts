@@ -233,6 +233,7 @@ export class ModifyDataComponent implements OnInit {
           },
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
+              console.log('regions option', this.regionsData);
               field.templateOptions.options = this.regionsData;
             }
           }
@@ -445,6 +446,7 @@ export class ModifyDataComponent implements OnInit {
           };
           SanitaryData.push(newPharmacyCo);
         }
+        console.log('regiones', SanitaryData);
         this.regionsData = SanitaryData;
       }
     );

@@ -12,8 +12,8 @@
                   </mat-select>
                 </mat-form-field>
               </form> 
-          <h2>Agregar {{data.Parent}}</h2>
-            <form [formGroup]="form" (ngSubmit)="submit()">
+          <h2 *ngIf="hospitalView && countrySelected">Agregar {{data.Parent}}</h2>
+            <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="hospitalView && countrySelected">
                 <formly-form [model]="model" [fields]="recruitmentFields" [options]="options" [form]="form"></formly-form>
                 <button type="submit" class="btn btn-primary submit-button" [disabled]="!form.valid">Submit</button>
     
