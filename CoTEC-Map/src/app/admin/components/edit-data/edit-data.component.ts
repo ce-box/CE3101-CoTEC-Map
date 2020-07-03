@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { MedicationService } from '../../services/medication/medication.service';
+import { PathologiesService } from '../../services/pathology/pathologies.service';
 
 @Component({
   selector: 'app-edit-data',
@@ -48,10 +49,10 @@ export class EditDataComponent implements OnInit {
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
               field.templateOptions.label = this.data.Keys[0];
-              field.form.controls.state.setValue(this.data['Selection']['value'][this.data.Keys[0]]);
+              field.form.controls.state.setValue(this.data.Selection['value'][this.data.Keys[0]]);
             }
+          }
         }
-      }
       ]
     }
   ];
@@ -72,24 +73,24 @@ export class EditDataComponent implements OnInit {
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
               field.templateOptions.label = this.data.Keys[0];
-              field.form.controls.state.setValue(this.data['Selection']['value'][this.data.Keys[0]]);
+              field.form.controls.state.setValue(this.data.Selection['value'][this.data.Keys[0]]);
             }
-        }
-      },
-      {
-        className: 'col-6',
-        type: 'input',
-        key: 'province',
-        templateOptions: {
-          required: true
-        },
-        hooks: {
-          onInit: (field: FormlyFieldConfig) => {
-            field.templateOptions.label = this.data.Keys[1];
-            field.form.controls.province.setValue(this.data['Selection']['value'][this.data.Keys[1]]);
           }
-      }
-    }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'province',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[1];
+              field.form.controls.province.setValue(this.data.Selection['value'][this.data.Keys[1]]);
+            }
+          }
+        }
       ]
     }
   ];
@@ -111,39 +112,39 @@ export class EditDataComponent implements OnInit {
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
               field.templateOptions.label = this.data.Keys[0];
-              field.form.controls.id.setValue(this.data['Selection']['value'][this.data.Keys[0]]);
+              field.form.controls.id.setValue(this.data.Selection['value'][this.data.Keys[0]]);
             }
-        }
-      },
-      {
-        className: 'col-6',
-        type: 'input',
-        key: 'medicationName',
-        templateOptions: {
-          required: true
-        },
-        hooks: {
-          onInit: (field: FormlyFieldConfig) => {
-            field.templateOptions.label = this.data.Keys[1];
-            field.form.controls.medicationName.setValue(this.data['Selection']['value'][this.data.Keys[1]]);
           }
-      }
-    },
-    {
-      className: 'col-6',
-      type: 'select',
-      key: 'pharmaCo',
-      templateOptions: {
-        required: true
-      },
-      hooks: {
-        onInit: (field: FormlyFieldConfig) => {
-          field.templateOptions.label = this.data.Keys[2];
-          field.form.controls.pharmaCo.setValue(this.data['Selection']['value'][this.data.Keys[2]]);
-          field.templateOptions.options = this.data.Pharmacies;
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'medicationName',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[1];
+              field.form.controls.medicationName.setValue(this.data.Selection['value'][this.data.Keys[1]]);
+            }
+          }
+        },
+        {
+          className: 'col-6',
+          type: 'select',
+          key: 'pharmaCo',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[2];
+              field.form.controls.pharmaCo.setValue(this.data.Selection['value'][this.data.Keys[2]]);
+              field.templateOptions.options = this.data.Pharmacies;
+            }
+          }
         }
-    }
-  }
       ]
     }
   ];
@@ -157,31 +158,31 @@ export class EditDataComponent implements OnInit {
         {
           className: 'col-6',
           type: 'input',
-          key: 'state',
+          key: 'option1',
           templateOptions: {
             required: true
           },
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
               field.templateOptions.label = this.data.Keys[0];
-              field.form.controls.state.setValue(this.data['Selection']['value'][this.data.Keys[0]]);
+              field.form.controls.option1.setValue(this.data.Selection['value'][this.data.Keys[0]]);
             }
-        }
-      },
-      {
-        className: 'col-6',
-        type: 'input',
-        key: 'province',
-        templateOptions: {
-          required: true
-        },
-        hooks: {
-          onInit: (field: FormlyFieldConfig) => {
-            field.templateOptions.label = this.data.Keys[1];
-            field.form.controls.province.setValue(this.data['Selection']['value'][this.data.Keys[1]]);
           }
-      }
-    }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option2',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[1];
+              field.form.controls.option2.setValue(this.data.Selection['value'][this.data.Keys[1]]);
+            }
+          }
+        }
       ]
     },
     {
@@ -197,24 +198,24 @@ export class EditDataComponent implements OnInit {
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
               field.templateOptions.label = this.data.Keys[2];
-              field.form.controls.option3.setValue(this.data['Selection']['value'][this.data.Keys[2]]);
+              field.form.controls.option3.setValue(this.data.Selection['value'][this.data.Keys[2]]);
             }
-        }
-      },
-      {
-        className: 'col-6',
-        type: 'input',
-        key: 'option4',
-        templateOptions: {
-          required: true
-        },
-        hooks: {
-          onInit: (field: FormlyFieldConfig) => {
-            field.templateOptions.label = this.data.Keys[3];
-            field.form.controls.option4.setValue(this.data['Selection']['value'][this.data.Keys[3]]);
           }
-      }
-    }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option4',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[3];
+              field.form.controls.option4.setValue(this.data.Selection['value'][this.data.Keys[3]]);
+            }
+          }
+        }
       ]
     }
   ];
@@ -235,9 +236,9 @@ export class EditDataComponent implements OnInit {
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
               field.templateOptions.label = this.data.Keys[0];
-              field.form.controls.option1.setValue(this.data['Selection']['value'][this.data.Keys[0]]);
+              field.form.controls.option1.setValue(this.data.Selection['value'][this.data.Keys[0]]);
             }
-        }
+          }
         },
         {
           className: 'col-6',
@@ -249,9 +250,9 @@ export class EditDataComponent implements OnInit {
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
               field.templateOptions.label = this.data.Keys[1];
-              field.form.controls.option2.setValue(this.data['Selection']['value'][this.data.Keys[1]]);
+              field.form.controls.option2.setValue(this.data.Selection['value'][this.data.Keys[1]]);
             }
-        }
+          }
         }
       ],
     },
@@ -268,9 +269,9 @@ export class EditDataComponent implements OnInit {
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
               field.templateOptions.label = this.data.Keys[2];
-              field.form.controls.option3.setValue(this.data['Selection']['value'][this.data.Keys[2]]);
+              field.form.controls.option3.setValue(this.data.Selection['value'][this.data.Keys[2]]);
             }
-        }
+          }
         },
         {
           className: 'col-6',
@@ -282,9 +283,9 @@ export class EditDataComponent implements OnInit {
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
               field.templateOptions.label = this.data.Keys[3];
-              field.form.controls.option4.setValue(this.data['Selection']['value'][this.data.Keys[3]]);
+              field.form.controls.option4.setValue(this.data.Selection['value'][this.data.Keys[3]]);
             }
-        }
+          }
         }
       ],
     },
@@ -301,9 +302,9 @@ export class EditDataComponent implements OnInit {
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
               field.templateOptions.label = this.data.Keys[4];
-              field.form.controls.option5.setValue(this.data['Selection']['value'][this.data.Keys[4]]);
+              field.form.controls.option5.setValue(this.data.Selection['value'][this.data.Keys[4]]);
             }
-        }
+          }
         },
         {
           className: 'col-6',
@@ -315,9 +316,9 @@ export class EditDataComponent implements OnInit {
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
               field.templateOptions.label = this.data.Keys[5];
-              field.form.controls.option6.setValue(this.data['Selection']['value'][this.data.Keys[5]]);
+              field.form.controls.option6.setValue(this.data.Selection['value'][this.data.Keys[5]]);
             }
-        }
+          }
         }
       ],
     }
@@ -328,49 +329,74 @@ export class EditDataComponent implements OnInit {
    * @param data Data passed from the parent component
    */
   constructor(public dialogRef: MatDialogRef<any>,
-              @Inject(MAT_DIALOG_DATA) public data: any,
-              public medicationService: MedicationService) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public medicationService: MedicationService,
+    public patholgyService: PathologiesService) { }
 
   ngOnInit(): void {
     console.log('edit', this.data);
-    console.log('edit leght keys', this.data.Keys.length );
-    if (this.data.Keys.length === 1){
+    console.log('edit leght keys', this.data.Keys.length);
+    if (this.data.Keys.length === 1) {
       this.recruitmentFields = this.FieldOne;
     }
-    if (this.data.Keys.length === 2){
+    if (this.data.Keys.length === 2) {
       this.recruitmentFields = this.FieldTwo;
     }
-    if (this.data.Keys.length === 3 && this.data.Parent === 'Medication'){
+    if (this.data.Keys.length === 3 && this.data.Parent === 'Medication') {
       console.log('edit medication');
       this.recruitmentFields = this.FieldMedication;
     }
-    if (this.data.Keys.length === 4){
+    if (this.data.Keys.length === 4) {
       this.recruitmentFields = this.FieldFour;
     }
-    if (this.data.Keys.length === 6){
+    if (this.data.Keys.length === 6) {
       this.recruitmentFields = this.SixFields;
     }
 
   }
-  submit(){
+  submit() {
     console.log('submit', this.model);
-    if (this.data.Parent === 'Medication'){
+    if (this.data.Parent === 'Medication') {
       const medication = [
         {
           op: 'replace',
           path: '/name',
           value: this.model?.medicationName
-      },
-      {
+        },
+        {
           op: 'replace',
           path: '/pharmaceuticCo',
           value: this.model?.pharmaCo
-      }
+        }
       ];
-      console.log('id', this.model?.id, 'data', medication );
+      console.log('id', this.model?.id, 'data', medication);
       this.medicationService.EditMedication(medication, this.model?.id).subscribe(
         data => {
           console.log('data', data);
+        }
+      );
+    }
+    if (this.data.Parent === 'Pathology') {
+      const data = [
+        {
+          op: 'replace',
+          path: '/description',
+          value: this.model[1]
+        },
+        {
+          op: 'replace',
+          path: 'treatment',
+          value: this.model[3]
+        },
+        {
+          op: 'replace',
+          path: '/symptoms',
+          value: this.model[2]
+        }
+      ];
+      this.patholgyService.editPathology(this.model[0], data).subscribe(
+        dataR => {
+          console.log('edit', dataR);
         }
       );
     }

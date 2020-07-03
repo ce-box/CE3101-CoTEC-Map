@@ -6,6 +6,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { RegionsService } from '../../services/regions/regions.service';
 import { tap } from 'rxjs/operators';
 import { MedicationService } from '../../services/medication/medication.service';
+import { PathologiesService } from '../../services/pathology/pathologies.service';
 
 @Component({
   selector: 'app-modify-data',
@@ -323,7 +324,8 @@ export class ModifyDataComponent implements OnInit {
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public regionService: RegionsService,
-    public medicationService: MedicationService) { }
+    public medicationService: MedicationService,
+    public patholgyService: PathologiesService) { }
 
   ngOnInit(): void {
     console.log('data pased', this.data);
@@ -361,7 +363,11 @@ export class ModifyDataComponent implements OnInit {
       this.medicationService.createMedication(this.model);
     }
     if (this.data.Parent === 'Pathology') {
-      this.recruitmentFields = this.PathologyFields;
+      this.patholgyService.createPathology(this.model).subscribe(
+        data => {
+          console.log('data', data);
+        }
+      );
     }
     if (this.data.Parent === 'byCountry') {
       this.recruitmentFields = this.ByCountryFields;
