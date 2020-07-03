@@ -104,6 +104,7 @@ export class MeasureComponent implements OnInit {
       this.getGeneralMeasue();
     }else{
       this.generalView = false;
+      this.getCountries();
     }
   }
   getGeneralMeasue(){
