@@ -9,6 +9,7 @@ import { MedicationService } from '../../services/medication/medication.service'
 import { PathologiesService } from '../../services/pathology/pathologies.service';
 import { MeasuresService } from '../../services/measure/measures.service';
 import { Router } from '@angular/router';
+import { HospitalService } from '../../services/hospital/hospital.service';
 
 @Component({
   selector: 'app-modify-data',
@@ -397,7 +398,8 @@ export class ModifyDataComponent implements OnInit {
     public regionService: RegionsService,
     public medicationService: MedicationService,
     public patholgyService: PathologiesService,
-    public measureService: MeasuresService) { }
+    public measureService: MeasuresService,
+    public hospitalService: HospitalService) { }
 
   ngOnInit(): void {
     console.log('data pased', this.data);
@@ -431,7 +433,7 @@ export class ModifyDataComponent implements OnInit {
       this.onNoClick();
     }
     if (this.data.Parent === 'Hospital') {
-      this.recruitmentFields = this.HospitalFields;
+      this.hospitalService.createHospital(this.model);
     }
     if (this.data.Parent === 'Medication') {
       this.medicationService.createMedication(this.model);
