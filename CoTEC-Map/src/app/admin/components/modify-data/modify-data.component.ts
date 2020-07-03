@@ -58,6 +58,18 @@ export class ModifyDataComponent implements OnInit {
    */
   presentOptions: boolean = false;
   /**
+   * Boolean for the hospital view
+   */
+  hospitalView: boolean = false;
+  /**
+   * Country Selected
+   */
+  countrySelected: string;
+  /**
+   * Regions list defined by a country
+   */
+  regionsData: any[];
+  /**
    * Temporal data for region form
    */
   RegionFields: FormlyFieldConfig[] = [
@@ -222,6 +234,7 @@ export class ModifyDataComponent implements OnInit {
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
               field.templateOptions.options = this.data?.Countries;
+              this.form.controls.country.setValue(this.countrySelected);
             },
           }
         },
@@ -235,12 +248,7 @@ export class ModifyDataComponent implements OnInit {
           },
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
-              field.form.get('country').valueChanges.pipe(
-                tap(countrySelected => {
-                  console.log('country Selected', countrySelected);
-                  field.templateOptions.options = this.selectRegion(countrySelected);
-                }),
-              ).subscribe();
+              field.templateOptions.options = this.regionsData;
             }
           }
         }
@@ -372,6 +380,7 @@ export class ModifyDataComponent implements OnInit {
       ],
     }
   ];
+
   constructor(
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -438,15 +447,13 @@ export class ModifyDataComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  selectRegion(country: string){
-    let dataRegions;
-    this.regionService.getRegions(country).toPromise().then(
+  selectRegion(){
+    this.regionService.getRegions(this.countrySelected).subscribe(
       dataR => {
-        dataRegions = dataR;
-        return dataRegions;
+        console.log('regiones', dataR);
+        this.regionsData = dataR;
       }
     );
-    return dataRegions;
   }
 
 }
