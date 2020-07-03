@@ -128,7 +128,8 @@ export class MedicationsComponent implements OnInit {
       data: {
         Parent: 'Medication',
         Selection: this.selectToOption,
-        Keys: Object.keys(this.rowsS[0])
+        Keys: Object.keys(this.rowsS[0]),
+        Pharmacies: this.pharmacyHouse
       }
     });
     dialogRef.afterClosed().subscribe(result => {

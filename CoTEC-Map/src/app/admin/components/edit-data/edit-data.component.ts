@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
+import { MedicationService } from '../../services/medication/medication.service';
 
 @Component({
   selector: 'app-edit-data',
@@ -40,7 +41,7 @@ export class EditDataComponent implements OnInit {
         {
           className: 'col-6',
           type: 'input',
-          key:'state',
+          key: 'state',
           templateOptions: {
             required: true
           },
@@ -64,7 +65,7 @@ export class EditDataComponent implements OnInit {
         {
           className: 'col-6',
           type: 'input',
-          key:'state',
+          key: 'state',
           templateOptions: {
             required: true
           },
@@ -78,7 +79,7 @@ export class EditDataComponent implements OnInit {
       {
         className: 'col-6',
         type: 'input',
-        key:'province',
+        key: 'province',
         templateOptions: {
           required: true
         },
@@ -89,6 +90,60 @@ export class EditDataComponent implements OnInit {
           }
       }
     }
+      ]
+    }
+  ];
+  /**
+   * Formly data structure for medication
+   */
+  FieldMedication: FormlyFieldConfig[] = [
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'id',
+          templateOptions: {
+            required: true,
+            readonly: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[0];
+              field.form.controls.id.setValue(this.data['Selection']['value'][this.data.Keys[0]]);
+            }
+        }
+      },
+      {
+        className: 'col-6',
+        type: 'input',
+        key: 'medicationName',
+        templateOptions: {
+          required: true
+        },
+        hooks: {
+          onInit: (field: FormlyFieldConfig) => {
+            field.templateOptions.label = this.data.Keys[1];
+            field.form.controls.medicationName.setValue(this.data['Selection']['value'][this.data.Keys[1]]);
+          }
+      }
+    },
+    {
+      className: 'col-6',
+      type: 'select',
+      key: 'pharmaCo',
+      templateOptions: {
+        required: true
+      },
+      hooks: {
+        onInit: (field: FormlyFieldConfig) => {
+          field.templateOptions.label = this.data.Keys[2];
+          field.form.controls.pharmaCo.setValue(this.data['Selection']['value'][this.data.Keys[2]]);
+          field.templateOptions.options = this.data.Pharmacies;
+        }
+    }
+  }
       ]
     }
   ];
@@ -116,7 +171,7 @@ export class EditDataComponent implements OnInit {
       {
         className: 'col-6',
         type: 'input',
-        key:'province',
+        key: 'province',
         templateOptions: {
           required: true
         },
@@ -149,7 +204,7 @@ export class EditDataComponent implements OnInit {
       {
         className: 'col-6',
         type: 'input',
-        key:'option4',
+        key: 'option4',
         templateOptions: {
           required: true
         },
@@ -273,11 +328,12 @@ export class EditDataComponent implements OnInit {
    * @param data Data passed from the parent component
    */
   constructor(public dialogRef: MatDialogRef<any>,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              public medicationService: MedicationService) { }
 
   ngOnInit(): void {
     console.log('edit', this.data);
-    console.log('edit leght keys',this.data.Keys.length )
+    console.log('edit leght keys', this.data.Keys.length );
     if (this.data.Keys.length === 1){
       this.recruitmentFields = this.FieldOne;
     }
@@ -286,6 +342,7 @@ export class EditDataComponent implements OnInit {
     }
     if (this.data.Keys.length === 3 && this.data.Parent === 'Medication'){
       console.log('edit medication');
+      this.recruitmentFields = this.FieldMedication;
     }
     if (this.data.Keys.length === 4){
       this.recruitmentFields = this.FieldFour;
@@ -297,6 +354,21 @@ export class EditDataComponent implements OnInit {
   }
   submit(){
     console.log('submit', this.model);
+    if (this.data.Parent === 'Medication'){
+      const medication = [
+        {
+          op: 'replace',
+          path: '/name',
+          value: this.model?.medicationName
+      },
+      {
+          op: 'replace',
+          path: '/pharmaceuticCo',
+          value: this.model?.pharmaCo
+      }
+      ];
+      this.medicationService.EditMedication(medication, this.model?.id);
+    }
   }
 
 }

@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { RegionsService } from '../../services/regions/regions.service';
 import { tap } from 'rxjs/operators';
+import { MedicationService } from '../../services/medication/medication.service';
 
 @Component({
   selector: 'app-modify-data',
@@ -91,7 +92,7 @@ export class ModifyDataComponent implements OnInit {
         {
           className: 'col-6',
           type: 'input',
-          key: 'option1',
+          key: 'name',
           templateOptions: {
             label: 'Medication',
             required: true
@@ -100,7 +101,7 @@ export class ModifyDataComponent implements OnInit {
         {
           className: 'col-6',
           type: 'select',
-          key: 'option2',
+          key: 'pharmaceuticCo',
           templateOptions: {
             label: 'House Pharmacy',
             required: true
@@ -321,7 +322,8 @@ export class ModifyDataComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public regionService: RegionsService) { }
+    public regionService: RegionsService,
+    public medicationService: MedicationService) { }
 
   ngOnInit(): void {
     console.log('data pased', this.data);
@@ -356,7 +358,7 @@ export class ModifyDataComponent implements OnInit {
       this.recruitmentFields = this.HospitalFields;
     }
     if (this.data.Parent === 'Medication') {
-      this.recruitmentFields = this.MedicationFields;
+      this.medicationService.createMedication(this.model);
     }
     if (this.data.Parent === 'Pathology') {
       this.recruitmentFields = this.PathologyFields;
