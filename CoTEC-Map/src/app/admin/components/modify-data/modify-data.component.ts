@@ -331,11 +331,15 @@ export class ModifyDataComponent implements OnInit {
         },
         {
           className: 'col-6',
-          type: 'input',
+          type: 'select',
           key: 'status',
           templateOptions: {
             label: 'Status',
-            required: true
+            required: true,
+            options: [
+              {label: 'Active', value: 'ACTIVE' },
+              {label: 'Inactive', value: 'INACTIVE'}
+            ]
           }
         }
       ],
@@ -395,7 +399,8 @@ export class ModifyDataComponent implements OnInit {
       );
     }
     if (this.data.Parent === 'byCountry') {
-      this.recruitmentFields = this.ByCountryFields;
+      this.measureService.assignSanitaryMeause(this.model);
+      this.onNoClick();
     }
     if (this.data.Parent === 'general') {
       this.measureService.createSanitaryMeasure(this.model);
