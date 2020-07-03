@@ -6,6 +6,7 @@ import { MedicationService } from '../../services/medication/medication.service'
 import { PathologiesService } from '../../services/pathology/pathologies.service';
 import { MeasuresService } from '../../services/measure/measures.service';
 import { HospitalService } from '../../services/hospital/hospital.service';
+import { StatusService } from '../../services/status/status.service';
 
 @Component({
   selector: 'app-edit-data',
@@ -90,6 +91,45 @@ export class EditDataComponent implements OnInit {
             onInit: (field: FormlyFieldConfig) => {
               field.templateOptions.label = this.data.Keys[1];
               field.form.controls.province.setValue(this.data.Selection['value'][this.data.Keys[1]]);
+            }
+          }
+        }
+      ]
+    }
+  ];
+  /**
+   * Formly data structure for two values
+   */
+  FieldStatus: FormlyFieldConfig[] = [
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'id',
+          templateOptions: {
+            required: true,
+            readonly: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[0];
+              field.form.controls.id.setValue(this.data.Selection['value'][this.data.Keys[0]]);
+            }
+          }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'name',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[1];
+              field.form.controls.name.setValue(this.data.Selection['value'][this.data.Keys[1]]);
             }
           }
         }
@@ -523,11 +563,12 @@ export class EditDataComponent implements OnInit {
    * @param data Data passed from the parent component
    */
   constructor(public dialogRef: MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public medicationService: MedicationService,
-    public patholgyService: PathologiesService,
-    public measureService: MeasuresService,
-    private hospitalService: HospitalService) { }
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              public medicationService: MedicationService,
+              public patholgyService: PathologiesService,
+              public measureService: MeasuresService,
+              private hospitalService: HospitalService,
+              private statusService: StatusService) { }
 
   ngOnInit(): void {
     console.log('edit', this.data);
@@ -536,7 +577,12 @@ export class EditDataComponent implements OnInit {
       this.recruitmentFields = this.FieldOne;
     }
     if (this.data.Keys.length === 2) {
-      this.recruitmentFields = this.FieldTwo;
+      if (this.data.Parent === 'Status'){
+        console.log('status')
+        this.recruitmentFields = this.FieldStatus;
+      }else{
+        this.recruitmentFields = this.FieldTwo;
+      }
     }
     if (this.data.Keys.length === 3 && this.data.Parent === 'Medication') {
       console.log('edit medication');
@@ -645,6 +691,18 @@ export class EditDataComponent implements OnInit {
         }
       ];
       this.hospitalService.editHospital(this.model.option1, data);
+      this.onNoClick();
+    }
+    if (this.data.Parent === 'Status'){
+      const data = [
+          {
+              op: 'replace',
+              path: '/name',
+              value: this.model.name
+          }
+      ];
+      this.statusService.editStatus(this.model.id, data);
+      this.onNoClick();
     }
   }
   onNoClick(): void {

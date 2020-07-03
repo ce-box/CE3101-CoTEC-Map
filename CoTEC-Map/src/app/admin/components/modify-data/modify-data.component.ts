@@ -10,6 +10,7 @@ import { PathologiesService } from '../../services/pathology/pathologies.service
 import { MeasuresService } from '../../services/measure/measures.service';
 import { Router } from '@angular/router';
 import { HospitalService } from '../../services/hospital/hospital.service';
+import { StatusService } from '../../services/status/status.service';
 
 @Component({
   selector: 'app-modify-data',
@@ -391,7 +392,25 @@ export class ModifyDataComponent implements OnInit {
       ],
     }
   ];
-
+  /**
+   * Formly data structure for two values
+   */
+  FieldStatus: FormlyFieldConfig[] = [
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'name',
+          templateOptions: {
+            required: true,
+            label: 'Name'
+          }
+        }
+      ]
+    }
+  ];
   constructor(
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -399,7 +418,8 @@ export class ModifyDataComponent implements OnInit {
     public medicationService: MedicationService,
     public patholgyService: PathologiesService,
     public measureService: MeasuresService,
-    public hospitalService: HospitalService) { }
+    public hospitalService: HospitalService,
+    private statusService: StatusService) { }
 
   ngOnInit(): void {
     console.log('data pased', this.data);
@@ -423,6 +443,9 @@ export class ModifyDataComponent implements OnInit {
       }
       if (this.data.Parent === 'general') {
         this.recruitmentFields = this.GeneralFields;
+      }
+      if (this.data.Parent === 'Status'){
+        this.recruitmentFields = this.FieldStatus;
       }
     }
   }
@@ -453,6 +476,10 @@ export class ModifyDataComponent implements OnInit {
     }
     if (this.data.Parent === 'general') {
       this.measureService.createSanitaryMeasure(this.model);
+      this.onNoClick();
+    }
+    if (this.data.Parent === 'Status'){
+      this.statusService.createStatus(this.model);
       this.onNoClick();
     }
 
