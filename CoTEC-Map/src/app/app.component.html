@@ -9,7 +9,13 @@
     <!--Principal navegation bar-->
     <div id="nav">
       <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href=" ">CoTEC</a>
+        <button
+          type="button"
+          class="btn"
+          onclick="location.href=''"
+        >
+          <img src=".\assets\imgs\logo.png" alt="return-button" width="200" />
+        </button>
         <button
           class="navbar-toggler"
           type="button"
@@ -115,11 +121,8 @@
     <!--Login-->
     <div *ngIf="changePage" class="container">
       <div class="row">
-        <div class="col-6 vision">
-          <img src="assets/logo.PNG" width="400" />
-          <br />
-          <br />
-          <br />
+        <div class="col-6 vision text-center">
+          <img src="..\assets\imgs\ORBE_V.gif" width="320" />
           <h2>Registro completo</h2>
           <p text-center>En busca del desarrollo nacional</p>
         </div>
