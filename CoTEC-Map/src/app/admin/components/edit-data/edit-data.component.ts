@@ -394,6 +394,7 @@ export class EditDataComponent implements OnInit {
           value: this.model[2]
         }
       ];
+      console.log('id', this.model[0], 'data', data);
       this.patholgyService.editPathology(this.model[0], data).subscribe(
         dataR => {
           console.log('edit', dataR);
