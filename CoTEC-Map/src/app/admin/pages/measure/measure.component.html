@@ -12,8 +12,8 @@
                     <mat-form-field appearance="fill">
                       <mat-label>Select a Country</mat-label>
                       <mat-select [(ngModel)]="countrySelected" name="food" (focus)="selectCountry($event)">
-                        <mat-option *ngFor="let country of countries" [value]="country.code">
-                          {{country.name}}
+                        <mat-option *ngFor="let country of countries" [value]="country.value">
+                          {{country.label}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
