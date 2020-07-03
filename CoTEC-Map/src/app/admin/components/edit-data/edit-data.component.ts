@@ -367,7 +367,12 @@ export class EditDataComponent implements OnInit {
           value: this.model?.pharmaCo
       }
       ];
-      this.medicationService.EditMedication(medication, this.model?.id);
+      console.log('id', this.model?.id, 'data', medication );
+      this.medicationService.EditMedication(medication, this.model?.id).subscribe(
+        data => {
+          console.log('data', data);
+        }
+      );
     }
   }
 
