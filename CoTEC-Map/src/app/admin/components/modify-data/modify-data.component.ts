@@ -4,7 +4,7 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { RegionsService } from '../../services/regions/regions.service';
-import { tap } from 'rxjs/operators';
+import { tap, retry } from 'rxjs/operators';
 import { MedicationService } from '../../services/medication/medication.service';
 import { PathologiesService } from '../../services/pathology/pathologies.service';
 import { MeasuresService } from '../../services/measure/measures.service';
@@ -249,12 +249,14 @@ export class ModifyDataComponent implements OnInit {
             onInit: (field: FormlyFieldConfig) => {
               field.form.get('country').valueChanges.pipe(
                 tap(countrySelected => {
-                  console.log('countrySelected');
+                  console.log('countrySelected', countrySelected);
+                  this.selectRegion(countrySelected);
+                  console.log('regions options 1', this.regionsData);
                   field.templateOptions.options = [{
                     label: 'test',
                     value: 'test'
                   }];
-                  console.log('regions options', this.regionsData);
+                  console.log('regions options 2', this.regionsData);
                 }),
               ).subscribe();
               }
@@ -456,8 +458,8 @@ export class ModifyDataComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  selectRegion(){
-    this.regionService.getRegionsO(this.countrySelected).then(
+  selectRegion(countrySelected: string){
+    this.regionService.getRegionsO(countrySelected).then(
       dataR => {
         console.log('regiones', dataR);
         const SanitaryData = [];
@@ -470,6 +472,7 @@ export class ModifyDataComponent implements OnInit {
         }
         console.log('regiones', SanitaryData);
         this.regionsData = SanitaryData;
+        return this.regionsData;
       }
     );
   }
