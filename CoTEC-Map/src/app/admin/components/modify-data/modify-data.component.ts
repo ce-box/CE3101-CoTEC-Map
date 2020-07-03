@@ -226,21 +226,6 @@ export class ModifyDataComponent implements OnInit {
         {
           className: 'col-6',
           type: 'select',
-          key: 'country',
-          templateOptions: {
-            label: 'Country',
-            required: true
-          },
-          hooks: {
-            onInit: (field: FormlyFieldConfig) => {
-              field.templateOptions.options = this.data?.Countries;
-              this.form.controls.country.setValue(this.countrySelected);
-            },
-          }
-        },
-        {
-          className: 'col-6',
-          type: 'select',
           key: 'region',
           templateOptions: {
             label: 'Region',
@@ -397,6 +382,7 @@ export class ModifyDataComponent implements OnInit {
     } else {
       if (this.data.Parent === 'Hospital') {
         this.recruitmentFields = this.HospitalFields;
+        this.hospitalView = true;
       }
       if (this.data.Parent === 'Medication') {
         this.recruitmentFields = this.MedicationFields;
