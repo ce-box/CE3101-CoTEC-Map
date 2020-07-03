@@ -477,7 +477,7 @@ export class EditDataComponent implements OnInit {
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
               field.templateOptions.label = this.data.Keys[5];
-              console.log('key',this.data.Keys[5], 'value', this.data.Selection?.value[this.data.Keys[5]] );
+              console.log('key', this.data.Keys[5], 'value', this.data.Selection?.value[this.data.Keys[5]]);
               field.form.controls.option6.setValue(this.data.Selection?.value[this.data.Keys[5]]);
             }
           }
@@ -493,7 +493,7 @@ export class EditDataComponent implements OnInit {
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
               field.templateOptions.label = this.data.Keys[6];
-              console.log('key',this.data.Keys[6], 'value', this.data.Selection?.value[this.data.Keys[6]] );
+              console.log('key', this.data.Keys[6], 'value', this.data.Selection?.value[this.data.Keys[6]]);
               field.form.controls.option7.setValue(this.data.Selection['value'][this.data.Keys[6]]);
             }
           }
@@ -509,7 +509,7 @@ export class EditDataComponent implements OnInit {
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
               field.templateOptions.label = this.data.Keys[7];
-              console.log('key',this.data.Keys[7], 'value', this.data.Selection?.value[this.data.Keys[7]] );
+              console.log('key', this.data.Keys[7], 'value', this.data.Selection?.value[this.data.Keys[7]]);
               field.form.controls.option8.setValue(this.data.Selection['value'][this.data.Keys[7]]);
             }
           }
@@ -523,11 +523,11 @@ export class EditDataComponent implements OnInit {
    * @param data Data passed from the parent component
    */
   constructor(public dialogRef: MatDialogRef<any>,
-              @Inject(MAT_DIALOG_DATA) public data: any,
-              public medicationService: MedicationService,
-              public patholgyService: PathologiesService,
-              public measureService: MeasuresService,
-              private hospitalService: HospitalService) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public medicationService: MedicationService,
+    public patholgyService: PathologiesService,
+    public measureService: MeasuresService,
+    private hospitalService: HospitalService) { }
 
   ngOnInit(): void {
     console.log('edit', this.data);
@@ -552,7 +552,7 @@ export class EditDataComponent implements OnInit {
     if (this.data.Keys.length === 6) {
       this.recruitmentFields = this.SixFields;
     }
-    if(this.data.Keys.length === 8){
+    if (this.data.Keys.length === 8) {
       this.recruitmentFields = this.HeightFields;
     }
 
@@ -621,29 +621,29 @@ export class EditDataComponent implements OnInit {
       ];
       this.measureService.editMeasure(this.model?.id, dataEdit);
     }
-    if (this.data.Parent === 'Hospital Center'){
+    if (this.data.Parent === 'Hospital Center') {
       const data = [
         {
-            "op":"replace",
-            "path":"/managerName",
-            "value":"Luis Perez"
+          op: 'replace',
+          path: '/managerName',
+          value: this.model.option3
         },
         {
-            "op":"replace",
-            "path":"/Phone",
-            "value":"(+506)2214-5648"
+          op: 'replace',
+          path: '/Phone',
+          value: this.model.option4
         },
         {
-            "op":"replace",
-            "path":"/capacity",
-            "value":2000
+          op: 'replace',
+          path: '/capacity',
+          value: this.model.option5
         },
         {
-            "op":"replace",
-            "path":"/iCU_Capacity",
-            "value":100
+          op: 'replace',
+          path: '/iCU_Capacity',
+          value: this.model.option6
         }
-    ]
+      ];
       this.hospitalService.editHospital(this.model.option1, data);
     }
   }
