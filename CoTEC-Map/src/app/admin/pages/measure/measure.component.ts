@@ -5,6 +5,7 @@ import { EditDataComponent } from '../../components/edit-data/edit-data.componen
 import { ModifyDataComponent } from '../../components/modify-data/modify-data.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MeasuresService } from '../../services/measure/measures.service';
+import { RegionsService } from '../../services/regions/regions.service';
 
 @Component({
   selector: 'app-measure',
@@ -37,18 +38,21 @@ export class MeasureComponent implements OnInit {
    * Columns measure for country
    */
   columnsS = [{ prop: 'name', name: 'Name' },
-  {  name: 'Country'},
+  { prop: 'description', name: 'Description' },
   { prop: 'startDate', name: 'Start Date' },
-  { prop: 'endDate', name: 'End Date'}];
+  { prop: 'endDate', name: 'End Date'},
+  { prop: 'status', name: 'Status' },
+];
   /**
    * Rows measure country
    */
   rowsS = [
     {
-      name: 'Total LockDown',
-      country: 'Costa Rica',
-      startDate: '14/03/2020',
-      endDate: '14/07/2020'
+      name: 'Uso Obligatorio de Mascarilla',
+      description: 'Ahora todos usando mascarilla perros',
+      startDate: '2020-04-02T00:00:00',
+      endDate: '2020-12-31T00:00:00',
+      status: 'Active'
     },
   ];
   /**
@@ -69,6 +73,14 @@ export class MeasureComponent implements OnInit {
     },
   ];
   /**
+   * Variable for the countries
+   */
+  countries: any[] = [];
+  /**
+   * country selected in the options
+   */
+  countrySelected: string;
+  /**
    * Boolean variable for enable a change in the option
    */
   // tslint:disable-next-line: no-inferrable-types
@@ -81,7 +93,8 @@ export class MeasureComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    public measureService: MeasuresService) { }
+    public measureService: MeasuresService,
+    public regionService: RegionsService) { }
 
   ngOnInit(): void {
     this.idPage = this.route.snapshot.params.id;
@@ -101,6 +114,12 @@ export class MeasureComponent implements OnInit {
       }
     );
   }
+  getCountries(){
+    this.regionService.getCountries().subscribe(data => {
+      console.log('region', data);
+      this.countries = data;
+    });
+  }
   /**
    * selection event
    */
@@ -111,6 +130,22 @@ export class MeasureComponent implements OnInit {
       value: selected[0]
     };
     this.enableChange = true;
+  }
+  /**
+   * Once is selected the country extract the measure by country
+   * @param event event click
+   */
+  selectCountry(event){
+    console.log('event', event);
+    console.log('country Selected', this.countrySelected);
+    if (this.countrySelected){
+      this.measureService.getSanitaryMeasureByCountry(this.countrySelected).subscribe(
+        data => {
+          console.log('data service', data);
+          this.rowsS = data;
+        }
+      );
+    }
   }
   /**
    * Delete the option selected

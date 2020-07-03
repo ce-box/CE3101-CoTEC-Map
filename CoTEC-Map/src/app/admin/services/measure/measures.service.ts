@@ -8,7 +8,7 @@ export class MeasuresService {
 
   constructor(private http: HttpClient) { }
   getSanitaryMeasureByCountry(country: string){
-    return this.http.get<any[]>(`https://localhost:5001/api/v1/measures/sanitary?CountryCode=${country}`);
+    return this.http.get<any[]>(`https://localhost:5001/api/v1/measures/country?CountryCode=${country}`);
   }
   getContainmentMeasureByCountry(country: string){
     return this.http.get<any[]>(`https://localhost:5001/api/v1/measures/containment?CountryCode=${country}`);
