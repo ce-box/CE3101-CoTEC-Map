@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { MedicationService } from '../../services/medication/medication.service';
 import { PathologiesService } from '../../services/pathology/pathologies.service';
+import { MeasuresService } from '../../services/measure/measures.service';
 
 @Component({
   selector: 'app-edit-data',
@@ -142,6 +143,59 @@ export class EditDataComponent implements OnInit {
               field.templateOptions.label = this.data.Keys[2];
               field.form.controls.pharmaCo.setValue(this.data.Selection['value'][this.data.Keys[2]]);
               field.templateOptions.options = this.data.Pharmacies;
+            }
+          }
+        }
+      ]
+    }
+  ];
+  /**
+   * Formly data structure for medication
+   */
+  FieldGeneral: FormlyFieldConfig[] = [
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'id',
+          templateOptions: {
+            required: true,
+            readonly: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[0];
+              field.form.controls.id.setValue(this.data.Selection['value'][this.data.Keys[0]]);
+            }
+          }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'name',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[1];
+              field.form.controls.name.setValue(this.data.Selection['value'][this.data.Keys[1]]);
+            }
+          }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'description',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[2];
+              field.form.controls.description.setValue(this.data?.Selection.value[this.data.Keys[2]]);
             }
           }
         }
@@ -329,9 +383,10 @@ export class EditDataComponent implements OnInit {
    * @param data Data passed from the parent component
    */
   constructor(public dialogRef: MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public medicationService: MedicationService,
-    public patholgyService: PathologiesService) { }
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              public medicationService: MedicationService,
+              public patholgyService: PathologiesService,
+              public measureService: MeasuresService) { }
 
   ngOnInit(): void {
     console.log('edit', this.data);
@@ -345,6 +400,10 @@ export class EditDataComponent implements OnInit {
     if (this.data.Keys.length === 3 && this.data.Parent === 'Medication') {
       console.log('edit medication');
       this.recruitmentFields = this.FieldMedication;
+    }
+    if (this.data.Keys.length === 3 && this.data.Parent === 'general') {
+      console.log('edit general');
+      this.recruitmentFields = this.FieldGeneral;
     }
     if (this.data.Keys.length === 4) {
       this.recruitmentFields = this.FieldFour;
@@ -373,6 +432,7 @@ export class EditDataComponent implements OnInit {
       this.medicationService.EditMedication(medication, this.model?.id).subscribe(
         data => {
           console.log('data', data);
+          this.onNoClick();
         }
       );
     }
@@ -398,9 +458,28 @@ export class EditDataComponent implements OnInit {
       this.patholgyService.editPathology(this.model?.option1, data).subscribe(
         dataR => {
           console.log('edit', dataR);
+          this.onNoClick();
         }
       );
     }
+    if (this.data.Parent === 'general') {
+      const dataEdit = [
+        {
+          op: 'replace',
+          path: '/name',
+          value: this.model?.name
+        },
+        {
+          op: 'replace',
+          path: '/description',
+          value: this.model?.description
+        }
+      ];
+      this.measureService.editMeasure(this.model?.id, dataEdit);
+    }
+  }
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

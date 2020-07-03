@@ -7,6 +7,8 @@ import { RegionsService } from '../../services/regions/regions.service';
 import { tap } from 'rxjs/operators';
 import { MedicationService } from '../../services/medication/medication.service';
 import { PathologiesService } from '../../services/pathology/pathologies.service';
+import { MeasuresService } from '../../services/measure/measures.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modify-data',
@@ -124,16 +126,16 @@ export class ModifyDataComponent implements OnInit {
       fieldGroupClassName: 'row',
       fieldGroup: [
         {
-          className: 'col-6',
+          className: 'col-4',
           type: 'input',
           key: 'name',
           templateOptions: {
             label: 'Name',
-            required: true
+            required: true,
           }
         },
         {
-          className: 'col-6',
+          className: 'col-4',
           type: 'input',
           key: 'description',
           templateOptions: {
@@ -325,7 +327,8 @@ export class ModifyDataComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public regionService: RegionsService,
     public medicationService: MedicationService,
-    public patholgyService: PathologiesService) { }
+    public patholgyService: PathologiesService,
+    public measureService: MeasuresService) { }
 
   ngOnInit(): void {
     console.log('data pased', this.data);
@@ -355,17 +358,20 @@ export class ModifyDataComponent implements OnInit {
     console.log(this.model);
     if (this.data.Parent === 'Region') {
       this.regionService.createRegion(this.model);
+      this.onNoClick();
     }
     if (this.data.Parent === 'Hospital') {
       this.recruitmentFields = this.HospitalFields;
     }
     if (this.data.Parent === 'Medication') {
       this.medicationService.createMedication(this.model);
+      this.onNoClick();
     }
     if (this.data.Parent === 'Pathology') {
       this.patholgyService.createPathology(this.model).subscribe(
         data => {
           console.log('data', data);
+          this.onNoClick();
         }
       );
     }
@@ -373,7 +379,8 @@ export class ModifyDataComponent implements OnInit {
       this.recruitmentFields = this.ByCountryFields;
     }
     if (this.data.Parent === 'general') {
-      this.recruitmentFields = this.GeneralFields;
+      this.measureService.createSanitaryMeasure(this.model);
+      this.onNoClick();
     }
 
   }

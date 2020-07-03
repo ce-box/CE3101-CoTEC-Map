@@ -4,6 +4,7 @@ import { SelectionType } from '@swimlane/ngx-datatable';
 import { EditDataComponent } from '../../components/edit-data/edit-data.component';
 import { ModifyDataComponent } from '../../components/modify-data/modify-data.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MeasuresService } from '../../services/measure/measures.service';
 
 @Component({
   selector: 'app-measure',
@@ -53,13 +54,16 @@ export class MeasureComponent implements OnInit {
   /**
    * Columns measure for general
    */
-  columnsG = [{ prop: 'name', name: 'Name' },
-  { prop: 'description', name: 'Description'}];
+  columnsG = [
+    { prop: 'id', name: 'Id'},
+    { prop: 'name', name: 'Name' },
+    { prop: 'description', name: 'Description'}];
   /**
    * Rows measure general
    */
   rowsG = [
     {
+      id: 1,
       name: 'Traffic restrictions',
       description: 'No car between 5am to 5pm'
     },
@@ -74,7 +78,10 @@ export class MeasureComponent implements OnInit {
    * @param route Controller for the routing
    * @param dialog Controller for the dialog view
    */
-  constructor( private route: ActivatedRoute, public dialog: MatDialog) { }
+  constructor(
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+    public measureService: MeasuresService) { }
 
   ngOnInit(): void {
     this.idPage = this.route.snapshot.params.id;
@@ -101,6 +108,8 @@ export class MeasureComponent implements OnInit {
    */
   deleteSelected(){
     console.log('selected to delete', this.selectToOption);
+    // tslint:disable-next-line: no-string-literal
+    this.measureService.disableMeause(this.selectToOption['value']['id']);
   }
   /**
    * Disable the option selected
