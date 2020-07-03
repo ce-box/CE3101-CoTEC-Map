@@ -120,7 +120,15 @@ export class MeasureComponent implements OnInit {
   getCountries(){
     this.regionService.getCountries().subscribe(data => {
       console.log('region', data);
-      this.countries = data;
+      const countryData = [];
+      for (const pharmacy of data) {
+          const newPharmacyCo = {
+            value: pharmacy.code,
+            label: pharmacy.name
+          };
+          countryData.push(newPharmacyCo);
+        }
+      this.countries = countryData;
     });
   }
   /**
@@ -211,6 +219,9 @@ export class MeasureComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
+  /**
+   * Set an structure for the measure info
+   */
   getMeasureFormly(){
     this.measureService.getSanitaryMeasure().subscribe(
       data => {
