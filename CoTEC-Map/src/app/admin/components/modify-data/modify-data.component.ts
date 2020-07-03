@@ -226,6 +226,20 @@ export class ModifyDataComponent implements OnInit {
         {
           className: 'col-6',
           type: 'select',
+          key: 'country',
+          templateOptions: {
+            label: 'Country',
+            required: true,
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.options = this.data.Countries;
+            }
+          }
+        },
+        {
+          className: 'col-6',
+          type: 'select',
           key: 'region',
           templateOptions: {
             label: 'Region',
@@ -233,10 +247,18 @@ export class ModifyDataComponent implements OnInit {
           },
           hooks: {
             onInit: (field: FormlyFieldConfig) => {
-              console.log('regions option', this.regionsData);
-              field.templateOptions.options = this.regionsData;
+              field.form.get('country').valueChanges.pipe(
+                tap(countrySelected => {
+                  console.log('countrySelected');
+                  field.templateOptions.options = [{
+                    label: 'test',
+                    value: 'test'
+                  }];
+                  console.log('regions options', this.regionsData);
+                }),
+              ).subscribe();
+              }
             }
-          }
         }
       ]
     }
@@ -435,7 +457,7 @@ export class ModifyDataComponent implements OnInit {
     this.dialogRef.close();
   }
   selectRegion(){
-    this.regionService.getRegions(this.countrySelected).subscribe(
+    this.regionService.getRegionsO(this.countrySelected).then(
       dataR => {
         console.log('regiones', dataR);
         const SanitaryData = [];

@@ -2,18 +2,8 @@
     <div class="imageDiv">
         <img src="assets/imgs/imagComplet.jpeg" alt="">
         <div class="container">
-            <form *ngIf="hospitalView">
-                <mat-form-field appearance="fill">
-                  <mat-label>Select a Country</mat-label>
-                  <mat-select [(ngModel)]="countrySelected" name="food" (focus)="selectRegion($event)">
-                    <mat-option *ngFor="let country of data.Countries" [value]="country.value">
-                      {{country.label}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </form> 
-          <h2 *ngIf="hospitalView && countrySelected">Agregar {{data.Parent}}</h2>
-            <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="hospitalView && countrySelected">
+          <h2>Agregar {{data.Parent}}</h2>
+            <form [formGroup]="form" (ngSubmit)="submit()">
                 <formly-form [model]="model" [fields]="recruitmentFields" [options]="options" [form]="form"></formly-form>
                 <button type="submit" class="btn btn-primary submit-button" [disabled]="!form.valid">Submit</button>
     

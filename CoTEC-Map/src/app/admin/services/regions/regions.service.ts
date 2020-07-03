@@ -14,6 +14,9 @@ export class RegionsService {
   getRegions(country: string){
     return this.http.get<any[]>(`https://localhost:5001/api/v1/regions/country?CountryCode=${country}`);
   }
+  async getRegionsO(country: string){
+    return await this.http.get<any[]>(`https://localhost:5001/api/v1/regions/country?CountryCode=${country}`).toPromise();
+  }
   createRegion(bodyRegion: object){
     this.http.post(`https://localhost:5001/api/v1/regions/new`, bodyRegion)
     .subscribe((response) => {
