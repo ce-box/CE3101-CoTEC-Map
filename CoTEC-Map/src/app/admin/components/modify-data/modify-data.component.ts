@@ -156,42 +156,44 @@ export class ModifyDataComponent implements OnInit {
         {
           className: 'col-6',
           type: 'input',
-          key: 'location',
-          templateOptions: {
-            label: 'Location',
-            required: true
-          }
-        },
-        {
-          className: 'col-6',
-          type: 'input',
           key: 'name',
           templateOptions: {
             label: 'Name',
             required: true
           }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'managerName',
+          templateOptions: {
+            label: 'Manager Name',
+            required: true
+          }
         }
       ],
     },
     {
       fieldGroupClassName: 'row',
       fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'phone',
+          templateOptions: {
+            label: 'Phone',
+            required: true,
+            type: 'number'
+          }
+        },
         {
           className: 'col-6',
           type: 'input',
           key: 'capacity',
           templateOptions: {
-            label: 'Beds capacity',
-            required: true
-          }
-        },
-        {
-          className: 'col-6',
-          type: 'input',
-          key: 'UCI',
-          templateOptions: {
-            label: 'UCI beds capacity',
-            required: true
+            label: 'Beds Capacity',
+            required: true,
+            type: 'number'
           }
         }
       ],
@@ -202,22 +204,47 @@ export class ModifyDataComponent implements OnInit {
         {
           className: 'col-6',
           type: 'input',
-          key: 'director',
+          key: 'icU_Capacity',
           templateOptions: {
-            label: 'Hospital`s Director',
-            required: true
+            label: 'Uci beds Capacity',
+            required: true,
+            type: 'number'
           }
         },
         {
           className: 'col-6',
-          type: 'input',
-          key: 'contact',
+          type: 'select',
+          key: 'country',
           templateOptions: {
-            label: 'Director`s contact',
+            label: 'Country',
             required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.options = this.data?.Countries;
+            },
+          }
+        },
+        {
+          className: 'col-6',
+          type: 'select',
+          key: 'region',
+          templateOptions: {
+            label: 'Region',
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.form.get('country').valueChanges.pipe(
+                tap(countrySelected => {
+                  console.log('country Selected', countrySelected);
+                  field.templateOptions.options = this.selectRegion(countrySelected);
+                }),
+              ).subscribe();
+            }
           }
         }
-      ],
+      ]
     }
   ];
   /**
@@ -410,6 +437,16 @@ export class ModifyDataComponent implements OnInit {
   }
   onNoClick(): void {
     this.dialogRef.close();
+  }
+  selectRegion(country: string){
+    let dataRegions;
+    this.regionService.getRegions(country).subscribe(
+      dataR => {
+        dataRegions = dataR;
+        return dataR;
+      }
+    );
+    return dataRegions;
   }
 
 }
