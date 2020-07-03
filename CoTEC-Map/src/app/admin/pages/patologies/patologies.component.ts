@@ -51,6 +51,7 @@ export class PatologiesComponent implements OnInit {
     public patholgyService: PathologiesService) { }
 
   ngOnInit(): void {
+    this.getPathologies();
   }
   getPathologies() {
     this.patholgyService.getPathology().subscribe(
