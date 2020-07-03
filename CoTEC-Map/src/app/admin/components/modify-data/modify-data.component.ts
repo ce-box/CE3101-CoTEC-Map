@@ -239,28 +239,28 @@ export class ModifyDataComponent implements OnInit {
         },
         {
           className: 'col-6',
-          type: 'select',
+          type: 'input',
           key: 'region',
           templateOptions: {
             label: 'Region',
             required: true
           },
-          hooks: {
-            onInit: (field: FormlyFieldConfig) => {
-              field.form.get('country').valueChanges.pipe(
-                tap(countrySelected => {
-                  console.log('countrySelected', countrySelected);
-                  this.selectRegion(countrySelected);
-                  console.log('regions options 1', this.regionsData);
-                  field.templateOptions.options = [{
-                    label: 'test',
-                    value: 'test'
-                  }];
-                  console.log('regions options 2', this.regionsData);
-                }),
-              ).subscribe();
-              }
-            }
+          // hooks: {
+          //   onInit: (field: FormlyFieldConfig) => {
+          //     field.form.get('country').valueChanges.pipe(
+          //       tap(countrySelected => {
+          //         console.log('countrySelected', countrySelected);
+          //         this.selectRegion(countrySelected);
+          //         console.log('regions options 1', this.regionsData);
+          //         field.templateOptions.options = [{
+          //           label: 'test',
+          //           value: 'test'
+          //         }];
+          //         console.log('regions options 2', this.regionsData);
+          //       }),
+          //     ).subscribe();
+          //     }
+          //   }
         }
       ]
     }
@@ -459,7 +459,7 @@ export class ModifyDataComponent implements OnInit {
     this.dialogRef.close();
   }
   selectRegion(countrySelected: string){
-    this.regionService.getRegionsO(countrySelected).then(
+    this.regionService.getRegions(countrySelected).subscribe(
       dataR => {
         console.log('regiones', dataR);
         const SanitaryData = [];

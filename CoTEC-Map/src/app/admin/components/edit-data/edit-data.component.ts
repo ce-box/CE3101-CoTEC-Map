@@ -5,6 +5,7 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { MedicationService } from '../../services/medication/medication.service';
 import { PathologiesService } from '../../services/pathology/pathologies.service';
 import { MeasuresService } from '../../services/measure/measures.service';
+import { HospitalService } from '../../services/hospital/hospital.service';
 
 @Component({
   selector: 'app-edit-data',
@@ -378,6 +379,145 @@ export class EditDataComponent implements OnInit {
     }
   ];
   /**
+   * Formly data structure for six values
+   */
+  HeightFields: FormlyFieldConfig[] = [
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option1',
+          templateOptions: {
+            required: true,
+            readonly: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[0];
+              field.form.controls.option1.setValue(this.data.Selection?.value[this.data.Keys[0]]);
+            }
+          }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option2',
+          templateOptions: {
+            required: true,
+            readonly: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[1];
+              field.form.controls.option2.setValue(this.data.Selection?.value[this.data.Keys[1]]);
+            }
+          }
+        }
+      ],
+    },
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option3',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[2];
+              field.form.controls.option3.setValue(this.data.Selection?.value[this.data.Keys[2]]);
+            }
+          }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option4',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[3];
+              field.form.controls.option4.setValue(this.data.Selection?.value[this.data.Keys[3]]);
+            }
+          }
+        }
+      ],
+    },
+    {
+      fieldGroupClassName: 'row',
+      fieldGroup: [
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option5',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[4];
+              field.form.controls.option5.setValue(this.data.Selection['value'][this.data.Keys[4]]);
+            }
+          }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option6',
+          templateOptions: {
+            required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[5];
+              console.log('key',this.data.Keys[5], 'value', this.data.Selection?.value[this.data.Keys[5]] );
+              field.form.controls.option6.setValue(this.data.Selection?.value[this.data.Keys[5]]);
+            }
+          }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option7',
+          templateOptions: {
+            required: true,
+            readonly: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[6];
+              console.log('key',this.data.Keys[6], 'value', this.data.Selection?.value[this.data.Keys[6]] );
+              field.form.controls.option7.setValue(this.data.Selection['value'][this.data.Keys[6]]);
+            }
+          }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'option8',
+          templateOptions: {
+            required: true,
+            readonly: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.label = this.data.Keys[7];
+              console.log('key',this.data.Keys[7], 'value', this.data.Selection?.value[this.data.Keys[7]] );
+              field.form.controls.option8.setValue(this.data.Selection['value'][this.data.Keys[7]]);
+            }
+          }
+        }
+      ],
+    }
+  ];
+  /**
    * First method in the page
    * @param dialogRef Controller for the dialog
    * @param data Data passed from the parent component
@@ -386,11 +526,12 @@ export class EditDataComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any,
               public medicationService: MedicationService,
               public patholgyService: PathologiesService,
-              public measureService: MeasuresService) { }
+              public measureService: MeasuresService,
+              private hospitalService: HospitalService) { }
 
   ngOnInit(): void {
     console.log('edit', this.data);
-    console.log('edit leght keys', this.data.Keys.length);
+    console.log('edit Length keys', this.data.Keys.length);
     if (this.data.Keys.length === 1) {
       this.recruitmentFields = this.FieldOne;
     }
@@ -410,6 +551,9 @@ export class EditDataComponent implements OnInit {
     }
     if (this.data.Keys.length === 6) {
       this.recruitmentFields = this.SixFields;
+    }
+    if(this.data.Keys.length === 8){
+      this.recruitmentFields = this.HeightFields;
     }
 
   }
@@ -476,6 +620,31 @@ export class EditDataComponent implements OnInit {
         }
       ];
       this.measureService.editMeasure(this.model?.id, dataEdit);
+    }
+    if (this.data.Parent === 'Hospital Center'){
+      const data = [
+        {
+            "op":"replace",
+            "path":"/managerName",
+            "value":"Luis Perez"
+        },
+        {
+            "op":"replace",
+            "path":"/Phone",
+            "value":"(+506)2214-5648"
+        },
+        {
+            "op":"replace",
+            "path":"/capacity",
+            "value":2000
+        },
+        {
+            "op":"replace",
+            "path":"/iCU_Capacity",
+            "value":100
+        }
+    ]
+      this.hospitalService.editHospital(this.model.option1, data);
     }
   }
   onNoClick(): void {
