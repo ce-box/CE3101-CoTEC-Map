@@ -280,20 +280,30 @@ export class ModifyDataComponent implements OnInit {
       fieldGroup: [
         {
           className: 'col-6',
-          type: 'input',
-          key: 'name',
+          type: 'select',
+          key: 'measureId',
           templateOptions: {
             label: 'Name',
             required: true
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.options = this.data?.Measure;
+            },
           }
         },
         {
           className: 'col-6',
-          type: 'input',
-          key: 'country',
+          type: 'select',
+          key: 'countryCode',
           templateOptions: {
             label: 'Country',
-            required: true
+            required: true,
+          },
+          hooks: {
+            onInit: (field: FormlyFieldConfig) => {
+              field.templateOptions.options = this.data?.Countries;
+            },
           }
         }
       ],
@@ -316,6 +326,15 @@ export class ModifyDataComponent implements OnInit {
           key: 'endDate',
           templateOptions: {
             label: 'End Date',
+            required: true
+          }
+        },
+        {
+          className: 'col-6',
+          type: 'input',
+          key: 'status',
+          templateOptions: {
+            label: 'Status',
             required: true
           }
         }

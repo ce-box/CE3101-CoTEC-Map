@@ -51,4 +51,12 @@ export class MeasuresService {
       }
     );
   }
+  disableCountryMeasure(idM: string, CountryCode: string){
+    this.http.delete(`https://localhost:5001/api/v1/measures/country/delete?Id=${idM}&Country=${CountryCode}`).subscribe(
+      dataR => {
+        console.log('disable', dataR);
+        return dataR;
+      }
+    );
+  }
 }

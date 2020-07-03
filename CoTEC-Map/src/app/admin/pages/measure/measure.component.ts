@@ -85,6 +85,7 @@ export class MeasureComponent implements OnInit {
    */
   // tslint:disable-next-line: no-inferrable-types
   enableChange: boolean = false;
+  formlyMeasureSelected: any[];
   /**
    * First method of the page
    * @param route Controller for the routing
@@ -99,11 +100,12 @@ export class MeasureComponent implements OnInit {
   ngOnInit(): void {
     this.idPage = this.route.snapshot.params.id;
     console.log('id', this.idPage);
+    this.getGeneralMeasue();
     if (this.idPage === 'general'){
       this.generalView = true;
-      this.getGeneralMeasue();
     }else{
       this.generalView = false;
+      this.getMeasureFormly();
       this.getCountries();
     }
   }
@@ -160,7 +162,8 @@ export class MeasureComponent implements OnInit {
    * Disable the option selected
    */
   disableSelected(){
-    console.log('selected to disable', this.selectToOption);
+    console.log('selected to disable', this.selectToOption, 'countryCode', this.countrySelected);
+    this.measureService.disableCountryMeasure(this.selectToOption['value']['id'], this.countrySelected);
   }
   /**
    * Open a Modify/Add Component
@@ -182,7 +185,10 @@ export class MeasureComponent implements OnInit {
         data: {
           Action: actionT,
           Parent: this.idPage,
-          Keys: Object.keys(this.rowsS)
+          Keys: Object.keys(this.rowsS),
+          Measure: this.formlyMeasureSelected,
+          Country: this.countrySelected,
+          Countries: this.countries
         }
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -204,5 +210,21 @@ export class MeasureComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+  getMeasureFormly(){
+    this.measureService.getSanitaryMeasure().subscribe(
+      data => {
+        console.log('sanitaryMeasure house');
+        const SanitaryData = [];
+        for (const pharmacy of data) {
+          const newPharmacyCo = {
+            value: pharmacy.id,
+            label: pharmacy.name
+          };
+          SanitaryData.push(newPharmacyCo);
+        }
+        this.formlyMeasureSelected = SanitaryData;
+      }
+    );
   }
 }
