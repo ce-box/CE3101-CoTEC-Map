@@ -103,6 +103,7 @@ export class MedicationsComponent implements OnInit {
    */
   deleteSelected() {
     console.log('selected to delete', this.selectToOption);
+    this.medicationService.deleteMedication(this.selectToOption[0].id);
   }
   /**
    * Open a Modify/Add Component
