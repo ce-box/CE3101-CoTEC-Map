@@ -203,6 +203,7 @@ export class AdminComponent implements OnInit {
     console.log('delete');
     // tslint:disable-next-line: no-string-literal
     this.statusService.deleteStatus(this.selectToOption['value']['id']);
+    location.reload();
   }
 
   /**

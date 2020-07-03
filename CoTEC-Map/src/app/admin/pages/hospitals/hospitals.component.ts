@@ -107,6 +107,7 @@ export class HospitalsComponent implements OnInit {
   deleteSelected(){
     console.log('selected to delete', this.selectToOption);
     this.hospitalService.deleteHospital(this.selectToOption['value']['id']);
+    location.reload();
   }
   /**
    * Open a Modify/Add Component

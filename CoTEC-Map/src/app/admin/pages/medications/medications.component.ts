@@ -108,6 +108,7 @@ export class MedicationsComponent implements OnInit {
         console.log('delet data responde', data);
       }
     );
+    location.reload();
   }
   /**
    * Open a Modify/Add Component

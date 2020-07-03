@@ -165,6 +165,7 @@ export class MeasureComponent implements OnInit {
     console.log('selected to delete', this.selectToOption);
     // tslint:disable-next-line: no-string-literal
     this.measureService.disableMeause(this.selectToOption['value']['id']);
+    location.reload();
   }
   /**
    * Disable the option selected
@@ -172,6 +173,7 @@ export class MeasureComponent implements OnInit {
   disableSelected(){
     console.log('selected to disable', this.selectToOption, 'countryCode', this.countrySelected);
     this.measureService.disableCountryMeasure(this.selectToOption['value']['id'], this.countrySelected);
+    location.reload();
   }
   /**
    * Open a Modify/Add Component

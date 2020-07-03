@@ -706,6 +706,7 @@ export class EditDataComponent implements OnInit {
     }
   }
   onNoClick(): void {
+    location.reload();
     this.dialogRef.close();
   }
 

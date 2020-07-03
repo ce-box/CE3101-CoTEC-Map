@@ -82,6 +82,7 @@ export class PatologiesComponent implements OnInit {
         console.log('response delete', dataR);
       }
     );
+    location.reload();
   }
   /**
    * Open a Modify/Add Component

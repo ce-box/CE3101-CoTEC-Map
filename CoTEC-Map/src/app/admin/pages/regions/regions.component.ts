@@ -113,6 +113,7 @@ export class RegionsComponent implements OnInit {
         console.log(dataResponse);
       }
     );
+    location.reload();
   }
   /**
    * Open a Modify/Add Component

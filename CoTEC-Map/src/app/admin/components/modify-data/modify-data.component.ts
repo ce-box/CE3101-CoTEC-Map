@@ -485,6 +485,7 @@ export class ModifyDataComponent implements OnInit {
 
   }
   onNoClick(): void {
+    location.reload();
     this.dialogRef.close();
   }
   selectRegion(countrySelected: string){
