@@ -10,41 +10,41 @@ import { ContactService } from 'src/app/hospital-center/Services/contact.service
   styleUrls: ['./contacts.component.scss']
 })
 export class ContactsComponent implements OnInit {
-  // Dni contact
+  // Dni contact for search patient
   @Input() dniContact: number;
 
   pageName = 'Crear Contacto';
+  countrySelect = false;
 
   // Data list
   pathologys: Pathologys[];
   pathologysList: any[] = [];
   contactList: any[] = [];
   countries: any;
+  regions: any;
 
   // tslint:disable-next-line: variable-name
-  constructor(private _http: ContactService) {
-
-    this.pathologys = [
-      {
-        name: 'Presión',
-        treatment: 'este',
-        symptoms: 'h',
-        description: 'esta',
-      },
-      {
-        name: 'Node Js',
-        treatment: 'este',
-        symptoms: 'j',
-        description: 'esta',
-      },
-      { name: 'Java', treatment: 'este', symptoms: 'k', description: 'esta' },
-    ];
-  }
+  constructor(private _http: ContactService) {}
 
   ngOnInit(): void {
+    this._http.getPathologys().subscribe(data => {
+      this.pathologys = data;
+    });
+
     this._http.getContriesData().subscribe(data => {
       this.countries = data;
     });
+  }
+
+  getRegions(code: string) {
+    this.countrySelect = true;
+    for (const entry of this.countries) {
+      if (entry.countryName === code){
+        this._http.getRegionsForContry(entry.countryCode).subscribe(data => {
+          this.regions = data;
+        });
+      }
+    }
   }
 
   // Add a pathology in the list for send to Data Base
@@ -67,15 +67,18 @@ export class ContactsComponent implements OnInit {
   }
 
   // Get the values for the forms and incluide in the table
-  getContactValue(name: string, lastName: string, age: string, email: string, address: string, dni: number, country: string): void {
-    const temporal = this.pathologysList;
-    const contact: Contact = {name, lastName, age, email, address, dni, country, pathologys: temporal};
-    console.log(contact);
+  // tslint:disable-next-line: max-line-length
+  getContactValue(name: string, lastName: string, doB: string, email: string, address: string, dni: number, country: string, region: string): void {
+    for (const entry of this.countries) {
+      if (entry.countryName === country) {
+        country = entry.countryCode;
+      }
+    }
+    const contact: Contact = {name, lastName, doB, email, address, dni, country, region};
     const i = this.contactList.indexOf(contact);
 
     if (i === -1) {
       this.contactList.push(contact);
-      console.log(this.contactList);
     }
   }
 
@@ -85,14 +88,16 @@ export class ContactsComponent implements OnInit {
 
     if (i !== -1) {
       this.contactList.splice(i, 1);
-      console.log(this.contactList);
     }
   }
 
   // Send a contact for the Data Base
-  sendContact(): void {
+  sendContact( ): void {
     if ((this.contactList.length)  !==  0 ) {
       console.log(this.contactList);
+      if (this.contactList.length !== 0){
+        this._http.postContacts(this.contactList, this.dniContact);
+      }
     }
   }
 

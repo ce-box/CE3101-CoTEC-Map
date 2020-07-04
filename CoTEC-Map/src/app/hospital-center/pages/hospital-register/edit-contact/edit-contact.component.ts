@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Contact } from '../../../Interfaces/contact';
 import { Pathologys } from 'src/app/hospital-center/Interfaces/pathologys';
+import { ContactService } from 'src/app/hospital-center/Services/contact.service';
 
 @Component({
   selector: 'app-edit-contact',
@@ -9,8 +9,7 @@ import { Pathologys } from 'src/app/hospital-center/Interfaces/pathologys';
 })
 export class EditContactComponent implements OnInit {
   // Patient dni, Contact dni
-  @Input() dniPatient: number;
-  dniContact: number;
+  @Input() dniContact: number;
 
   pageName = 'Contacto';
 
@@ -24,45 +23,21 @@ export class EditContactComponent implements OnInit {
   countrys: any;
   patient: any;
 
-  constructor() {
+  // tslint:disable-next-line: variable-name
+  constructor(private _http: ContactService) { }
 
-    this.patient = {
-      name: 'Olman',
-      lastName: 'Castro Hernández',
-      dni: '207840516',
-      age: 21,
-      nationality: 'Costa Rica',
-      state: 'Crítico',
-      region: 'Heredia',
-      internship: 'Sí',
-      UCI: 'Sí',
-      medication: [
-        { house: 'Bayer', medicine: 'Alive' },
-        { house: 'Bayer', medicine: 'Alive' },
-        { house: 'Bayer', medicine: 'Aspirina' },
-      ],
-      pathology: ['Hipertensión', 'diavetes', 'asma'],
-    };
 
-    this.countrys = ['Costa Rica', 'El Salvador', 'Nicaragua', 'Panamá'];
-    this.pathologys = [
-      {
-        name: 'Presión',
-        treatment: 'este',
-        symptoms: 'h',
-        description: 'esta',
-      },
-      {
-        name: 'Node Js',
-        treatment: 'este',
-        symptoms: 'j',
-        description: 'esta',
-      },
-      { name: 'Java', treatment: 'este', symptoms: 'k', description: 'esta' },
-    ];
+  ngOnInit(): void {
+    console.log(this.dniContact);
+    this._http.getContact(this.dniContact).subscribe(data => {
+      this.patient = data;
+    });
+
+    this._http.getContactPathologys(this.dniContact).subscribe(data => {
+      this.pathologys = data;
+    });
+
   }
-
-  ngOnInit(): void {}
 
   // Add a pathology in the list for send to Data Base
   getPathologyValue(value: Pathologys[]): void {

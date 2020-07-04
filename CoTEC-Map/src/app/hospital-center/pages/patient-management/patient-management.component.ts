@@ -27,58 +27,7 @@ export class PatientManagementComponent implements OnInit {
   pathology: Pathologys[];
 
   // tslint:disable-next-line: variable-name
-  constructor(private _http: PatientService) {
-
-      this.pathology = [
-        {name: 'Hipertensión', treatment: '', symptoms: '', description: ''},
-        {name: 'diavetes', treatment: '', symptoms: '', description: ''},
-        {name: 'asma', treatment: '', symptoms: '', description: ''}
-      ],
-
-
-    this.contacts = [
-      {
-        name: 'Daniel',
-        lastName: 'Castro Hernández',
-        dni: '207840600',
-        age: 15,
-        nationality: 'Costa Rica',
-        address: 'Ssrapiquí, Heredía',
-        email: 'kstro379@hotmail.com',
-        pathology: ['Hipertensión', 'diavetes', 'asma'],
-      },
-      {
-        name: 'Daniel',
-        lastName: 'Castro Hernández',
-        dni: '207840600',
-        age: 15,
-        nationality: 'Costa Rica',
-        address: 'Ssrapiquí, Heredía',
-        email: 'kstro379@hotmail.com',
-        pathology: ['Hipertensión', 'diavetes', 'asma'],
-      },
-      {
-        name: 'Daniel',
-        lastName: 'Castro Hernández',
-        dni: '207840600',
-        age: 15,
-        nationality: 'Costa Rica',
-        address: 'Ssrapiquí, Heredía',
-        email: 'kstro379@hotmail.com',
-        pathology: ['Hipertensión', 'diavetes', 'asma'],
-      },
-      {
-        name: 'Daniel',
-        lastName: 'Castro Hernández',
-        dni: '207840600',
-        age: 15,
-        nationality: 'Costa Rica',
-        address: 'Ssrapiquí, Heredía',
-        email: 'kstro379@hotmail.com',
-        pathology: ['Hipertensión', 'diavetes', 'asma'],
-      },
-    ];
-  }
+  constructor(private _http: PatientService) { }
 
   ngOnInit(): void {
     this._http.getPatientData(this.dniPatient).subscribe(data => {
@@ -88,6 +37,15 @@ export class PatientManagementComponent implements OnInit {
     this._http.getPatientMedications(this.dniPatient).subscribe(data => {
       this.medication = data;
     });
+
+    this._http.getPatientPathologys(this.dniPatient).subscribe(data => {
+      this.pathology = data;
+    });
+
+    this._http.getContacts(this.dniPatient).subscribe(data => {
+      this.contacts = data;
+    });
+
   }
 
   // Change the page to create contacts
@@ -103,7 +61,7 @@ export class PatientManagementComponent implements OnInit {
 
   // Change the page to contact information
   changeinformationContactPage(dni: number){
-    this.dniContact = this.dniContact;
+    this.dniContact = dni;
     this.changeContactInformation = true;
   }
 }

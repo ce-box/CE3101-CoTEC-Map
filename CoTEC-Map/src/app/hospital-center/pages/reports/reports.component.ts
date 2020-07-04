@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ReportsService } from '../../Services/reports.service';
 
 @Component({
   selector: 'app-reports',
@@ -17,18 +18,18 @@ export class ReportsComponent implements OnInit {
   countryData: any;
   countrystatistics: any;
 
-  constructor() {
-    this.countryData = [
-      {coutry: 'Costa Rica', infections: 23455566, recovered: 6675775, dead: 345566, actives: 566467},
-      {coutry: 'Costa Rica', infections: 234555566, recovered: 6675775, dead: 345566, actives: 566467},
-      {coutry: 'Costa Rica', infections: 23455566, recovered: 66755775, dead: 345566, actives: 5566467},
-      {coutry: 'Costa Rica', infections: 23455566, recovered: 6675775, dead: 3455566, actives: 566467}
-    ];
-    this.countrystatistics =
-      {infections: 23455566, recovered: 6675775, dead: 345566, actives: 566467};
-  }
+  // tslint:disable-next-line: variable-name
+  constructor(private _http: ReportsService) { }
 
   ngOnInit(): void {
+    this._http.getContriesData().subscribe(data => {
+      this.countryData = data;
+    });
+
+    this._http.getWorldInformation().subscribe(data => {
+      this.countrystatistics = data;
+    });
+
   }
 
   // Print the report in a pdf

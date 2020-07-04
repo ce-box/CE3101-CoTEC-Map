@@ -151,12 +151,16 @@
                         <thead>
                           <tr>
                             <th scope="col">Nombre</th>
+                            <th scope="col">Descripción</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let type of pathology">
                             <td class="align-middle">
                               {{ type.name }}
+                            </td>
+                            <td class="align-middle">
+                              {{ type.description }}
                             </td>
                           </tr>
                         </tbody>
@@ -279,7 +283,7 @@
   <!-- Roud for the contact information page -->
   <body *ngIf="changeContactInformation">
     <div>
-      <app-edit-contact [dniPatient]="dniContact"></app-edit-contact>
+      <app-edit-contact [dniContact]="dniContact"></app-edit-contact>
     </div>
   </body>
   <!-- /Roud for the add contacts information page -->

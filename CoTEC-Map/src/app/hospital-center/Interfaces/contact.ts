@@ -2,10 +2,10 @@
 export interface Contact{
     name: string;
     lastName: string;
-    age: string;
+    doB: string;
     email: string;
     address: string;
     dni: number;
     country: string;
-    pathologys: any[];
+    region: string;
     }

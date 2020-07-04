@@ -111,20 +111,20 @@
           </thead>
           <tbody *ngFor="let country of countryData">
             <tr>
-              <td class="align-middle">{{ country.coutry }}</td>
-              <td class="align-middle">{{ country.infections }}</td>
+              <td class="align-middle">{{ country.countryName }}</td>
+              <td class="align-middle">{{ country.infected }}</td>
               <td class="align-middle">{{ country.recovered }}</td>
-              <td class="align-middle">{{ country.dead }}</td>
-              <td class="align-middle">{{ country.actives }}</td>
+              <td class="align-middle">{{ country.deaths }}</td>
+              <td class="align-middle">{{ country.active }}</td>
             </tr>
           </tbody>
           <thead style="border-top: 3px solid #000000;">
             <tr>
               <th scope="col">Totales</th>
-              <th scope="col">{{ countrystatistics.infections }}</th>
+              <th scope="col">{{ countrystatistics.infected }}</th>
               <th scope="col">{{ countrystatistics.recovered }}</th>
-              <th scope="col">{{ countrystatistics.dead }}</th>
-              <th scope="col">{{ countrystatistics.actives }}</th>
+              <th scope="col">{{ countrystatistics.deaths }}</th>
+              <th scope="col">{{ countrystatistics.active }}</th>
             </tr>
           </thead>
         </table>

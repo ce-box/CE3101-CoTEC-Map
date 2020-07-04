@@ -50,7 +50,9 @@
                       dni.valid &&
                       startDate.control.valid &&
                       email.valid &&
-                      direction.valid
+                      direction.valid &&
+                      inputStateCountry.valid &&
+                      inputStateRegion.valid
                     )
                   "
                   (click)="
@@ -61,7 +63,8 @@
                       email.value,
                       direction.value,
                       dni.value,
-                      inputContry.value
+                      inputStateCountry.value,
+                      inputStateRegion.value
                     )
                   "
                 >
@@ -214,19 +217,47 @@
                   <!-- Country input  -->
                   <div class="form-group">
                     <h2>País de origen</h2>
-                    <select
-                      id="inputContry"
-                      class="form-control"
-                      inputContry="inputContry"
-                      ngModel
-                      #inputContry="ngModel"
+                    <div class="row">
+                    <div class="col">
+                    <select 
+                    required 
+                    id="inputStateCountry" 
+                    class="form-control"
+                    name="inputStateCountry"
+                    ngModel
+                    #inputStateCountry="ngModel" 
                     >
-                      <option *ngFor="let country of countries" selected>{{
-                        country.countryName
+                      <option 
+                      *ngFor="let country of countries" 
+                      >
+                        {{country.countryName}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col">
+                    <button type="button" class="btn btn-success" (click)="getRegions(inputStateCountry?.value)">Ok</button>
+                  </div>
+                </div>
+                  </div>
+                  <!-- /Country input  -->
+
+                  <!-- Region input  -->
+                  <div class="form-group">
+                    <h2>Regiones</h2>
+                    <select
+                    required 
+                    id="inputStateRegion" 
+                    class="form-control"
+                    name="inputStateRegion"
+                    ngModel
+                    #inputStateRegion="ngModel" 
+                    >
+                      <option *ngFor="let region of regions" selected>{{
+                        region.name
                       }}</option>
                     </select>
                   </div>
-                  <!-- /Country input  -->
+                  <!-- /Region input  -->
 
                   <!-- Adress input  -->
                   <div class="form-group">
@@ -349,8 +380,9 @@
           <button
             type="button"
             class="btn btn-success col-md-2"
-            (click)="sendContact()"
-          >
+            (click)="sendContact( )"
+            
+            >
             Agregar
           </button>
           <br />

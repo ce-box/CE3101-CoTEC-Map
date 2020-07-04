@@ -31,24 +31,7 @@ export class PatientsComponent implements OnInit {
   regions: any;
 
   // tslint:disable-next-line: variable-name
-  constructor(private _http: PatientService) {
-
-    this.pathologys = [
-      {
-        name: 'Presión',
-        treatment: 'este',
-        symptoms: 'h',
-        description: 'esta',
-      },
-      {
-        name: 'Node Js',
-        treatment: 'este',
-        symptoms: 'j',
-        description: 'esta',
-      },
-      { name: 'Java', treatment: 'este', symptoms: 'k', description: 'esta' },
-    ];
-  }
+  constructor(private _http: PatientService) { }
 
   ngOnInit(): void {
     this._http.getContriesData().subscribe(data => {
@@ -61,6 +44,10 @@ export class PatientsComponent implements OnInit {
 
     this._http.getStatus().subscribe(data => {
       this.status = data;
+    });
+
+    this._http.getPathologys().subscribe(data => {
+      this.pathologys = data;
     });
   }
 
@@ -81,6 +68,7 @@ export class PatientsComponent implements OnInit {
 
     if (i === -1) {
       this.pathologysList.push(value);
+      console.log(this.pathologysList);
     }
 
   }
@@ -100,6 +88,7 @@ export class PatientsComponent implements OnInit {
 
     if (i === -1) {
       this.medicationList.push(value);
+      console.log(this.medicationList);
     }
 
   }
@@ -144,8 +133,26 @@ export class PatientsComponent implements OnInit {
     const patient: SendPatient = {Dni: dni, Name: name, LastName: lastName,
       DoB: doB, Hospitalized: this.hospitalizedPatient, ICU: this.icuPatent,
       Status: this.statusPatient, Hospital_Id: 1, Region: region, Country: country };
-    console.log(patient);
 
-    this._http.postPatient(patient);
+    // this._http.postPatient(patient);
+
+    console.log(this.medicationList);
+    const medicationSend = [];
+    for (const entry of this.medicationList) {
+      medicationSend.push({patientDni: dni, medicationId: entry.id, prescription: 'Seguir etiqueta'});
+    }
+
+
+    const pathologysSend = [];
+    for (const entry of this.pathologysList) {
+      pathologysSend.push({PatientDni: dni, PathologyName: entry.name});
+    }
+
+    if (pathologysSend.length !== 0) {
+      this._http.postPathology(pathologysSend);
+    }
+    if (medicationSend.length !== 0) {
+      this._http.postMedicine(medicationSend);
+    }
   }
 }
