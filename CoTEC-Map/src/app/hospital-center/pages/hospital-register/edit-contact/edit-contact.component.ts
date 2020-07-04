@@ -84,16 +84,8 @@ export class EditContactComponent implements OnInit {
   }
 
   // Get the values for the forms and incluide in the table
-  getContactValue(name: string, lastName: string, age: string, email: string, address: string, dni: number, country: string): void {
-    const temporal = this.pathologysList;
-    const contact: Contact = {name, lastName, age, email, address, dni, country, pathologys: temporal};
-    console.log(contact);
-    const i = this.contactList.indexOf(contact);
+  getContactValue(name: string, lastName: string, email: string, address: string): void {
 
-    if (i === -1) {
-      this.contactList.push(contact);
-      console.log(this.contactList);
-    }
   }
 
   // Change the page to edit contact

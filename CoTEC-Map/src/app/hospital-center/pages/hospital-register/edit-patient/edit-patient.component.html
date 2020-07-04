@@ -41,10 +41,23 @@
           <!-- Add to the list button   -->
           <div id="button3" class="text-center">
             <button
+              (click)="
+                pachtPatient(
+                  dni.value,
+                  name.value,
+                  LastName.value,
+                  customRadio.value,
+                  customRadio2.value,
+                  inputState.value
+                )
+              "
               type="button"
               class="btn btn-success col-md-8"
               [disabled]="
-                !(name.valid && LastName.valid )
+                !(
+                  name.valid &&
+                  LastName.valid
+                )
               "
             >
               Guardar
@@ -120,6 +133,7 @@
                       placeholder="Identificación *"
                       required
                       dni="dni"
+                      [(ngModel)]="identificacion1"
                       ngModel
                       #dni="ngModel"
                       id="dni"
@@ -131,7 +145,15 @@
                   <!-- State input  -->
                   <div class="form-group">
                     <h2>Estado</h2>
-                    <select id="inputState" class="form-control">
+                    <select
+                      id="inputState"
+                      class="form-control"
+                      required
+                      name="inputState"
+                      [(ngModel)] = "status"
+                      ngModel
+                      #inputState="ngModel"
+                    >
                       <option *ngFor="let state of states" selected>{{
                         state
                       }}</option>
@@ -199,7 +221,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      placeholder="Edad *"
+                      [(ngModel)]="age1"
                       required
                       age="age"
                       ngModel
@@ -219,6 +241,7 @@
                       placeholder="País *"
                       required
                       country="country"
+                      [(ngModel)]="country1"
                       ngModel
                       #country="ngModel"
                       id="country"
@@ -236,6 +259,7 @@
                       placeholder="Región *"
                       required
                       region="region"
+                      [(ngModel)]="region1"
                       ngModel
                       #region="ngModel"
                       id="region"
@@ -249,56 +273,40 @@
                     <div class="row">
                       <div class="col">
                         <h2>Internado</h2>
-                        <div class="custom-control custom-radio">
+                        <div class="form-check">
                           <input
-                            type="radio"
-                            id="customRadio1"
-                            name="customRadio"
-                            class="custom-control-input"
+                            type="checkbox"
+                            class="form-check-input"
+                            id="customRadio"
+                            required
+                            ngModel
+                            #customRadio="ngModel"
+                            [(ngModel)] ="valu"
                             checked
                           />
-                          <label class="custom-control-label" for="customRadio1"
+                          <label class="form-check-label" for="customRadio"
                             >Sí</label
-                          >
-                        </div>
-                        <div class="custom-control custom-radio">
-                          <input
-                            type="radio"
-                            id="customRadio2"
-                            name="customRadio"
-                            class="custom-control-input"
-                          />
-                          <label class="custom-control-label" for="customRadio2"
-                            >No</label
                           >
                         </div>
                       </div>
-                    
+
                       <div class="col"></div>
 
                       <div class="col">
-                        <h2>En UCI</h2>
-                        <div class="custom-control custom-radio">
+                        <h2>UCI</h2>
+                        <div class="form-check">
                           <input
-                            type="radio"
-                            id="customRadio3"
-                            name="customRadio2"
-                            class="custom-control-input"
+                            type="checkbox"
+                            class="form-check-input"
+                            id="customRadio2"
+                            required
+                            ngModel
+                            #customRadio2="ngModel"
+                            [(ngModel)] ="valu2"
                             checked
                           />
-                          <label class="custom-control-label" for="customRadio3"
+                          <label class="form-check-label" for="customRadio2"
                             >Sí</label
-                          >
-                        </div>
-                        <div class="custom-control custom-radio">
-                          <input
-                            type="radio"
-                            id="customRadio4"
-                            name="customRadio2"
-                            class="custom-control-input"
-                          />
-                          <label class="custom-control-label" for="customRadio4"
-                            >No</label
                           >
                         </div>
                       </div>

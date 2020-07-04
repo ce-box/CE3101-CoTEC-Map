@@ -188,8 +188,6 @@
                     !(
                       name.valid &&
                       LastName.valid &&
-                      dni.valid &&
-                      startDate.control.valid &&
                       email.valid &&
                       direction.valid
                     )
@@ -198,11 +196,8 @@
                     getContactValue(
                       name.value,
                       LastName.value,
-                      startDate.value,
                       email.value,
-                      direction.value,
-                      dni.value,
-                      inputContry.value
+                      direction.value
                     )
                   "
                 >
@@ -275,51 +270,31 @@
                     <h2>Número de identificación</h2>
                     <input
                       required
-                      pattern="[0-9]{9}"
                       ngModel
                       name="dni"
-                      placeholder="Identificación *"
                       #dni="ngModel"
-                      type="number"
+                      type="text"
                       class="form-control"
                       id="dni"
-                      [disabled]
+                      disabled
                     />
-                    <div
-                      class="alert alert-danger"
-                      *ngIf="dni.touched && !dni.valid"
-                    >
-                      <div *ngIf="dni.errors?.required">
-                        Debe ingresar un código.
-                      </div>
-                      <div *ngIf="dni.errors?.pattern">
-                        El código debe ser de 9 dígitos.
-                      </div>
-                    </div>
                   </div>
                   <!-- /Dni input  -->
 
                   <!-- Born input  -->
                   <div class="form-group">
-                    <h2>Fecha de nacimiento</h2>
+                    <h2>Edad</h2>
                     <div class="form-group">
                       <input
                         required
-                        type="date"
+                        type="text"
                         name="startDate"
                         ngModel
                         #startDate="ngModel"
-                        max="31-12-3000"
-                        min="01-01-1000"
                         class="form-control"
                         id="startDate"
+                        disabled
                       />
-                      <div
-                        class="alert alert-danger"
-                        *ngIf="startDate.touched && !startDate.valid"
-                      >
-                        Debe ingresar una fecha válida.
-                      </div>
                     </div>
                   </div>
                   <!-- Born input  -->
@@ -356,17 +331,14 @@
                   <!-- Country input  -->
                   <div class="form-group">
                     <h2>País de origen</h2>
-                    <select
+                    <input
                       id="inputContry"
                       class="form-control"
                       inputContry="inputContry"
                       ngModel
                       #inputContry="ngModel"
+                      disabled
                     >
-                      <option *ngFor="let country of countrys" selected>{{
-                        country
-                      }}</option>
-                    </select>
                   </div>
                   <!-- /Country input  -->
 

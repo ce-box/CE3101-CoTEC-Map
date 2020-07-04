@@ -22,6 +22,15 @@ export class EditPatientComponent implements OnInit {
   states: any;
   countrys: any;
 
+  // hdhdh
+  age1 = 27;
+  country1 = 'Costa Rica';
+  region1 = 'Heredia';
+  identificacion1 = 23334455;
+  valu = null;
+  valu2 = null;
+  status = 'active';
+
   // tslint:disable-next-line: variable-name
   constructor(private _http: PatientService) {
 
@@ -86,6 +95,10 @@ export class EditPatientComponent implements OnInit {
     if (i !== -1) {
       this.medicationList.splice(i, 1);
     }
+  }
+
+  pachtPatient(dni: number, name: string, lastname: string, customRadio: string, customRadio2: string, inputState: string) {
+    console.log(customRadio, customRadio2);
   }
 }
 
