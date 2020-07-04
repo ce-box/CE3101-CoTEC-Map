@@ -3,19 +3,19 @@ import { AdminServiceService } from '../../services/admin-service.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 import { SelectionType } from '@swimlane/ngx-datatable';
-import faker from 'faker';
 import { ubicaciones } from 'src/assets/data/ubication';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { NationalityService } from '../../services/nationality/nationality.service';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PopoverComponent } from '../../components/popover/popover.component';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { EditDataComponent } from '../../components/edit-data/edit-data.component';
 import { ModifyDataComponent } from '../../components/modify-data/modify-data.component';
 import { StatusService } from '../../services/status/status.service';
+import * as XLSX from 'xlsx';
+
 /**
  * Declare fuse variable
  */
@@ -260,11 +260,28 @@ export class AdminComponent implements OnInit {
    * @param element the element uploaded
    */
   fileChange(element) {
+    console.log('element added');
     console.log(element.target.files[0]);
     if (element.target.files[0].type === 'application/vnd.ms-excel'){
       console.log('es un excel');
       this.openSnackBar('Send the file');
-      this.FileSelected = element.target.files[0];
+      let file = element.target.files[0];
+      let workBook = null;
+      let jsonData = null;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const data = reader.result;
+        workBook = XLSX.read(data, { type: 'binary' });
+        jsonData = workBook.SheetNames.reduce((initial, name) => {
+          const sheet = workBook.Sheets[name];
+          initial[name] = XLSX.utils.sheet_to_json(sheet);
+          return initial;
+        }, {});
+        const dataString = JSON.stringify(jsonData);
+        console.log(dataString);
+        //document.getElementById('output').innerHTML = dataString.slice(0, 300).concat("...");
+      };
+      reader.readAsBinaryString(file);
       this.disableMoreFile = false;
     }else{
       this.openSnackBar('Please upload an excel File');
