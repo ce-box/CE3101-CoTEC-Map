@@ -172,5 +172,6 @@ export class PatientsComponent implements OnInit {
         this._http.postMedicine(medicationSend);
       }
     }
+    window.history.go(-1);
   }
 }
