@@ -44,7 +44,7 @@ export class ContactService {
   }
 
   postPathology(pathology: object) {
-    this.httpClient.post('https://localhost:5001/api/v1/pathologies/contacts/assign', pathology).subscribe();
+    this.httpClient.post('https://localhost:5001/api/v1/pathologies/contact/assign', pathology).subscribe();
   }
 
   // This funtion delete a contact

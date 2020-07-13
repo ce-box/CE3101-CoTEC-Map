@@ -86,6 +86,15 @@ export class EditContactComponent implements OnInit {
       }
   ];
     this._http.patchContact(contact, this.dniContact);
+
+    const pathologysSend = [];
+    for (const entry of this.pathologysList) {
+          pathologysSend.push({PersonDni: this.dniContact, PathologyName: entry.name});
+    }
+    console.log(pathologysSend);
+    this._http.postPathology(pathologysSend);
+    window.history.go(-1);
+
   }
 
   // Change the page to edit contact

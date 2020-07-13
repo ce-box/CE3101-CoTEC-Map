@@ -90,7 +90,7 @@
                   </div>
                   <div class="form-group">
                     <h2>Email</h2>
-                    <h3>{{ contact.age }}</h3>
+                    <h3>{{ contact.email }}</h3>
                   </div>
                   <div class="form-group"></div>
                 </div>
@@ -105,12 +105,16 @@
                   style="padding-left: 10px;"
                 >
                   <div class="form-group">
-                    <h2>Nacionalidad</h2>
+                    <h2>País de Procedencia</h2>
                     <h3>{{ contact.country }}</h3>
                   </div>
                   <div class="form-group">
-                    <h2>Dirreción</h2>
+                    <h2>Región</h2>
                     <h3>{{ contact.region }}</h3>
+                  </div>
+                  <div class="form-group">
+                    <h2>Dirección</h2>
+                    <h3>{{ contact.address }}</h3>
                   </div>
                   <div class="form-group">
                     <h2>Patologías</h2>
@@ -123,7 +127,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let pathology of contact.pathology">
+                          <tr *ngFor="let pathology of pathologysList">
                             <td class="align-middle">
                               {{ pathology.name }}
                             </td>
@@ -351,6 +355,21 @@
                     >
                   </div>
                   <!-- /Country input  -->
+
+                  <!-- Region input  -->
+                  <div class="form-group">
+                    <h2>Región</h2>
+                    <input
+                      id="inputContry"
+                      class="form-control"
+                      inputContry="inputContry"
+                      ngModel
+                      [(ngModel)]="contact.region"
+                      #inputContry="ngModel"
+                      disabled
+                    >
+                  </div>
+                  <!-- /Region input  -->
 
                   <!-- Adress input  -->
                   <div class="form-group">
