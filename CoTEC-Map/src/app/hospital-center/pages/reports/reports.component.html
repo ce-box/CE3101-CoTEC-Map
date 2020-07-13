@@ -141,49 +141,19 @@
               <tr>
                 <th scope="col"></th>
                 <th scope="col"></th>
-                <th scope="col">Recuperados</th>
-                <th scope="col">Muertos</th>
-                <th scope="col">Activos</th>
-                <th scope="col">Recuperados</th>
-                <th scope="col">Muertos</th>
-                <th scope="col">Activos</th>
-                <th scope="col">Activos</th>
+                <th scope="col" *ngFor="let date of dates" >{{date}}</th>
               </tr>
             </thead>
-            <tbody *ngFor="let country of countryData">
+            <tbody *ngFor="let country of countrylastdays | keyvalue">
               <tr>
-                <th class="align-middle">{{ country.coutry }}</th>
+                <th class="align-middle">{{ country.key }}</th>
                 <th class="align-middle">
                   <h4>Muertes</h4>
                   <h4>Casos Nuevos</h4>
                 </th>
-                <th class="align-middle" style="border-top: 3px solid #000000;">
-                  <h4>{{ country.recovered }}</h4>
-                  <h4>{{ country.recovered }}</h4>
-                </th>
-                <th class="align-middle" style="border-top: 3px solid #000000;">
-                  <h4>{{ country.dead }}</h4>
-                  <h4>{{ country.dead }}</h4>
-                </th>
-                <th class="align-middle" style="border-top: 3px solid #000000;">
-                  <h4>{{ country.dead }}</h4>
-                  <h4>{{ country.dead }}</h4>
-                </th>
-                <th class="align-middle" style="border-top: 3px solid #000000;">
-                  <h4>{{ country.dead }}</h4>
-                  <h4>{{ country.dead }}</h4>
-                </th>
-                <th class="align-middle" style="border-top: 3px solid #000000;">
-                  <h4>{{ country.dead }}</h4>
-                  <h4>{{ country.dead }}</h4>
-                </th>
-                <th class="align-middle" style="border-top: 3px solid #000000;">
-                  <h4>{{ country.dead }}</h4>
-                  <h4>{{ country.dead }}</h4>
-                </th>
-                <th class="align-middle" style="border-top: 3px solid #000000;">
-                  <h4>{{ country.dead }}</h4>
-                  <h4>{{ country.dead }}</h4>
+                <th class="align-middle" style="border-top: 3px solid #000000;" *ngFor="let item of country.value | keyvalue" >
+                  <h4>{{ item.value.deaths }}</h4>
+                  <h4>{{ item.value.infected }}</h4>
                 </th>
               </tr>
             </tbody>
