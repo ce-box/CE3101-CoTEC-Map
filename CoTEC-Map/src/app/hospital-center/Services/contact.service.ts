@@ -42,4 +42,9 @@ export class ContactService {
   postContacts(contact: object, dni: number) {
     this.httpClient.post('https://localhost:5001/api/v1/contacts/new?Dni=' + dni, contact).subscribe();
   }
+
+  postPathology(pathology: object) {
+    console.log(pathology);
+    this.httpClient.post('https://localhost:5001/api/v1/pathologies/contacts/assign', pathology).subscribe();
+  }
 }

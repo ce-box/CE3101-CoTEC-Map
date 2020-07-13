@@ -17,6 +17,8 @@ export class ReportsComponent implements OnInit {
   // List data
   countryData: any;
   countrystatistics: any;
+  countrylastdays: any;
+  dates = [];
 
   // tslint:disable-next-line: variable-name
   constructor(private _http: ReportsService) { }
@@ -28,6 +30,23 @@ export class ReportsComponent implements OnInit {
 
     this._http.getWorldInformation().subscribe(data => {
       this.countrystatistics = data;
+    });
+
+    this._http.getCoutryReport().subscribe(data => {
+      this.countrylastdays = data;
+
+      // tslint:disable-next-line: forin
+      for (const key in data){
+        const value = data[key];
+
+        // tslint:disable-next-line: forin
+        for ( const report in value){
+          // tslint:disable-next-line: no-string-literal
+          const currentDate = value[report]['date'].replace('T00:00:00', '');
+          this.dates.push(currentDate);
+        }
+        break;
+      }
     });
 
   }

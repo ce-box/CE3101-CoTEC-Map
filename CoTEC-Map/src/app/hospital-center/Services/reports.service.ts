@@ -18,4 +18,8 @@ export class ReportsService {
   getWorldInformation() {
     return this.httpClient.get<Country>('https://localhost:5001/api/v1/cases/world');
   }
+
+  getCoutryReport() {
+    return this.httpClient.get('https://localhost:5001/api/v1/cases/report');
+  }
 }

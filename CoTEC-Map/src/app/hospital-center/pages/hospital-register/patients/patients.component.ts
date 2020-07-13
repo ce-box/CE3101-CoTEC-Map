@@ -5,6 +5,7 @@ import { PatientService } from 'src/app/hospital-center/Services/patient.service
 import { Country } from 'src/app/hospital-center/Interfaces/Country';
 import { Status } from 'src/app/hospital-center/Interfaces/status';
 import { Patient, SendPatient } from 'src/app/hospital-center/Interfaces/Patient';
+import { ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-patients',
@@ -20,6 +21,7 @@ export class PatientsComponent implements OnInit {
   hospitalizedPatient: boolean;
   icuPatent: boolean;
   statusPatient: number;
+  hospitalId: any;
 
   // Data lists
   pathologys: Pathologys[];
@@ -31,7 +33,17 @@ export class PatientsComponent implements OnInit {
   regions: any;
 
   // tslint:disable-next-line: variable-name
-  constructor(private _http: PatientService) { }
+  constructor(private _http: PatientService, private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(
+      params => {
+        if (params && params.special) {
+          // tslint:disable-next-line: no-string-literal
+          this.hospitalId = params.special;
+          console.log('ID: ', this.hospitalId);
+        }
+      }
+    );
+  }
 
   ngOnInit(): void {
     this._http.getContriesData().subscribe(data => {
@@ -132,27 +144,33 @@ export class PatientsComponent implements OnInit {
     }
     const patient: SendPatient = {Dni: dni, Name: name, LastName: lastName,
       DoB: doB, Hospitalized: this.hospitalizedPatient, ICU: this.icuPatent,
-      Status: this.statusPatient, Hospital_Id: 1, Region: region, Country: country };
+      Status: this.statusPatient, Hospital_Id: this.hospitalId, Region: region, Country: country };
+    const response = this._http.postPatient(patient);
 
-    // this._http.postPatient(patient);
+    if (response){
+      const medicationSend = [];
+      for (const entry of this.medicationList) {
+        medicationSend.push({patientDni: dni, medicationId: entry.id, prescription: 'Seguir etiqueta'});
+      }
 
-    console.log(this.medicationList);
-    const medicationSend = [];
-    for (const entry of this.medicationList) {
-      medicationSend.push({patientDni: dni, medicationId: entry.id, prescription: 'Seguir etiqueta'});
-    }
+      const pathologysSend = [];
+      for (const entry of this.pathologysList) {
+        pathologysSend.push({patientDni: dni, PathologyName: entry.name});
+      }
 
+      // tslint:disable-next-line: variable-name
+      for ( let _i = 0; _i < 20; _i++) {
+        console.log(_i);
+      }
 
-    const pathologysSend = [];
-    for (const entry of this.pathologysList) {
-      pathologysSend.push({PatientDni: dni, PathologyName: entry.name});
-    }
-
-    if (pathologysSend.length !== 0) {
-      this._http.postPathology(pathologysSend);
-    }
-    if (medicationSend.length !== 0) {
-      this._http.postMedicine(medicationSend);
+      if (pathologysSend.length !== 0) {
+        console.log(pathologysSend);
+        this._http.postPathology(pathologysSend);
+      }
+      if (medicationSend.length !== 0) {
+        console.log(medicationSend);
+        this._http.postMedicine(medicationSend);
+      }
     }
   }
 }

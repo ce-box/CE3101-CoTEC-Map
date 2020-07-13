@@ -20,6 +20,7 @@ export class ContactsComponent implements OnInit {
   pathologys: Pathologys[];
   pathologysList: any[] = [];
   contactList: any[] = [];
+  generalPathologyst: any[] = [];
   countries: any;
   regions: any;
 
@@ -77,8 +78,15 @@ export class ContactsComponent implements OnInit {
     const contact: Contact = {name, lastName, doB, email, address, dni, country, region};
     const i = this.contactList.indexOf(contact);
 
+    const pathologysSend = [];
+    for (const entry of this.pathologysList) {
+          pathologysSend.push({PersonDni: dni, PathologyName: entry.name});
+    }
+    console.log(pathologysSend);
+
     if (i === -1) {
       this.contactList.push(contact);
+      this.generalPathologyst.push(pathologysSend);
     }
   }
 
@@ -88,6 +96,7 @@ export class ContactsComponent implements OnInit {
 
     if (i !== -1) {
       this.contactList.splice(i, 1);
+      // this.generalPathologyst.splice(i, 1);
     }
   }
 
@@ -96,9 +105,24 @@ export class ContactsComponent implements OnInit {
     if ((this.contactList.length)  !==  0 ) {
       console.log(this.contactList);
       if (this.contactList.length !== 0){
-        this._http.postContacts(this.contactList, this.dniContact);
+       this._http.postContacts(this.contactList, this.dniContact);
+      }
+
+     // tslint:disable-next-line: variable-name
+      for ( let _i = 0; _i < 60; _i++) {
+        console.log(_i);
+      }
+
+      console.log(this.generalPathologyst);
+      if (this.generalPathologyst.length !== 0) {
+        // tslint:disable-next-line: forin
+        for (const index in this.generalPathologyst) {
+          const list = this.generalPathologyst[index];
+          this._http.postPathology(list);
+          // this._http.postPathology(enty);
+        }
       }
     }
+    window.history.go(-1);
   }
-
 }
