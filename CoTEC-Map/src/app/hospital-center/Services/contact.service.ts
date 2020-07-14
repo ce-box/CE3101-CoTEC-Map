@@ -44,7 +44,11 @@ export class ContactService {
   }
 
   postPathology(pathology: object) {
-    console.log(pathology);
     this.httpClient.post('https://localhost:5001/api/v1/pathologies/contacts/assign', pathology).subscribe();
+  }
+
+  // This funtion delete a contact
+  deleteContact(dni: number) {
+    this.httpClient.delete('https://localhost:5001/api/v1/contacts/delete?Dni=' + dni).subscribe();
   }
 }

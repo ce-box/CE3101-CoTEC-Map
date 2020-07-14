@@ -67,4 +67,10 @@ export class EditContactComponent implements OnInit {
   changeEditPage( ){
     this.changeEditContactPage = true;
   }
+
+  // Delete contact
+  deleteContact() {
+    this._http.deleteContact(this.dniContact);
+    window.history.go(-1);
+  }
 }
