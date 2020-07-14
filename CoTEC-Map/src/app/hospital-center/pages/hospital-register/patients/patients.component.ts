@@ -159,7 +159,7 @@ export class PatientsComponent implements OnInit {
       }
 
       // tslint:disable-next-line: variable-name
-      for ( let _i = 0; _i < 20; _i++) {
+      for ( let _i = 0; _i < 80; _i++) {
         console.log(_i);
       }
 

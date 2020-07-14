@@ -103,10 +103,11 @@ export class EditPatientComponent implements OnInit {
 
   pachtPatient(dni: number, name: string, lastName: string, customRadio: string, customRadio2: string, inputState: string) {
     for (const entry of this.status) {
-      if (entry.name === status) {
+      if (entry.name === inputState) {
         this.statusPatient = entry.id;
       }
     }
+
     const patient = [
       {
           op: 'replace',
