@@ -21,19 +21,22 @@ export class EditContactComponent implements OnInit {
   pathologysList: any[] = [];
   contactList: any[] = [];
   countrys: any;
-  patient: any;
+  contact: any;
 
   // tslint:disable-next-line: variable-name
   constructor(private _http: ContactService) { }
 
 
   ngOnInit(): void {
-    console.log(this.dniContact);
     this._http.getContact(this.dniContact).subscribe(data => {
-      this.patient = data;
+      this.contact = data;
     });
 
     this._http.getContactPathologys(this.dniContact).subscribe(data => {
+      this.pathologysList = data;
+    });
+
+    this._http.getPathologys().subscribe(data => {
       this.pathologys = data;
     });
 
@@ -59,8 +62,30 @@ export class EditContactComponent implements OnInit {
   }
 
   // Get the values for the forms and incluide in the table
-  getContactValue(name: string, lastName: string, email: string, address: string): void {
-
+  pathcContact(name: string, lastName: string, email: string, address: string): void {
+    const contact = [
+      {
+          op: 'replace',
+          path: '/name',
+          value: name
+      },
+      {
+          op: 'replace',
+          path: '/lastName',
+          value: lastName
+      },
+      {
+          op: 'replace',
+          path: '/email',
+          value: email
+      },
+      {
+          op: 'replace',
+          path: '/address',
+          value: address
+      }
+  ];
+    this._http.patchContact(contact, this.dniContact);
   }
 
   // Change the page to edit contact

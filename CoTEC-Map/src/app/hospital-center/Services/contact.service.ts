@@ -51,4 +51,8 @@ export class ContactService {
   deleteContact(dni: number) {
     this.httpClient.delete('https://localhost:5001/api/v1/contacts/delete?Dni=' + dni).subscribe();
   }
+
+  patchContact(contact: object, dni: number) {
+    this.httpClient.patch('https://localhost:5001/api/v1/contacts/edit?Dni=' + dni, contact). subscribe();
+  }
 }
