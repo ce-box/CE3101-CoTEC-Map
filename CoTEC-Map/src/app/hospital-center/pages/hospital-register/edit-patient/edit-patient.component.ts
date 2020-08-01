@@ -19,43 +19,47 @@ export class EditPatientComponent implements OnInit {
   medication: Medication[];
   pathologysList: any[] = [];
   medicationList: any[] = [];
-  states: any;
-  countrys: any;
-
-  // hdhdh
-  age1 = 27;
-  country1 = 'Costa Rica';
-  region1 = 'Heredia';
-  identificacion1 = 23334455;
-  valu = null;
-  valu2 = null;
-  status = 'active';
+  patient: any;
+  patientRaw: any;
+  status: any;
+  statusPatient: string;
 
   // tslint:disable-next-line: variable-name
   constructor(private _http: PatientService) {
-
-    this.states = ['Activa', 'Contagiada', 'Recuperada', 'Muerta'];
-    this.countrys = ['Costa Rica', 'El Salvador', 'Nicaragua', 'Panamá'];
-    this.pathologys = [
-      {
-        name: 'Presión',
-        treatment: 'este',
-        symptoms: 'h',
-        description: 'esta',
-      },
-      {
-        name: 'Node Js',
-        treatment: 'este',
-        symptoms: 'j',
-        description: 'esta',
-      },
-      { name: 'Java', treatment: 'este', symptoms: 'k', description: 'esta' },
-    ];
   }
 
   ngOnInit(): void {
     this._http.getPatientMedications(this.dniPatient).subscribe(data => {
+      data.forEach(
+        // tslint:disable-next-line: no-unused-expression
+        entry => {
+          this.medicationList.push({ id: entry.medicationId, medicationName: entry.medicationName, pharmaCo: entry.pharmaCo });
+        }
+      );
+    });
+
+    this._http.getMedications().subscribe(data => {
       this.medication = data;
+    });
+
+    this._http.getPathologys().subscribe(data => {
+      this.pathologys = data;
+    });
+
+    this._http.getPatientPathologys(this.dniPatient).subscribe(data => {
+      this.pathologysList = data;
+    });
+
+    this._http.getPatientData(this.dniPatient).subscribe(data => {
+      this.patient = data;
+    });
+
+    this._http.getPatientRawData(this.dniPatient).subscribe(data => {
+      this.patientRaw = data;
+    });
+
+    this._http.getStatus().subscribe(data => {
+      this.status = data;
     });
   }
 
@@ -97,8 +101,66 @@ export class EditPatientComponent implements OnInit {
     }
   }
 
-  pachtPatient(dni: number, name: string, lastname: string, customRadio: string, customRadio2: string, inputState: string) {
-    console.log(customRadio, customRadio2);
+  pachtPatient(dni: number, name: string, lastName: string, customRadio: string, customRadio2: string, inputState: string) {
+    for (const entry of this.status) {
+      if (entry.name === inputState) {
+        this.statusPatient = entry.id;
+      }
+    }
+
+    const patient = [
+      {
+          op: 'replace',
+          path: '/name',
+          value: name
+      },
+      {
+          op: 'replace',
+          path: '/lastName',
+          value: lastName
+      },
+      {
+          op: 'replace',
+          path: '/hospitalized',
+          value: customRadio
+      },
+      {
+          op: 'replace',
+          path: '/icu',
+          value: customRadio2
+      },
+      {
+          op: 'replace',
+          path: '/doB',
+          value: this.patientRaw.doB
+      },
+      {
+          op: 'replace',
+          path: '/status',
+          value: this.statusPatient
+      },
+      {
+          op: 'replace',
+          path: '/hospital_Id',
+          value: this.patientRaw.hospital_Id
+      }
+  ];
+    this._http.pacthPatient(patient, this.patient.dni);
+
+    const pathologysSend = [];
+    for (const entry of this.pathologysList) {
+          pathologysSend.push({PatientDni: this.patient.dni, PathologyName: entry.name});
+    }
+
+    const medicationSend = [];
+    for (const entry of this.medicationList) {
+        medicationSend.push({patientDni: this.patient.dni, medicationId: entry.id, prescription: 'Seguir etiqueta'});
+      }
+
+    this._http.postPathology(pathologysSend);
+    this._http.postMedicine(medicationSend);
+
+    window.history.go(-1);
   }
 }
 

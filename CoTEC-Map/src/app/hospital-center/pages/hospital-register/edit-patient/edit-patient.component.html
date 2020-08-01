@@ -10,7 +10,7 @@
     <div class="container mt-4">
       <div class="row">
         <div class="col-12">
-          <h1 class="text-center" style="font-size: 28px;" id="pageName">
+          <h1 class="text-center" style="font-size: 28px; font-weight: bold;" id="pageName">
             {{ pageName }}
           </h1>
         </div>
@@ -90,6 +90,7 @@
                       required
                       name="name"
                       ngModel
+                      [(ngModel)]="patient.name"
                       #name="ngModel"
                       id="startDate"
                     />
@@ -112,6 +113,7 @@
                       required
                       LastName="LastName"
                       ngModel
+                      [(ngModel)]="patient.lastName"
                       #LastName="ngModel"
                       id="LastName"
                     />
@@ -133,7 +135,7 @@
                       placeholder="Identificación *"
                       required
                       dni="dni"
-                      [(ngModel)]="identificacion1"
+                      [(ngModel)]="patient.dni"
                       ngModel
                       #dni="ngModel"
                       id="dni"
@@ -150,12 +152,12 @@
                       class="form-control"
                       required
                       name="inputState"
-                      [(ngModel)] = "status"
+                      [(ngModel)] = "patient.status"
                       ngModel
                       #inputState="ngModel"
                     >
-                      <option *ngFor="let state of states" selected>{{
-                        state
+                      <option *ngFor="let state of status" selected>{{
+                        state.name
                       }}</option>
                     </select>
                   </div>
@@ -221,10 +223,10 @@
                     <input
                       type="text"
                       class="form-control"
-                      [(ngModel)]="age1"
                       required
                       age="age"
                       ngModel
+                      [(ngModel)]="patient.age"
                       #age="ngModel"
                       id="age"
                       disabled
@@ -241,7 +243,7 @@
                       placeholder="País *"
                       required
                       country="country"
-                      [(ngModel)]="country1"
+                      [(ngModel)]="patient.country"
                       ngModel
                       #country="ngModel"
                       id="country"
@@ -259,7 +261,7 @@
                       placeholder="Región *"
                       required
                       region="region"
-                      [(ngModel)]="region1"
+                      [(ngModel)]="patient.region"
                       ngModel
                       #region="ngModel"
                       id="region"
@@ -281,7 +283,7 @@
                             required
                             ngModel
                             #customRadio="ngModel"
-                            [(ngModel)] ="valu"
+                            [(ngModel)] ="patient.hospitalized"
                             checked
                           />
                           <label class="form-check-label" for="customRadio"
@@ -302,7 +304,7 @@
                             required
                             ngModel
                             #customRadio2="ngModel"
-                            [(ngModel)] ="valu2"
+                            [(ngModel)] ="patient.icu"
                             checked
                           />
                           <label class="form-check-label" for="customRadio2"

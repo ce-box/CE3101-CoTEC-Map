@@ -17,9 +17,10 @@ export class AdminServiceService {
   getServiceData(){
     return this.http.get(`${URL}/admin`);
   }
-  uploadData(data: File){
-    this.http.post('/api/upload', data)
-      .subscribe((response) => {
+  uploadData(data: any){
+    console.log('data-> ', data);
+    this.http.post('https://localhost:5001/api/v1/patients/excel', data)
+    .subscribe((response) => {
         console.log('response received is ', response);
       });
   }

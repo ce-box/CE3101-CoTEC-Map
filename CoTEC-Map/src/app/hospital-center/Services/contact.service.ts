@@ -42,4 +42,17 @@ export class ContactService {
   postContacts(contact: object, dni: number) {
     this.httpClient.post('https://localhost:5001/api/v1/contacts/new?Dni=' + dni, contact).subscribe();
   }
+
+  postPathology(pathology: object) {
+    this.httpClient.post('https://localhost:5001/api/v1/pathologies/contact/assign', pathology).subscribe();
+  }
+
+  // This funtion delete a contact
+  deleteContact(dni: number) {
+    this.httpClient.delete('https://localhost:5001/api/v1/contacts/delete?Dni=' + dni).subscribe();
+  }
+
+  patchContact(contact: object, dni: number) {
+    this.httpClient.patch('https://localhost:5001/api/v1/contacts/edit?Dni=' + dni, contact). subscribe();
+  }
 }

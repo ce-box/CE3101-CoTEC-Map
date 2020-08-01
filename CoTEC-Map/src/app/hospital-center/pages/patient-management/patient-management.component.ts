@@ -64,4 +64,9 @@ export class PatientManagementComponent implements OnInit {
     this.dniContact = dni;
     this.changeContactInformation = true;
   }
+
+  deletePatient(){
+    this._http.deletePatient(this.dniPatient);
+    window.history.go(-1);
+  }
 }

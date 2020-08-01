@@ -151,7 +151,7 @@
               </div>
 
               <!-- Login Form -->
-              <form (submit)="confirm(userName, userPass)">
+              <form>
                 <input
                   id="login"
                   class="fadeIn second"
@@ -165,10 +165,10 @@
                   class="fadeIn third"
                   name="login"
                   placeholder="password"
-                  type="text"
+                  type="password"
                   #userPass
                 />
-                <input type="submit" class="fadeIn fourth" value="Log In" />
+                <input type="submit" class="fadeIn fourth" value="Log In" (click)="userLogin(userName.value, userPass.value)" />
               </form>
             </div>
           </div>

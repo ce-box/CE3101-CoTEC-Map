@@ -18,7 +18,7 @@
     <div class="container mt-4">
       <div class="row">
         <div class="col-12">
-          <h1 class="text-center" style="font-size: 28px;" id="pageName">
+          <h1 class="text-center" style="font-size: 28px; font-weight: bold;" id="pageName">
             {{ pageName }}
           </h1>
         </div>
@@ -56,7 +56,7 @@
           </div>
           <br />
           <div>
-            <button type="button" class="btn btn-danger col-md-12">
+            <button type="button" class="btn btn-danger col-md-12" (click)="deleteContact()">
               Eliminar
             </button>
           </div>
@@ -78,19 +78,19 @@
                 <div class="col-md-5" id="dataContainer">
                   <div class="form-group">
                     <h2>Nombre</h2>
-                    <h3>{{ patient.name }} {{ patient.lastName }}</h3>
+                    <h3>{{ contact.name }} {{ contact.lastName }}</h3>
                   </div>
                   <div class="form-group">
                     <h2>Número de identificación</h2>
-                    <h3>{{ patient.dni }}</h3>
+                    <h3>{{ contact.dni }}</h3>
                   </div>
                   <div class="form-group">
                     <h2>Edad</h2>
-                    <h3>{{ patient.age }}</h3>
+                    <h3>{{ contact.age }}</h3>
                   </div>
                   <div class="form-group">
                     <h2>Email</h2>
-                    <h3>{{ patient.age }}</h3>
+                    <h3>{{ contact.email }}</h3>
                   </div>
                   <div class="form-group"></div>
                 </div>
@@ -105,12 +105,16 @@
                   style="padding-left: 10px;"
                 >
                   <div class="form-group">
-                    <h2>Nacionalidad</h2>
-                    <h3>{{ patient.country }}</h3>
+                    <h2>País de Procedencia</h2>
+                    <h3>{{ contact.country }}</h3>
                   </div>
                   <div class="form-group">
-                    <h2>Dirreción</h2>
-                    <h3>{{ patient.region }}</h3>
+                    <h2>Región</h2>
+                    <h3>{{ contact.region }}</h3>
+                  </div>
+                  <div class="form-group">
+                    <h2>Dirección</h2>
+                    <h3>{{ contact.address }}</h3>
                   </div>
                   <div class="form-group">
                     <h2>Patologías</h2>
@@ -123,7 +127,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let pathology of patient.pathology">
+                          <tr *ngFor="let pathology of pathologysList">
                             <td class="align-middle">
                               {{ pathology.name }}
                             </td>
@@ -155,7 +159,7 @@
     <div class="container mt-4">
       <div class="row">
         <div class="col-12">
-          <h1 class="text-center" style="font-size: 28px;" id="pageName">
+          <h1 class="text-center" style="font-size: 28px; font-weight: bold;" id="pageName">
             {{ pageName }}
           </h1>
         </div>
@@ -197,7 +201,7 @@
                     )
                   "
                   (click)="
-                    getContactValue(
+                  pathcContact(
                       name.value,
                       LastName.value,
                       email.value,
@@ -235,6 +239,7 @@
                       required
                       name="name"
                       ngModel
+                      [(ngModel)]="contact.name"
                       #name="ngModel"
                       id="startDate"
                     />
@@ -257,6 +262,7 @@
                       required
                       LastName="LastName"
                       ngModel
+                      [(ngModel)]="contact.lastName"
                       #LastName="ngModel"
                       id="LastName"
                     />
@@ -275,6 +281,7 @@
                     <input
                       required
                       ngModel
+                      [(ngModel)]="contact.dni"
                       name="dni"
                       #dni="ngModel"
                       type="text"
@@ -294,6 +301,7 @@
                         type="text"
                         name="startDate"
                         ngModel
+                        [(ngModel)]="contact.age"
                         #startDate="ngModel"
                         class="form-control"
                         id="startDate"
@@ -313,6 +321,7 @@
                       required
                       email="email"
                       ngModel
+                      [(ngModel)]="contact.email"
                       #email="ngModel"
                       id="email"
                     />
@@ -340,11 +349,27 @@
                       class="form-control"
                       inputContry="inputContry"
                       ngModel
+                      [(ngModel)]="contact.country"
                       #inputContry="ngModel"
                       disabled
                     >
                   </div>
                   <!-- /Country input  -->
+
+                  <!-- Region input  -->
+                  <div class="form-group">
+                    <h2>Región</h2>
+                    <input
+                      id="inputContry"
+                      class="form-control"
+                      inputContry="inputContry"
+                      ngModel
+                      [(ngModel)]="contact.region"
+                      #inputContry="ngModel"
+                      disabled
+                    >
+                  </div>
+                  <!-- /Region input  -->
 
                   <!-- Adress input  -->
                   <div class="form-group">
@@ -356,6 +381,7 @@
                       required
                       direction="direction"
                       ngModel
+                      [(ngModel)]="contact.address"
                       #direction="ngModel"
                       id="direction"
                     ></textarea>

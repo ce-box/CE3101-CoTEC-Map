@@ -16,8 +16,12 @@ export class PatientService {
   constructor(private httpClient: HttpClient) { }
 
   // This funtion get a list of patient
-  getPatientsData(){
-    return this.httpClient.get<Patient[]>('https://localhost:5001/api/v1/patients/hospital?hospital_Id=1');
+  getPatientsData(id: number){
+    return this.httpClient.get<Patient[]>('https://localhost:5001/api/v1/patients/hospital?hospital_Id=' + id);
+  }
+
+  getPatientRawData(dni: number){
+    return this.httpClient.get('https://localhost:5001/api/v1/patients/raw?Dni=' + dni);
   }
 
   // This funtion get a Patient data
@@ -67,7 +71,7 @@ export class PatientService {
 
   // This funtion create a patients in data base
   postPatient(patient: SendPatient) {
-    this.httpClient.post('https://localhost:5001/api/v1/patients/new', patient).subscribe();
+    return this.httpClient.post('https://localhost:5001/api/v1/patients/new', patient).subscribe();
   }
 
   // This funtion add pathology to the patient
@@ -80,6 +84,15 @@ export class PatientService {
   postMedicine(medicine: object) {
     console.log(medicine);
     this.httpClient.post('https://localhost:5001/api/v1/medications/patient/assign/list', medicine).subscribe();
+  }
+
+  // This funtion delete a patient
+  deletePatient(dni: number) {
+    this.httpClient.delete('https://localhost:5001/api/v1/patients/delete?Dni=' + dni).subscribe();
+  }
+
+  pacthPatient(patient: object, dni: number) {
+    this.httpClient.patch('https://localhost:5001/api/v1/patients/edit?Dni=' + dni, patient).subscribe();
   }
 
 }
