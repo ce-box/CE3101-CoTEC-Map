@@ -1,7 +1,0 @@
-{
-  "name": "CocTEC-App",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}

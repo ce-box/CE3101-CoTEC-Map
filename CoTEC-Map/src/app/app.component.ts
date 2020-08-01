@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
         this.logout = true;
         this.changePage = false;
         this.access = true;
-
+        this.router.navigate(['/admin']);
       },
       (error: HttpErrorResponse) => {
         console.log(error);
@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
         },
         (error: HttpErrorResponse) => {
           console.log(error);
-          alert('Oops! Usuario Incorrecto!');
+          //alert('Oops! Usuario Incorrecto!');
         }
       );
     }

@@ -115,6 +115,8 @@ export class AdminComponent implements OnInit {
    * String of the option in the table
    */
   selectToOption: object;
+
+  jsonData: any;
   /**
    * First method in the page
    * @param adminService Controller for the admin service
@@ -262,22 +264,22 @@ export class AdminComponent implements OnInit {
   fileChange(element) {
     console.log('element added');
     console.log(element.target.files[0]);
-    if (element.target.files[0].type === 'application/vnd.ms-excel'){
+    if (true){//element.target.files[0].type === 'application/vnd.ms-excel'){
       console.log('es un excel');
       this.openSnackBar('Send the file');
-      let file = element.target.files[0];
+      const file = element.target.files[0];
       let workBook = null;
-      let jsonData = null;
+      this.jsonData = null;
       const reader = new FileReader();
       reader.onload = (event) => {
         const data = reader.result;
         workBook = XLSX.read(data, { type: 'binary' });
-        jsonData = workBook.SheetNames.reduce((initial, name) => {
+        this.jsonData = workBook.SheetNames.reduce((initial, name) => {
           const sheet = workBook.Sheets[name];
           initial[name] = XLSX.utils.sheet_to_json(sheet);
           return initial;
         }, {});
-        const dataString = JSON.stringify(jsonData);
+        const dataString = JSON.stringify(this.jsonData);
         console.log(dataString);
         //document.getElementById('output').innerHTML = dataString.slice(0, 300).concat("...");
       };
@@ -291,8 +293,11 @@ export class AdminComponent implements OnInit {
    * Send the file to the service
    */
   upload() {
-    console.log('will be sent', this.selectedValue);
-    //this.adminService.uploadData(this.FileSelected);
+    // tslint:disable-next-line: no-string-literal
+    const file = this.jsonData['Worksheet'];
+    console.log('will be sent', file);
+    this.adminService.uploadData(file);
+    this.openSnackBar('!Se han agregado los pacientes que cumplen los requisitos!');
   }
   /**
    * Toast messages controller
